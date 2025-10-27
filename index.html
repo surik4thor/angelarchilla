@@ -377,60 +377,20 @@
                 <p class="section-subtitle fade-in">Estoy aquí para ayudarte a hacer crecer tu negocio</p>
             </div>
             <div class="contact-content">
-                <div class="contact-form fade-in">
-                    <div class="success-message" id="successMessage">
-                        <span style="margin-right: 8px;">✅</span>
-                        ¡Mensaje enviado correctamente! Te responderé pronto.
-                    </div>
-                    <form id="contactForm">
-                        <div id="formFeedback" style="display:none;margin-bottom:12px;padding:8px;border-radius:6px;font-size:1rem;"></div>
-                        <div class="form-group">
-                            <label for="name" class="form-label">Nombre *</label>
-                            <input type="text" id="name" name="name" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email *</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="service" class="form-label">Servicio de Interés</label>
-                            <select id="service" name="service" class="form-control">
-                                <option value="">Selecciona un servicio</option>
-                                <option value="marketing-estrategia">Marketing Digital - Estrategia</option>
-                                <option value="redes-1-2">Gestión Redes Sociales (1-2 redes)</option>
-                                <option value="redes-3+">Gestión Redes Sociales (3+ redes)</option>
-                                <option value="logotipo">Diseño Gráfico - Logotipo</option>
-                                <option value="flyer-folleto">Diseño Gráfico - Flyer/Folleto</option>
-                                <option value="tarjetas">Diseño Gráfico - Tarjetas de Visita</option>
-                                <option value="catalogo">Diseño Gráfico - Catálogo</option>
-                                <option value="rollup">Diseño para Impresión - Roll-up</option>
-                                <option value="libro">Edición y Maquetación - Libro</option>
-                                <option value="revista">Edición y Maquetación - Revista</option>
-                                <option value="folletos-digitales">Folletos Digitales</option>
-                                <option value="folletos-impresos">Folletos Impresos</option>
-                                <option value="eventos-pequeños">Organización de Eventos - Pequeños</option>
-                                <option value="eventos-medianos">Organización de Eventos - Medianos</option>
-                                <option value="ecommerce">Mantenimiento eCommerce</option>
-                                <option value="otro">Otro servicio</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message" class="form-label">Mensaje *</label>
-                            <textarea id="message" name="message" class="form-control" placeholder="Cuéntame más sobre tu proyecto..." required></textarea>
-                        </div>
-                        
-                        <!-- Google reCAPTCHA v3: el token se añade dinámicamente -->
-                        <input type="hidden" id="recaptchaToken" name="recaptchaToken">
-                        <button type="submit" class="btn btn--primary btn--full-width">
-                            <span style="margin-right: 8px;">✉️</span>
-                            Enviar Mensaje
-                        </button>
-                    </form>
-                </div>
-                
+                        <div class="contact-content">
+                            <div class="contact-message fade-in" style="padding:2rem 1rem;background:#f8f8f8;border-radius:12px;text-align:center;max-width:500px;margin:auto;">
+                                <h3 style="margin-bottom:1rem;">¿Quieres contactar conmigo?</h3>
+                                <p style="font-size:1.15rem;margin-bottom:1.2rem;">Puedes llamarme, enviarme un email o escribirme por WhatsApp. <br>Estaré encantado de atenderte personalmente.</p>
+                                <div style="margin-bottom:1rem;">
+                                    <span style="font-size:1.3rem;">📞</span> <strong>Teléfono / WhatsApp:</strong> <a href="tel:+34613530642" style="color:#2a7ae4;text-decoration:none;">+34 613 530 642</a>
+                                </div>
+                                <div>
+                                    <span style="font-size:1.3rem;">✉️</span> <strong>Email:</strong> <a href="mailto:contacto@angelarchilla.com" style="color:#2a7ae4;text-decoration:none;">contacto@angelarchilla.com</a>
+                                </div>
+                                <div style="margin-top:1rem;">
+                                    <span style="font-size:1.3rem;">💬</span> <strong>También estoy en WhatsApp con ese número.</strong>
+                                </div>
+                            </div>
                 <div class="contact-info fade-in">
                     <div class="contact-item">
                         <div class="contact-icon">
@@ -501,21 +461,7 @@
     <!-- Back to Top Button -->
     <button class="back-to-top" id="backToTop">⬆️</button>
 
-    <!-- Google reCAPTCHA v2 script -->
-    <script src="https://www.google.com/recaptcha/api.js?render=TU_SITE_KEY_RECAPTCHA"></script>
-        // reCAPTCHA v3: obtener token antes de enviar el formulario
-        const contactForm = document.getElementById('contactForm');
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                grecaptcha.ready(function() {
-                    grecaptcha.execute('TU_SITE_KEY_RECAPTCHA', {action: 'contact'}).then(function(token) {
-                        document.getElementById('recaptchaToken').value = token;
-                        contactForm.submit();
-                    });
-                });
-            });
-        }
+    <!-- ...existing code... -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Banner de cookies
@@ -535,67 +481,7 @@
         if (legalLink) {
           legalLink.onclick = function(e){e.preventDefault();document.getElementById('legal-modal').style.display='block';};
         }
-        // Validación de formulario
-                var contactForm = document.getElementById('contactForm');
-                if (contactForm) {
-                    contactForm.onsubmit = function(e) {
-                        e.preventDefault();
-                        var nombre = document.getElementById('name').value.trim();
-                        var email = document.getElementById('email').value.trim();
-                        var mensaje = document.getElementById('message').value.trim();
-                        var feedback = document.getElementById('formFeedback');
-                        if (nombre.length < 2 || !email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/) || mensaje.length < 10) {
-                            feedback.textContent = 'Por favor, rellena todos los campos correctamente.';
-                            feedback.style.display = 'block';
-                            feedback.style.background = '#f8d7da';
-                            feedback.style.color = '#842029';
-                            return;
-                        }
-                        // El token de reCAPTCHA v3 ya está en el campo oculto recaptchaToken
-                        feedback.textContent = 'Validación correcta. Enviando...';
-                        feedback.style.display = 'block';
-                        feedback.style.background = '#d1e7dd';
-                        feedback.style.color = '#0f5132';
-
-                        // Construir el payload para el backend
-                        const payload = {
-                            nombre: nombre,
-                            email: email,
-                            servicio: document.getElementById('service').value,
-                            mensaje: mensaje,
-                            recaptchaToken: document.getElementById('recaptchaToken').value
-                        };
-
-                        fetch('https://angelarchilla.es/api/contact', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(payload)
-                        })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.success) {
-                                feedback.textContent = '¡Mensaje enviado correctamente! Te responderé pronto.';
-                                feedback.style.display = 'block';
-                                feedback.style.background = '#d1e7dd';
-                                feedback.style.color = '#0f5132';
-                                document.getElementById('contactForm').reset();
-                            } else {
-                                feedback.textContent = 'Hubo un error al enviar el mensaje. Inténtalo más tarde.';
-                                feedback.style.display = 'block';
-                                feedback.style.background = '#f8d7da';
-                                feedback.style.color = '#842029';
-                            }
-                        })
-                        .catch(err => {
-                            feedback.textContent = 'Error de conexión. Inténtalo más tarde.';
-                            feedback.style.display = 'block';
-                            feedback.style.background = '#f8d7da';
-                            feedback.style.color = '#842029';
-                        });
-                    };
-                }
+        // ...existing code...
         // Mobile menu toggle
         const mobileToggle = document.querySelector('.mobile-menu-toggle');
         const navMenu = document.querySelector('.nav-menu');
@@ -660,28 +546,7 @@
         document.querySelectorAll('.fade-in').forEach(el => {
             observer.observe(el);
         });
-        // Contact form handling (extra)
-        const successMessage = document.getElementById('successMessage');
-        if (contactForm && successMessage) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-                const name = formData.get('name');
-                const email = formData.get('email');
-                const service = formData.get('service');
-                const message = formData.get('message');
-                if (!name || !email || !message) {
-                    alert('Por favor, completa todos los campos obligatorios.');
-                    return;
-                }
-                successMessage.classList.add('show');
-                this.reset();
-                setTimeout(() => {
-                    successMessage.classList.remove('show');
-                }, 5000);
-                console.log('Form data:', { name, email, service, message });
-            });
-        }
+        // ...existing code...
         // Service card click handling
         document.querySelectorAll('.service-card').forEach(card => {
             card.addEventListener('click', function() {
