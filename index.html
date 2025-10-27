@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angel Archilla García - Marketing Digital &amp; Diseño Gráfico</title>
+    <meta name="description" content="Servicios profesionales de marketing digital, gestión de redes sociales, diseño gráfico, edición de libros y organización de eventos. Consulta gratuita.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SEO y Social -->
+    <meta name="author" content="Angel Archilla García">
+    <meta property="og:title" content="Angel Archilla García - Marketing Digital & Diseño Gráfico">
+    <meta property="og:description" content="Servicios profesionales de marketing digital, gestión de redes sociales, diseño gráfico, edición de libros y organización de eventos. Consulta gratuita.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://angelarchilla.es/">
+    <meta property="og:image" content="/assets/img/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Angel Archilla García - Marketing Digital & Diseño Gráfico">
+    <meta name="twitter:description" content="Servicios profesionales de marketing digital, gestión de redes sociales, diseño gráfico, edición de libros y organización de eventos. Consulta gratuita.">
+    <meta name="twitter:image" content="/assets/img/og-image.jpg">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="/assets/img/favicon/site.webmanifest">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Eliminado FontAwesome, usar emojis/SVG en su lugar -->
+      <!-- Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+      </script>
+</head>
+<body>
+        <!-- Header -->
+        <header class="header">
+            <nav class="nav">
+                <a class="logo" href="#" aria-label="Inicio Angel Archilla">Angel Archilla 🚀</a>
+                <ul class="nav-menu">
+                  <li><a href="#servicios">Servicios 💼</a></li>
+                  <li><a href="#por-que">Por qué elegirme ⭐</a></li>
+                  <li><a href="#contacto">Contacto 📬</a></li>
+                  <li id="blog-menu-item"><a href="#blog">Blog 📝</a></li>
+                </ul>
+                <button class="mobile-menu-toggle" aria-label="Abrir menú móvil">☰</button>
+            </nav>
+        </header>
+            <!-- Banner de cookies -->
+            <div id="cookie-banner" style="position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ccc;padding:16px;text-align:center;z-index:9999;display:none;">
+                Utilizamos cookies para mejorar tu experiencia. <button id="acceptCookies" class="btn btn--secondary">Aceptar</button>
+                <a href="#privacidad">Más información</a>
+            </div>
+            <!-- Modales de privacidad y legal -->
+            <div id="privacidad-modal" style="display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);background:#fff;padding:32px;max-width:600px;z-index:10000;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.2);">
+                <h2>Política de Privacidad</h2>
+                <p>Tu información será tratada conforme a la normativa vigente. No comparto datos con terceros. Puedes solicitar la eliminación de tus datos en cualquier momento.</p>
+                <button onclick="document.getElementById('privacidad-modal').style.display='none'" class="btn btn--secondary">Cerrar</button>
+            </div>
+            <div id="legal-modal" style="display:none;position:fixed;top:10%;left:50%;transform:translateX(-50%);background:#fff;padding:32px;max-width:600px;z-index:10000;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.2);">
+                <h2>Aviso Legal</h2>
+                <p>Este sitio web es propiedad de Angel Archilla García. Todos los contenidos son originales y están protegidos por derechos de autor. Para cualquier consulta legal, contacta a hola@angelarchilla.es.</p>
+                <button onclick="document.getElementById('legal-modal').style.display='none'" class="btn btn--secondary">Cerrar</button>
+            </div>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>Angel Archilla García</h1>
+            <p class="hero-subtitle">Marketing Digital | Diseño Gráfico | Gestión de Proyectos Creativos</p>
+            <a href="#contacto" class="btn btn--primary">
+                <span style="margin-right: 8px;">💬</span>
+                Consulta Gratuita
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="sobre-mi" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title fade-in">Sobre Mí</h2>
+            </div>
+            <div class="about-content fade-in">
+                <p>Soy Angel Archilla García, un profesional freelance especializado en marketing digital, diseño gráfico y gestión de proyectos creativos. Con años de experiencia ayudando a empresas y emprendedores a hacer crecer su negocio a través de estrategias digitales efectivas y diseños que comunican.</p>
+                
+                <p>Mi enfoque se basa en entender las necesidades específicas de cada cliente para crear soluciones personalizadas que generen resultados reales. Desde la conceptualización hasta la ejecución, me involucro en cada etapa del proyecto para garantizar la máxima calidad y satisfacción.</p>
+                
+                <p>¿Necesitas impulsar tu presencia digital, crear materiales gráficos profesionales o gestionar un evento? Estoy aquí para convertir tus ideas en realidad con la profesionalidad y dedicación que tu proyecto merece.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="section section--alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title fade-in">Mis Servicios</h2>
+                <p class="section-subtitle fade-in">Soluciones completas para hacer crecer tu negocio</p>
+            </div>
+            <div class="services-grid">
+                <!-- Marketing Services -->
+                <div class="service-card service-card--marketing fade-in" data-service="marketing">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3 class="service-title">Marketing Digital - Estrategia</h3>
+                    <p class="service-price">desde 250€</p>
+                    <p class="service-description">Consultoría y plan de marketing digital personalizado</p>
+                </div>
+
+                <div class="service-card service-card--marketing fade-in" data-service="marketing">
+                    <div class="service-icon">
+                        <i class="fas fa-share-nodes"></i>
+                    </div>
+                    <h3 class="service-title">Gestión Redes Sociales (1-2 redes)</h3>
+                    <p class="service-price">desde 300€/mes</p>
+                    <p class="service-description">Publicación 8-12 posts/mes, gestión básica</p>
+                </div>
+
+                <div class="service-card service-card--marketing fade-in" data-service="marketing">
+                    <div class="service-icon">
+                        <i class="fas fa-hashtag"></i>
+                    </div>
+                    <h3 class="service-title">Gestión Redes Sociales (3+ redes)</h3>
+                    <p class="service-price">desde 500€/mes</p>
+                    <p class="service-description">Publicación 15-20 posts/mes, estrategia completa</p>
+                </div>
+
+                <!-- Design Services -->
+                <div class="service-card service-card--diseno fade-in" data-service="diseno">
+                    <div class="service-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="service-title">Diseño Gráfico - Logotipo</h3>
+                    <p class="service-price">desde 300€</p>
+                    <p class="service-description">Diseño profesional de logotipo con 2-3 propuestas</p>
+                </div>
+
+                <div class="service-card service-card--diseno fade-in" data-service="diseno">
+                    <div class="service-icon">
+                        <i class="fas fa-file-image"></i>
+                    </div>
+                    <h3 class="service-title">Diseño Gráfico - Flyer/Folleto</h3>
+                    <p class="service-price">desde 150€</p>
+                    <p class="service-description">Diseño de flyer o folleto listo para imprenta</p>
+                </div>
+
+                <div class="service-card service-card--diseno fade-in" data-service="diseno">
+                    <div class="service-icon">
+                        <i class="fas fa-address-card"></i>
+                    </div>
+                    <h3 class="service-title">Diseño Gráfico - Tarjetas de Visita</h3>
+                    <p class="service-price">desde 60€</p>
+                    <p class="service-description">Diseño de tarjetas corporativas profesionales</p>
+                </div>
+
+                <div class="service-card service-card--diseno fade-in" data-service="diseno">
+                    <div class="service-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="service-title">Diseño Gráfico - Catálogo</h3>
+                    <p class="service-price">desde 15€/pág.</p>
+                    <p class="service-description">Maquetación de catálogo comercial por página</p>
+                </div>
+
+                <div class="service-card service-card--diseno fade-in" data-service="diseno">
+                    <div class="service-icon">
+                        <i class="fas fa-rectangle-ad"></i>
+                    </div>
+                    <h3 class="service-title">Diseño para Impresión - Roll-up</h3>
+                    <p class="service-price">desde 150€</p>
+                    <p class="service-description">Diseño de roll-up publicitario completo</p>
+                </div>
+
+                <div class="service-card service-card--diseno fade-in" data-service="diseno">
+                    <div class="service-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3 class="service-title">Folletos Digitales</h3>
+                    <p class="service-price">desde 180€</p>
+                    <p class="service-description">Diseño de folletos en formato digital (PDF)</p>
+                </div>
+
+                <div class="service-card service-card--diseno fade-in" data-service="diseno">
+                    <div class="service-icon">
+                        <i class="fas fa-print"></i>
+                    </div>
+                    <h3 class="service-title">Folletos Impresos (diseño)</h3>
+                    <p class="service-price">desde 180€</p>
+                    <p class="service-description">Diseño de folletos para impresión física</p>
+                </div>
+
+                <!-- Editorial Services -->
+                <div class="service-card service-card--editorial fade-in" data-service="editorial">
+                    <div class="service-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="service-title">Edición y Maquetación - Libro (texto)</h3>
+                    <p class="service-price">desde 0.80€/pág.</p>
+                    <p class="service-description">Maquetación de texto corrido (novelas, ensayos)</p>
+                </div>
+
+                <div class="service-card service-card--editorial fade-in" data-service="editorial">
+                    <div class="service-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <h3 class="service-title">Edición y Maquetación - Revista</h3>
+                    <p class="service-price">desde 12€/pág.</p>
+                    <p class="service-description">Maquetación de revista con imágenes y diseño</p>
+                </div>
+
+                <!-- Events Services -->
+                <div class="service-card service-card--eventos fade-in" data-service="eventos">
+                    <div class="service-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="service-title">Organización de Eventos - Pequeños</h3>
+                    <p class="service-price">desde 700€</p>
+                    <p class="service-description">Eventos hasta 50 personas, coordinación básica</p>
+                </div>
+
+                <div class="service-card service-card--eventos fade-in" data-service="eventos">
+                    <div class="service-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="service-title">Organización de Eventos - Medianos</h3>
+                    <p class="service-price">desde 1.500€</p>
+                    <p class="service-description">Eventos 50-200 personas, gestión completa</p>
+                </div>
+
+                <!-- Web Services -->
+                <div class="service-card service-card--web fade-in" data-service="web">
+                    <div class="service-icon">
+                        <i class="fas fa-cart-shopping"></i>
+                    </div>
+                    <h3 class="service-title">Mantenimiento eCommerce</h3>
+                    <p class="service-price">desde 110€/mes</p>
+                    <p class="service-description">Actualización, soporte y mantenimiento web eCommerce</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Me Section -->
+    <section id="por-que" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title fade-in">¿Por Qué Elegirme?</h2>
+                <p class="section-subtitle fade-in">Las razones que me hacen tu mejor opción</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3 class="feature-title">Atención Personalizada</h3>
+                    <p class="feature-description">Cada proyecto recibe atención dedicada y soluciones a medida</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-euro-sign"></i>
+                    </div>
+                    <h3 class="feature-title">Precios Competitivos</h3>
+                    <p class="feature-description">Tarifas ajustadas al mercado con excelente relación calidad-precio</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="feature-title">Entrega Puntual</h3>
+                    <p class="feature-description">Cumplimiento de plazos y compromiso con los deadlines</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3 class="feature-title">Profesionalidad Garantizada</h3>
+                    <p class="feature-description">Experiencia demostrable y resultados de calidad</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3 class="feature-title">Experiencia Multidisciplinar</h3>
+                    <p class="feature-description">Servicios integrales de marketing, diseño y gestión de proyectos</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="feature-title">Comunicación Directa</h3>
+                    <p class="feature-description">Contacto directo sin intermediarios, feedback rápido</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="proceso" class="section section--alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title fade-in">Mi Proceso de Trabajo</h2>
+                <p class="section-subtitle fade-in">Así es como trabajamos juntos para lograr tus objetivos</p>
+            </div>
+            <div class="process-steps">
+                <div class="process-step fade-in">
+                    <div class="process-number">1</div>
+                    <h3 class="process-title">Consulta Inicial</h3>
+                    <p class="process-description">Contacta conmigo sin compromiso. Analizamos tus necesidades y objetivos.</p>
+                </div>
+
+                <div class="process-step fade-in">
+                    <div class="process-number">2</div>
+                    <h3 class="process-title">Propuesta y Presupuesto</h3>
+                    <p class="process-description">Recibe una propuesta detallada con plazos y presupuesto transparente.</p>
+                </div>
+
+                <div class="process-step fade-in">
+                    <div class="process-number">3</div>
+                    <h3 class="process-title">Desarrollo del Proyecto</h3>
+                    <p class="process-description">Trabajo en tu proyecto con comunicación constante y revisiones.</p>
+                </div>
+
+                <div class="process-step fade-in">
+                    <div class="process-number">4</div>
+                    <h3 class="process-title">Entrega y Seguimiento</h3>
+                    <p class="process-description">Entrega final con todos los archivos y soporte post-proyecto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="section section--alt" aria-labelledby="blog-title" style="display:none;">
+          <div class="section-header">
+            <h2 id="blog-title" class="section-title">Blog</h2>
+            <p class="section-subtitle">Lee mis artículos sobre marketing, diseño y creatividad.</p>
+          </div>
+          <div id="blog-posts" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;"></div>
+                    <div style="text-align:center;margin-top:32px;">
+                        <a href="/blog" class="btn btn--secondary">Ver todos los artículos 📰</a>
+          </div>
+            <!-- Blog Sanity - integración simple -->
+            <script>
+            // Cambia esta variable a false para ocultar el blog
+            var mostrarBlog = false;
+            document.addEventListener('DOMContentLoaded', function() {
+                if(mostrarBlog){
+                    document.getElementById('blog').style.display = '';
+                    var blogMenuItem = document.getElementById('blog-menu-item');
+                    if(blogMenuItem) blogMenuItem.style.display = '';
+                    // ...código de carga del blog...
+                } else {
+                    var blogSection = document.getElementById('blog');
+                    if(blogSection) blogSection.style.display = 'none';
+                    var blogMenuItem = document.getElementById('blog-menu-item');
+                    if(blogMenuItem) blogMenuItem.style.display = 'none';
+                }
+            });
+            </script>
+        </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title fade-in">¡Hablemos de tu Proyecto!</h2>
+                <p class="section-subtitle fade-in">Estoy aquí para ayudarte a hacer crecer tu negocio</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-form fade-in">
+                    <div class="success-message" id="successMessage">
+                        <span style="margin-right: 8px;">✅</span>
+                        ¡Mensaje enviado correctamente! Te responderé pronto.
+                    </div>
+                    <form id="contactForm">
+                        <div id="formFeedback" style="display:none;margin-bottom:12px;padding:8px;border-radius:6px;font-size:1rem;"></div>
+                        <div class="form-group">
+                            <label for="name" class="form-label">Nombre *</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email *</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service" class="form-label">Servicio de Interés</label>
+                            <select id="service" name="service" class="form-control">
+                                <option value="">Selecciona un servicio</option>
+                                <option value="marketing-estrategia">Marketing Digital - Estrategia</option>
+                                <option value="redes-1-2">Gestión Redes Sociales (1-2 redes)</option>
+                                <option value="redes-3+">Gestión Redes Sociales (3+ redes)</option>
+                                <option value="logotipo">Diseño Gráfico - Logotipo</option>
+                                <option value="flyer-folleto">Diseño Gráfico - Flyer/Folleto</option>
+                                <option value="tarjetas">Diseño Gráfico - Tarjetas de Visita</option>
+                                <option value="catalogo">Diseño Gráfico - Catálogo</option>
+                                <option value="rollup">Diseño para Impresión - Roll-up</option>
+                                <option value="libro">Edición y Maquetación - Libro</option>
+                                <option value="revista">Edición y Maquetación - Revista</option>
+                                <option value="folletos-digitales">Folletos Digitales</option>
+                                <option value="folletos-impresos">Folletos Impresos</option>
+                                <option value="eventos-pequeños">Organización de Eventos - Pequeños</option>
+                                <option value="eventos-medianos">Organización de Eventos - Medianos</option>
+                                <option value="ecommerce">Mantenimiento eCommerce</option>
+                                <option value="otro">Otro servicio</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" class="form-label">Mensaje *</label>
+                            <textarea id="message" name="message" class="form-control" placeholder="Cuéntame más sobre tu proyecto..." required></textarea>
+                        </div>
+                        
+                        <!-- Google reCAPTCHA v3: el token se añade dinámicamente -->
+                        <input type="hidden" id="recaptchaToken" name="recaptchaToken">
+                        <button type="submit" class="btn btn--primary btn--full-width">
+                            <span style="margin-right: 8px;">✉️</span>
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="contact-info fade-in">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <span>✉️</span>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>contacto@angelarchilla.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <span>📞</span>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Teléfono</h4>
+                            <p>+34 613 530 642</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <span>📍</span>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Ubicación</h4>
+                            <p>Granada, España</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link" target="_blank">
+                            <span>🔗</span>
+                        </a>
+                        <a href="#" class="social-link" target="_blank">
+                            <span>📸</span>
+                        </a>
+                        <a href="#" class="social-link" target="_blank">
+                            <span>🐦</span>
+                        </a>
+                        <a href="#" class="social-link" target="_blank">
+                            <span>🌐</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <nav class="footer-nav">
+                <a href="#inicio">Inicio</a>
+                <a href="#sobre-mi">Sobre Mí</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#por-que">¿Por qué yo?</a>
+                <a href="#proceso">Proceso</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Angel Archilla García. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">⬆️</button>
+
+    <!-- Google reCAPTCHA v2 script -->
+    <script src="https://www.google.com/recaptcha/api.js?render=TU_SITE_KEY_RECAPTCHA"></script>
+        // reCAPTCHA v3: obtener token antes de enviar el formulario
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('TU_SITE_KEY_RECAPTCHA', {action: 'contact'}).then(function(token) {
+                        document.getElementById('recaptchaToken').value = token;
+                        contactForm.submit();
+                    });
+                });
+            });
+        }
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Banner de cookies
+        if(!localStorage.getItem('cookiesAccepted')){
+          document.getElementById('cookie-banner').style.display='block';
+        }
+        document.getElementById('acceptCookies').onclick=function(){
+          localStorage.setItem('cookiesAccepted','true');
+          document.getElementById('cookie-banner').style.display='none';
+        };
+        // Modales privacidad y legal
+        var privacidadLink = document.getElementById('privacidad-link');
+        if (privacidadLink) {
+          privacidadLink.onclick = function(e){e.preventDefault();document.getElementById('privacidad-modal').style.display='block';};
+        }
+        var legalLink = document.getElementById('legal-link');
+        if (legalLink) {
+          legalLink.onclick = function(e){e.preventDefault();document.getElementById('legal-modal').style.display='block';};
+        }
+        // Validación de formulario
+                var contactForm = document.getElementById('contactForm');
+                if (contactForm) {
+                    contactForm.onsubmit = function(e) {
+                        e.preventDefault();
+                        var nombre = document.getElementById('name').value.trim();
+                        var email = document.getElementById('email').value.trim();
+                        var mensaje = document.getElementById('message').value.trim();
+                        var feedback = document.getElementById('formFeedback');
+                        if (nombre.length < 2 || !email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/) || mensaje.length < 10) {
+                            feedback.textContent = 'Por favor, rellena todos los campos correctamente.';
+                            feedback.style.display = 'block';
+                            feedback.style.background = '#f8d7da';
+                            feedback.style.color = '#842029';
+                            return;
+                        }
+                        // El token de reCAPTCHA v3 ya está en el campo oculto recaptchaToken
+                        feedback.textContent = 'Validación correcta. Enviando...';
+                        feedback.style.display = 'block';
+                        feedback.style.background = '#d1e7dd';
+                        feedback.style.color = '#0f5132';
+
+                        // Construir el payload para el backend
+                        const payload = {
+                            nombre: nombre,
+                            email: email,
+                            servicio: document.getElementById('service').value,
+                            mensaje: mensaje,
+                            recaptchaToken: document.getElementById('recaptchaToken').value
+                        };
+
+                        fetch('https://angelarchilla.es/api/contact', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                feedback.textContent = '¡Mensaje enviado correctamente! Te responderé pronto.';
+                                feedback.style.display = 'block';
+                                feedback.style.background = '#d1e7dd';
+                                feedback.style.color = '#0f5132';
+                                document.getElementById('contactForm').reset();
+                            } else {
+                                feedback.textContent = 'Hubo un error al enviar el mensaje. Inténtalo más tarde.';
+                                feedback.style.display = 'block';
+                                feedback.style.background = '#f8d7da';
+                                feedback.style.color = '#842029';
+                            }
+                        })
+                        .catch(err => {
+                            feedback.textContent = 'Error de conexión. Inténtalo más tarde.';
+                            feedback.style.display = 'block';
+                            feedback.style.background = '#f8d7da';
+                            feedback.style.color = '#842029';
+                        });
+                    };
+                }
+        // Mobile menu toggle
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        if (mobileToggle && navMenu) {
+            mobileToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                const icon = mobileToggle.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    const icon = mobileToggle.querySelector('i');
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                });
+            });
+        }
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+        // Contact form handling (extra)
+        const successMessage = document.getElementById('successMessage');
+        if (contactForm && successMessage) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const name = formData.get('name');
+                const email = formData.get('email');
+                const service = formData.get('service');
+                const message = formData.get('message');
+                if (!name || !email || !message) {
+                    alert('Por favor, completa todos los campos obligatorios.');
+                    return;
+                }
+                successMessage.classList.add('show');
+                this.reset();
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+                console.log('Form data:', { name, email, service, message });
+            });
+        }
+        // Service card click handling
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const service = this.dataset.service;
+                const title = this.querySelector('.service-title').textContent;
+                const price = this.querySelector('.service-price').textContent;
+                const contactSection = document.getElementById('contacto');
+                const serviceSelect = document.getElementById('service');
+                const headerHeight = document.querySelector('.header').offsetHeight;
+                const serviceName = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                const option = Array.from(serviceSelect.options).find(opt => 
+                    opt.textContent.toLowerCase().includes(title.toLowerCase().split(' - ')[0])
+                );
+                if (option) {
+                    serviceSelect.value = option.value;
+                }
+                window.scrollTo({
+                    top: contactSection.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.pageYOffset > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+    });
+    </script>
+</body>
+</html>
