@@ -1,0 +1,10 @@
+// Modelo Prisma para interpretaciones de sueños
+model DreamInterpretation {
+  id         Int      @id @default(autoincrement())
+  userId     Int?
+  dreamText  String
+  feelings   String[]
+  result     Json
+  createdAt  DateTime @default(now())
+  // ...otros campos relevantes...
+}

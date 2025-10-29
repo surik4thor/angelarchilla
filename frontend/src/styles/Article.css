@@ -1,0 +1,52 @@
+.article-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
+  font-family: 'Inter', sans-serif;
+  color: #f0f0f5;
+}
+
+.article-container h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #ffd700;
+}
+
+.article-meta {
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  color: #bbb;
+}
+
+.article-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  object-fit: cover;
+}
+
+.article-content {
+  line-height: 1.75;
+  font-size: 1rem;
+  color: #e0e0e5;
+}
+
+.article-content p {
+  margin-bottom: 1rem;
+}
+
+.article-content h2,
+.article-content h3 {
+  margin-top: 1.5rem;
+  color: #ffe066;
+}
+
+.article-content a {
+  color: #ffd700;
+  text-decoration: underline;
+}

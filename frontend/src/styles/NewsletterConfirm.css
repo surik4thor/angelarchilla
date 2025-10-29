@@ -1,0 +1,21 @@
+/* Estilos premium para NewsletterConfirm.jsx */
+.newsletter-confirm-container {
+  text-align: center;
+  padding: 3em 1em;
+  background: linear-gradient(135deg, #18121e 0%, #2d186c 100%);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px #0002;
+  max-width: 520px;
+  margin: 3em auto;
+}
+.newsletter-confirm-title {
+  color: #d4af37;
+  font-family: var(--font-title);
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+.newsletter-confirm-text {
+  color: #e6d7c3;
+  font-size: 1.15em;
+  margin-bottom: 0.7em;
+}

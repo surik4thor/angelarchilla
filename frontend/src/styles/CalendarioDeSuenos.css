@@ -1,0 +1,341 @@
+/* Estilos para el Calendario de Sueños */
+.calendario-suenos {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  color: #e6d7c3;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* Header del calendario */
+.calendario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.calendario-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #d4af37;
+  margin: 0;
+  text-align: center;
+  flex: 1;
+}
+
+.nav-btn {
+  background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+  color: #1a1a2e;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+.nav-btn:hover {
+  background: linear-gradient(135deg, #e6c555 0%, #d4af37 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+.nav-btn:active {
+  transform: translateY(0);
+}
+
+/* Días de la semana */
+.calendario-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.weekday {
+  padding: 0.5rem;
+  text-align: center;
+  font-weight: 600;
+  color: #d4af37;
+  font-size: 0.9rem;
+}
+
+/* Grid principal de días */
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.calendario-day {
+  position: relative;
+  aspect-ratio: 1;
+  min-height: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.3rem;
+}
+
+.calendario-day:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.3);
+  transform: translateY(-2px);
+}
+
+.calendario-day.empty {
+  visibility: hidden;
+}
+
+.calendario-day.today {
+  background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+  color: #1a1a2e;
+  font-weight: bold;
+  border-color: #d4af37;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+}
+
+.calendario-day.has-dreams {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  border-color: #8b5cf6;
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.3);
+}
+
+.calendario-day.has-dreams:hover {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
+}
+
+.day-number {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+/* Indicadores de sueños */
+.dream-indicators {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dream-dot {
+  width: 6px;
+  height: 6px;
+  background: #8b5cf6;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(139, 92, 246, 0.6);
+}
+
+.calendario-day.today .dream-dot {
+  background: #1a1a2e;
+}
+
+.more-dreams {
+  font-size: 0.7rem;
+  color: #8b5cf6;
+  font-weight: bold;
+  margin-left: 2px;
+}
+
+/* Leyenda */
+.calendario-leyenda {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #a0a0a0;
+}
+
+.today-indicator {
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+  border-radius: 2px;
+}
+
+/* Modal de sueño */
+.dream-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.dream-modal {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.dream-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dream-modal-header h4 {
+  color: #d4af37;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #e6d7c3;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #d4af37;
+}
+
+.dream-modal-content {
+  padding: 1.5rem;
+}
+
+.dream-section {
+  margin-bottom: 1.5rem;
+}
+
+.dream-section h5 {
+  color: #d4af37;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dream-section p {
+  color: #e6d7c3;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.feelings-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.feeling-tag {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3);
+}
+
+.dream-interpretation {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #d4af37;
+  color: #e6d7c3;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .calendario-suenos {
+    padding: 1rem;
+  }
+  
+  .calendario-title {
+    font-size: 1.2rem;
+  }
+  
+  .calendario-day {
+    min-height: 2.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .day-number {
+    font-size: 0.8rem;
+  }
+  
+  .dream-dot {
+    width: 4px;
+    height: 4px;
+  }
+  
+  .calendario-leyenda {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .dream-modal {
+    margin: 0.5rem;
+  }
+  
+  .dream-modal-header,
+  .dream-modal-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+  }
+  
+  .calendario-grid {
+    gap: 0.3rem;
+  }
+  
+  .calendario-day {
+    min-height: 2rem;
+  }
+}

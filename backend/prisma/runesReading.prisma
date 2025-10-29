@@ -1,0 +1,10 @@
+// Modelo Prisma para lecturas de runas
+model RunesReading {
+  id         Int      @id @default(autoincrement())
+  userId     Int?
+  spread    String
+  question  String
+  result    Json
+  createdAt DateTime @default(now())
+  // ...otros campos relevantes...
+}

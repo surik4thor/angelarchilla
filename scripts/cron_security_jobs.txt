@@ -1,0 +1,27 @@
+# Rotar y limpiar tokens y secretos cada mes
+0 5 1 * * bash /var/www/NebulosaMagica/scripts/rotate_tokens_and_notify.sh
+# Actualización y auditoría de dependencias cada semana
+
+0 4 * * 1 cd /var/www/NebulosaMagica/backend && yarn upgrade && yarn audit | tee /var/log/nebulosamagica/backend_audit.log && tail -20 /var/log/nebulosamagica/backend_audit.log | jq -Rs '{content: .}' | curl -s -X POST -H 'Content-Type: application/json' -d @- $(cat /etc/nebulosa_discord_webhook_analytics.url)
+# Ejecutar alerta de logs críticos cada hora
+0 * * * * bash /var/www/NebulosaMagica/scripts/log_alert_notify_discord.sh
+# Cron jobs para auditoría y monitorización de seguridad con notificación a Discord
+# Añade estas líneas al crontab del usuario root o del usuario que ejecuta los scripts
+# Edita con: sudo crontab -e
+
+# Auditoría de dependencias npm (cada lunes a las 8:00)
+0 8 * * 1 /var/www/NebulosaMagica/scripts/audit_notify_discord.sh
+
+# Monitorización de expiración de certificados SSL (cada día a las 7:00)
+0 7 * * * /var/www/NebulosaMagica/scripts/ssl_expiry_notify_discord.sh
+
+# Auditoría de logs de seguridad (cada hora)
+0 * * * * /var/www/NebulosaMagica/scripts/log_alert_notify_discord.sh
+
+# Escaneo automatizado con Trivy (cada martes a las 9:00)
+0 9 * * 2 /var/www/NebulosaMagica/scripts/trivy_scan_notify_discord.sh
+
+# Escaneo automatizado con Snyk (cada miércoles a las 9:00)
+0 9 * * 3 /var/www/NebulosaMagica/scripts/snyk_scan_notify_discord.sh
+
+# Puedes ajustar la periodicidad según tus necesidades y recursos.

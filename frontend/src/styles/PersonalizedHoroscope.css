@@ -1,0 +1,332 @@
+.personalized-horoscope {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border-radius: 20px;
+  padding: 30px;
+  margin: 20px 0;
+  color: #ffffff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.personalized-horoscope::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.personalized-horoscope > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Header */
+.horoscope-header {
+  margin-bottom: 30px;
+}
+
+.zodiac-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.zodiac-icon {
+  font-size: 4rem;
+  background: linear-gradient(45deg, #ffd700, #ffaa00);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.zodiac-details h2 {
+  margin: 0;
+  font-size: 2.5rem;
+  background: linear-gradient(45deg, #ffd700, #ffffff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.horoscope-date {
+  color: #b8b8b8;
+  font-size: 1rem;
+  margin: 5px 0;
+  text-transform: capitalize;
+}
+
+.personalized-badge {
+  background: linear-gradient(45deg, #8a2be2, #da70d6);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+}
+
+/* Content */
+.horoscope-content {
+  margin: 30px 0;
+  line-height: 1.8;
+}
+
+.horoscope-paragraph {
+  margin: 15px 0;
+  font-size: 1.1rem;
+  text-align: justify;
+  color: #e0e0e0;
+}
+
+/* Transits Section */
+.transits-section {
+  background: rgba(138, 43, 226, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 25px 0;
+  border-left: 4px solid #8a2be2;
+}
+
+.transits-section h4 {
+  color: #da70d6;
+  margin: 0 0 15px 0;
+  font-size: 1.3rem;
+}
+
+.transits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.transit-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px;
+  border-left: 3px solid #ffd700;
+}
+
+.transit-aspect {
+  font-weight: 600;
+  color: #ffd700;
+  margin-bottom: 5px;
+}
+
+.transit-description {
+  color: #c0c0c0;
+  font-size: 0.95rem;
+}
+
+/* Footer */
+.horoscope-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.personalized-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #da70d6;
+  font-size: 0.9rem;
+}
+
+.premium-icon {
+  animation: sparkle 2s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+.refresh-btn {
+  background: linear-gradient(45deg, #4a90e2, #357abd);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+
+.refresh-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+}
+
+/* Loading State */
+.loading-horoscope {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #ffd700;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-horoscope p {
+  color: #b8b8b8;
+  font-size: 1.1rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Error State */
+.error-horoscope {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.error-horoscope h3 {
+  color: #ff6b6b;
+  margin-bottom: 15px;
+}
+
+.error-horoscope p {
+  color: #c0c0c0;
+  margin-bottom: 20px;
+}
+
+.retry-btn {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a5a);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.retry-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+/* Auth Required */
+.auth-required, .natal-chart-required, .generate-horoscope {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.auth-required h3, .natal-chart-required h3, .generate-horoscope h3 {
+  color: #ffd700;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.auth-required p, .natal-chart-required p, .generate-horoscope p {
+  color: #c0c0c0;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.natal-chart-btn, .generate-btn {
+  background: linear-gradient(45deg, #8a2be2, #da70d6);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.natal-chart-btn:hover, .generate-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .personalized-horoscope {
+    padding: 20px;
+    margin: 15px 0;
+  }
+
+  .zodiac-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .zodiac-icon {
+    font-size: 3rem;
+  }
+
+  .zodiac-details h2 {
+    font-size: 2rem;
+  }
+
+  .horoscope-paragraph {
+    font-size: 1rem;
+  }
+
+  .horoscope-footer {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .transits-section {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .personalized-horoscope {
+    padding: 15px;
+  }
+
+  .zodiac-icon {
+    font-size: 2.5rem;
+  }
+
+  .zodiac-details h2 {
+    font-size: 1.8rem;
+  }
+
+  .horoscope-paragraph {
+    font-size: 0.95rem;
+  }
+}

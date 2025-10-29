@@ -1,0 +1,14 @@
+export const zodiacSymbols = {
+  aries: '♈',
+  tauro: '♉',
+  geminis: '♊',
+  cancer: '♋',
+  leo: '♌',
+  virgo: '♍',
+  libra: '♎',
+  escorpio: '♏',
+  sagitario: '♐',
+  capricornio: '♑',
+  acuario: '♒',
+  piscis: '♓'
+};

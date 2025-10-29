@@ -1,0 +1,8 @@
+.carousel-section { margin: 2.5em 0; }
+.carousel-title { font-size: 1.5em; color: #d4af37; margin-bottom: 1em; text-align: left; }
+.carousel-wrapper { display: flex; align-items: center; gap: 1em; }
+.carousel-items { display: flex; gap: 1.5em; overflow-x: auto; }
+.carousel-item { min-width: 320px; background: #232946; border-radius: 12px; box-shadow: 0 2px 12px #8b5cf688; padding: 1.2em; color: #fff; transition: box-shadow 0.2s; }
+.carousel-item:hover { box-shadow: 0 4px 24px #d4af37cc; }
+.carousel-btn { background: #8b5cf6; color: #fff; border: none; border-radius: 50%; font-size: 2em; width: 48px; height: 48px; cursor: pointer; transition: background 0.2s; }
+.carousel-btn:disabled { background: #b3bcdf; cursor: not-allowed; }

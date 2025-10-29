@@ -1,0 +1,126 @@
+/* Bloques premium y visuales para interpretación de sueños */
+.limit-message-block.center-text {
+  text-align: center;
+}
+.limit-title {
+  color: #d4af37;
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+.limit-desc.dream-bg {
+  font-size: 1.15em;
+  color: #fff;
+  background: #8a2be2;
+  padding: 1.2em;
+  border-radius: 14px;
+  margin: 1.2em 0;
+  box-shadow: 0 2px 16px #0005;
+  font-weight: 500;
+}
+.premium-box {
+  background: #222;
+  border-radius: 12px;
+  padding: 1.2em;
+  margin: 1.2em 0;
+  color: #ffe;
+  box-shadow: 0 2px 12px #0003;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+}
+.benefits-title {
+  color: #8a2be2;
+  font-weight: 600;
+  margin-bottom: 0.7em;
+  font-size: 1.1em;
+}
+.benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1em;
+  line-height: 1.7;
+}
+.dream-form.premium-form {
+  max-width: 480px;
+  margin: 0 auto;
+}
+.dream-label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.3em;
+}
+.dream-input {
+  width: 100%;
+  margin-bottom: 1em;
+  border-radius: 8px;
+  border: 1.5px solid #8a2be2;
+  padding: 0.7em 1em;
+  font-size: 1.08rem;
+  background: #232946;
+  color: #e6d7c3;
+}
+.dream-textarea {
+  width: 100%;
+  margin-bottom: 1em;
+  resize: vertical;
+  border-radius: 8px;
+  border: 1.5px solid #8a2be2;
+  padding: 0.7em 1em;
+  font-size: 1.08rem;
+  background: #232946;
+  color: #e6d7c3;
+}
+.dream-feelings-block {
+  margin-bottom: 1em;
+}
+.dream-feelings-label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.3em;
+}
+.dream-feelings-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7em;
+  margin-top: 0.5em;
+}
+.dream-feeling-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+.dream-submit-btn {
+  margin-top: 1em;
+}
+.dream-result-box {
+  margin-top: 2em;
+  background: #181a2a;
+  padding: 1.2em;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #0002;
+}
+.dream-result-title {
+  color: #d4af37;
+}
+.main-title {
+  font-family: var(--font-title);
+  font-size: 1.5em;
+  color: #d4af37;
+  text-align: center;
+  margin: 0.5em 0 0.2em 0;
+  letter-spacing: 1.5px;
+  white-space: normal;
+  overflow: visible;
+  word-break: break-word;
+  line-height: 1.1;
+  max-width: 90vw;
+}
+
+@media (max-width: 600px) {
+  .main-title {
+    font-size: 1.1em;
+    padding: 0 0.5em;
+    max-width: 98vw;
+  }
+}

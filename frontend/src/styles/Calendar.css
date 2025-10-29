@@ -1,0 +1,62 @@
+/* Calendario simple para lecturas y sueños en el perfil */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5em;
+  background: #232946;
+  border-radius: 12px;
+  padding: 1.2em;
+  margin-bottom: 1em;
+}
+.calendar-day {
+  background: #181a2a;
+  border-radius: 8px;
+  min-height: 70px;
+  padding: 0.5em;
+  color: #e0e0e0;
+  font-size: 0.98em;
+  box-shadow: 0 2px 8px #0002;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+}
+.calendar-day.today {
+  border: 2px solid #d4af37;
+  background: #232946;
+}
+.calendar-day .day-number {
+  font-weight: bold;
+  color: #d4af37;
+  font-size: 1.1em;
+  margin-bottom: 0.3em;
+}
+.calendar-day .event {
+  background: #8b5cf6;
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.2em 0.5em;
+  font-size: 0.95em;
+  margin-bottom: 0.2em;
+  margin-top: 0.2em;
+  box-shadow: 0 1px 4px #0001;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.calendar-day .event:hover {
+  background: #d4af37;
+  color: #232946;
+}
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+}
+.calendar-weekdays span {
+  color: #f4d03f;
+  font-weight: 600;
+  text-align: center;
+  font-size: 1em;
+}

@@ -1,0 +1,82 @@
+/* Estilos premium para LandingSoon.jsx */
+.landing-main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--card-bg);
+}
+.landing-card {
+  max-width: 480px;
+  padding: 2.5em 2em;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px #0002;
+  text-align: center;
+  margin-bottom: 2em;
+  background: linear-gradient(135deg, #18121e 0%, #2d186c 100%);
+}
+.landing-title {
+  color: var(--color-gold);
+  font-family: var(--font-title);
+  font-size: 2.2rem;
+  margin-bottom: 0.7em;
+}
+.landing-desc {
+  font-size: 1.15rem;
+  color: #b3bcdf;
+  margin-bottom: 1.2em;
+}
+.landing-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.landing-input {
+  padding: 0.7em;
+  border-radius: 8px;
+  border: 1px solid #b3bcdf;
+  font-size: 1.07rem;
+  width: 100%;
+}
+.landing-btn {
+  font-size: 1.08rem;
+  padding: 0.7em 2em;
+  background: linear-gradient(90deg,#d4af37,#f4d03f);
+  color: #232946;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background .2s;
+}
+.landing-btn-alt {
+  background: linear-gradient(90deg,#7b2ff2,#f357a8);
+  color: #fff;
+}
+.landing-thankyou {
+  color: #f4d03f;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.landing-contact-title {
+  color: #d4af37;
+  font-size: 1.15rem;
+  margin-bottom: 0.7em;
+}
+.landing-contact-msg {
+  color: #8b5cf6;
+  margin-top: 1em;
+  font-weight: 600;
+}
+.landing-contact-mail {
+  margin-top: 1.2em;
+  color: #b3bcdf;
+  font-size: 0.98rem;
+}
+.landing-contact-mail a {
+  color: #f4d03f;
+  text-decoration: underline;
+}

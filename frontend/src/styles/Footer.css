@@ -1,0 +1,129 @@
+/* Nebulosa Mágica - Footer Styles (solo clases activas) */
+.footer-main {
+  background: #18121e;
+  color: #e6d7c3;
+  font-family: var(--font-base);
+  padding: 2.5rem 0 1.2rem 0;
+  box-shadow: 0 0 40px #8b5cf633;
+  border-top: 2px solid #d4af37;
+  position: relative;
+  z-index: 20;
+  padding-bottom: 120px;
+}
+.home-nav {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-bottom: 1.2rem;
+}
+.menu-link.btn-anim {
+  color: #d4af37;
+  font-size: 1.18rem;
+  font-family: var(--font-base);
+  letter-spacing: 1px;
+  background: none;
+  border: none;
+  padding: 0.5em 1.2em;
+  border-radius: 8px;
+  transition: background .18s, color .18s;
+  box-shadow: 0 2px 8px #d4af3722;
+}
+.menu-link.btn-anim:hover {
+  background: #d4af371a;
+  color: #8b5cf6;
+  box-shadow: 0 4px 16px #8b5cf666;
+}
+.newsletter-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  background: linear-gradient(135deg, #2d186c 0%, #18121e 100%);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px #8b5cf633;
+  padding: 1.5rem 2rem;
+  margin: 0 auto 1.5rem auto;
+  border: 1.5px solid #d4af37;
+  text-align: center;
+  font-family: var(--font-base);
+}
+.newsletter-section input {
+  border-radius: 8px;
+  border: 1.5px solid #8b5cf6;
+  padding: 0.7em 1em;
+  font-size: 1.08rem;
+  background: #232946;
+  color: #e6d7c3;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+.newsletter-section input:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 8px #d4af37;
+}
+.newsletter-section button {
+  width: 100%;
+  max-width: 320px;
+  margin: 0.5rem auto;
+  padding: 0.9rem 1.2rem;
+  border-radius: 14px;
+  font-size: 1.13rem;
+  font-family: var(--font-btn);
+  background: linear-gradient(120deg, #d4af37 0%, #8b5cf6 100%);
+  color: #18121e;
+  box-shadow: 0 2px 12px #8b5cf633;
+  border: none;
+  cursor: pointer;
+  transition: background .2s, box-shadow .2s;
+}
+.newsletter-section button:hover {
+  background: linear-gradient(120deg, #8b5cf6 0%, #d4af37 100%);
+  box-shadow: 0 4px 16px #8b5cf666;
+  transform: scale(1.04);
+}
+
+.newsletter-section .newsletter-msg {
+  color: #ec4899;
+  font-size: 1.02rem;
+  margin-top: 0.7em;
+  font-family: var(--font-sans);
+}
+.footer-link {
+  color: #d4af37;
+  font-family: var(--font-base);
+  font-size: 1.08rem;
+  text-decoration: none;
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  transition: background .18s, color .18s;
+}
+.footer-link:hover {
+  background: #8b5cf61a;
+  color: #ec4899;
+}
+.footer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+}
+.footer-logo-symbol {
+  font-size: 2.2rem;
+  color: #d4af37;
+  text-shadow: 0 0 18px #8b5cf6;
+}
+.footer-logo-text {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  color: #d4af37;
+  letter-spacing: 1px;
+}
+.footer-copyright {
+  text-align: center;
+  color: #b3bcdf;
+  font-size: 0.95rem;
+  margin-top: 1.2rem;
+  font-family: var(--font-sans);
+}

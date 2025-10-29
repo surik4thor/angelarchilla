@@ -1,0 +1,152 @@
+/* Admin Route Protection Styles */
+.admin-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.loading-container {
+  text-align: center;
+  background: white;
+  padding: 60px 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.loading-icon {
+  font-size: 48px;
+  color: #8e44ad;
+  margin-bottom: 30px;
+}
+
+.loading-container h2 {
+  color: #2c3e50;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+}
+
+.loading-container p {
+  color: #7f8c8d;
+  font-size: 16px;
+  margin: 0;
+}
+
+.admin-access-denied {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff7b7b 0%, #f093fb 100%);
+  padding: 20px;
+}
+
+.access-denied-container {
+  text-align: center;
+  background: white;
+  padding: 60px 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+}
+
+.denied-icon {
+  font-size: 64px;
+  color: #e74c3c;
+  margin-bottom: 30px;
+}
+
+.access-denied-container h2 {
+  color: #2c3e50;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+}
+
+.access-denied-container p {
+  color: #7f8c8d;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 30px 0;
+}
+
+.required-permissions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(142, 68, 173, 0.1);
+  color: #8e44ad;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+.required-permissions svg {
+  font-size: 18px;
+}
+
+.back-button {
+  background: linear-gradient(135deg, #8e44ad, #9b59b6);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: linear-gradient(135deg, #7d3c98, #8e44ad);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(142, 68, 173, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .loading-container,
+  .access-denied-container {
+    padding: 40px 30px;
+    margin: 10px;
+  }
+  
+  .loading-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .denied-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+  
+  .loading-container h2,
+  .access-denied-container h2 {
+    font-size: 20px;
+  }
+  
+  .loading-container p,
+  .access-denied-container p {
+    font-size: 14px;
+  }
+  
+  .required-permissions {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 15px;
+  }
+  
+  .back-button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}

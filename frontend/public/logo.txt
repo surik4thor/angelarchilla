@@ -1,0 +1,2 @@
+// Este archivo es un placeholder para el logotipo de la plataforma ArcanaClub.
+// Reemplaza este archivo por tu logo real (logo.png) en /frontend/public/ para que la función de compartir como imagen funcione correctamente.

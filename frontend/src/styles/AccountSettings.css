@@ -1,0 +1,617 @@
+/* Newsletter unsubscribe section premium */
+.notification-group-newsletter {
+  margin-top: 2em;
+  background: #232946;
+  border-radius: 8px;
+  padding: 1em;
+  color: #fff;
+}
+.newsletter-unsubscribe-btn {
+  margin-top: 1em;
+  background: linear-gradient(90deg,#d4af37,#f4d03f);
+  color: #232946;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 0.7em 2em;
+  box-shadow: 0 2px 8px #d4af3740;
+  font-size: 1.08rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+.newsletter-unsubscribe-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.newsletter-unsubscribed {
+  color: #ffe066;
+}
+/* src/styles/AccountSettings.css */
+
+.account-settings-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
+  padding: 2rem 0;
+  position: relative;
+}
+
+.account-settings-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.settings-header {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.back-button {
+  background: rgba(16, 33, 62, 0.8);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 50px;
+  padding: 0.75rem 1.5rem;
+  color: #d4af37;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.back-button:hover {
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.1);
+  transform: translateY(-2px);
+}
+
+.settings-header h1 {
+  color: #d4af37;
+  font-size: 2.5rem;
+  margin: 0;
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.message {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+  animation: slideIn 0.3s ease;
+}
+
+.message.success {
+  background: rgba(46, 125, 50, 0.2);
+  border: 1px solid #4caf50;
+  color: #81c784;
+}
+
+.message.error {
+  background: rgba(211, 47, 47, 0.2);
+  border: 1px solid #f44336;
+  color: #ef5350;
+}
+
+.message button {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: auto;
+  padding: 0.25rem;
+}
+
+.settings-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 2rem;
+}
+
+.settings-tabs {
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 15px;
+  padding: 1.5rem;
+  height: fit-content;
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.tab-button {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 1rem;
+  color: #87ceeb;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.tab-button:hover {
+  background: rgba(212, 175, 55, 0.1);
+  color: #d4af37;
+}
+
+.tab-button.active {
+  background: rgba(212, 175, 55, 0.2);
+  color: #d4af37;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.tab-button svg {
+  font-size: 1.1rem;
+}
+
+.settings-panel {
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 20px;
+  padding: 2.5rem;
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.settings-panel h2 {
+  color: #d4af37;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.settings-panel h3 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* Security Panel */
+.security-section {
+  margin-bottom: 3rem;
+}
+
+.password-form {
+  max-width: 500px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  color: #d4af37;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.password-input {
+  position: relative;
+}
+
+.password-input input {
+  width: 100%;
+  background: rgba(16, 33, 62, 0.8);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 10px;
+  padding: 1rem 3rem 1rem 1rem;
+  color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.password-input input:focus {
+  outline: none;
+  border-color: #d4af37;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.toggle-password {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #87ceeb;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: #d4af37;
+}
+
+.form-group small {
+  color: #87ceeb;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.update-button {
+  background: linear-gradient(135deg, #d4af37, #b8941f);
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 2rem;
+  color: #000000;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.update-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ffdd44, #d4af37);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+}
+
+.update-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.danger-zone {
+  background: rgba(211, 47, 47, 0.1);
+  border: 2px solid rgba(244, 67, 54, 0.3);
+  border-radius: 15px;
+  padding: 2rem;
+  margin-top: 3rem;
+}
+
+.danger-zone h3 {
+  color: #ef5350;
+  border-bottom-color: rgba(244, 67, 54, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.danger-zone p {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.delete-account-button {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 2rem;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.delete-account-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ef5350, #f44336);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(244, 67, 54, 0.4);
+}
+
+.delete-account-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Notifications Panel */
+.notification-groups {
+  margin-bottom: 2rem;
+}
+
+.notification-group {
+  margin-bottom: 2.5rem;
+}
+
+.notification-group h3 {
+  color: #87ceeb;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.notification-item {
+  background: rgba(16, 33, 62, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.notification-item:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  background: rgba(16, 33, 62, 0.8);
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.toggle-label input[type="checkbox"] {
+  display: none;
+}
+
+.toggle-slider {
+  width: 50px;
+  height: 26px;
+  background: rgba(95, 99, 104, 0.4);
+  border-radius: 26px;
+  position: relative;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  top: 3px;
+  left: 3px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.toggle-label input[type="checkbox"]:checked + .toggle-slider {
+  background: #d4af37;
+}
+
+.toggle-label input[type="checkbox"]:checked + .toggle-slider::before {
+  transform: translateX(24px);
+}
+
+.notification-info strong {
+  color: #ffffff;
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.notification-info p {
+  color: #87ceeb;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.save-button {
+  background: linear-gradient(135deg, #4caf50, #388e3c);
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 2rem;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.save-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #66bb6a, #4caf50);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+}
+
+.save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Privacy Panel */
+.privacy-groups {
+  margin-bottom: 2rem;
+}
+
+.privacy-group {
+  margin-bottom: 2.5rem;
+}
+
+.privacy-item {
+  background: rgba(16, 33, 62, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.privacy-item:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  background: rgba(16, 33, 62, 0.8);
+}
+
+.privacy-info {
+  flex: 1;
+}
+
+.privacy-info strong {
+  color: #ffffff;
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.privacy-info p {
+  color: #87ceeb;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.privacy-info-box {
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.privacy-info-box svg {
+  color: #4caf50;
+  font-size: 1.5rem;
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+}
+
+.privacy-info-box h4 {
+  color: #66bb6a;
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.privacy-info-box p {
+  color: #87ceeb;
+  margin: 0;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .account-settings-container {
+    padding: 1rem 0;
+  }
+  
+  .settings-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .settings-header h1 {
+    font-size: 2rem;
+  }
+  
+  .settings-content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .settings-tabs {
+    display: flex;
+    overflow-x: auto;
+    padding: 1rem;
+  }
+  
+  .tab-button {
+    min-width: 150px;
+    margin-right: 0.5rem;
+    margin-bottom: 0;
+  }
+  
+  .settings-panel {
+    padding: 1.5rem;
+  }
+  
+  .settings-panel h2 {
+    font-size: 1.5rem;
+  }
+  
+  .password-form {
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .settings-panel {
+    padding: 1rem;
+  }
+  
+  .settings-panel h2 {
+    font-size: 1.3rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .toggle-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .notification-item,
+  .privacy-item {
+    padding: 1rem;
+  }
+}

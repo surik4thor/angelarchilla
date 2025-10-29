@@ -1,0 +1,586 @@
+/* Fix FontAwesome icon size globally */
+/* Eliminado soporte FontAwesome: solo emojis */
+.menu-link:focus, .footer-link:focus, .cta-button:focus, .btn-primary:focus, .card-link:focus {
+  outline: 2px solid #d4af37;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px #d4af3722;
+}
+:root {
+  /* Tipografías místicas y elegantes */
+  --font-mistica: 'Bodoni Moda','Times New Roman',serif;
+  --font-manuscrita: 'Courgette', cursive;
+    --font-sans: 'Montserrat', 'Inter', Arial, Helvetica, sans-serif;
+    --font-base: var(--font-mistica), var(--font-sans);
+    --font-title: var(--font-manuscrita), var(--font-mistica), var(--font-sans);
+    --font-btn: var(--font-manuscrita), var(--font-mistica), var(--font-sans);
+  /* Mantener solo clases activas y referenciadas en JSX. Eliminar clases no usadas. */
+/* Importar Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Courgette&display=swap');
+  --color-gold: #d4af37;
+  --color-purple: #8b5cf6;
+  --color-blue: #3b82f6;
+  --color-pink: #ec4899;
+  --color-rose: #f43f5e;
+  --color-white: #f1f5f9;
+  --color-text: #e6d7c3;
+  --color-muted: #b3bcdf;
+  --nebulosa-gradient: 
+    radial-gradient(circle at 20% 80%, #8b5cf6 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, #d4af37 0%, transparent 60%),
+    radial-gradient(circle at 50% 50%, #ec4899 0%, transparent 70%),
+    radial-gradient(circle at 70% 60%, #3b82f6 0%, transparent 60%),
+    linear-gradient(135deg, #18121e 0%, #2d186c 100%);
+}
+
+body {
+  background: var(--nebulosa-gradient), url('/nebulosa-bg.svg');
+  background-blend-mode: lighten, screen;
+  color: var(--color-text);
+  font-family: var(--font-base) !important;
+  margin: 0;
+}
+
+/* Botones universales */
+.btn {
+  border-radius: 14px;
+  font-size: 1.13rem;
+  font-family: var(--font-manuscrita), cursive, var(--font-mistica), serif;
+  background: linear-gradient(120deg, #d4af37 0%, #8b5cf6 100%);
+  color: #18121e;
+  box-shadow: 0 2px 12px #8b5cf633;
+  border: none;
+  cursor: pointer;
+  transition: background .2s, box-shadow .2s;
+  padding: 0.9rem 1.2rem;
+  margin: 0.5rem auto;
+  width: 100%;
+  max-width: 320px;
+}
+.btn:hover {
+  background: linear-gradient(120deg, #8b5cf6 0%, #d4af37 100%);
+  box-shadow: 0 4px 16px #8b5cf666;
+  transform: scale(1.04);
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-gold), var(--color-purple), var(--color-blue), var(--color-pink));
+  color: #d4af37;
+  font-family: var(--font-manuscrita), var(--font-mistica), serif;
+  font-size: 1.18rem;
+  font-weight: 700;
+  text-shadow: 0 0 14px #8b5cf6;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px #8b5cf633, 0 0 0 2px #d4af37, 0 0 18px #8b5cf6;
+  padding: 1rem 2.2rem;
+  border: none;
+  cursor: pointer;
+  margin: 1.5em auto 0 auto;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 2.5px;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--color-purple), var(--color-gold), var(--color-pink), var(--color-blue));
+  box-shadow: 0 12px 35px #8b5cf666, 0 0 0 3px #d4af37, 0 0 32px #ec4899;
+  transform: translateY(-3px) scale(1.06);
+}
+.btn-primary:active {
+  box-shadow: 0 4px 12px #d4af3766, 0 0 0 2px #8b5cf6;
+  transform: scale(0.98);
+}
+
+/* Inputs y textareas universales */
+input, textarea {
+  border-radius: 8px;
+  border: 1.5px solid #8b5cf6;
+  padding: 0.7em 1em;
+  font-size: 1.08rem;
+  background: #232946;
+  color: #e6d7c3;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+input:focus, textarea:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 8px #d4af37;
+}
+input[type="checkbox"] {
+  accent-color: #8b5cf6;
+  width: 22px;
+  border-radius: 6px;
+  border: 2px solid #8b5cf6;
+  background: #18112a;
+  margin-right: 0.7rem;
+  cursor: pointer;
+}
+/* Títulos y logo con tipografía mística */
+.menu-site-name, .footer-logo-text {
+  font-family: var(--font-manuscrita), var(--font-mistica), serif;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: #d4af37;
+  text-shadow: 0 0 12px #8b5cf6;
+}
+
+h1, h2, h3, h4, h5, h6, .content-container h3 {
+  font-family: var(--font-title) !important;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #d4af37;
+  text-shadow: 0 0 12px #8b5cf633;
+  margin: 0;
+  padding: 0;
+  word-break: break-word;
+  white-space: normal;
+  /* min-height y position eliminados para evitar estiramiento de títulos */
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.55;
+  filter: blur(2.5px) brightness(1.08);
+  background:
+    radial-gradient(circle at 15% 85%, #8b5cf6 0%, transparent 60%),
+    radial-gradient(circle at 80% 10%, #d4af37 0%, transparent 60%),
+    radial-gradient(circle at 50% 50%, #ec4899 0%, transparent 70%),
+    linear-gradient(135deg, #18121e 0%, #2d186c 100%),
+    url('data:image/svg+xml;utf8,<svg width="600" height="600" xmlns="http://www.w3.org/2000/svg"><circle cx="300" cy="300" r="120" fill="none" stroke="%238b5cf6" stroke-width="6" opacity="0.13"/><polygon points="300,180 340,300 300,420 260,300" fill="none" stroke="%23d4af37" stroke-width="4" opacity="0.18"/><text x="50%" y="52%" text-anchor="middle" fill="%23d4af37" font-size="48" font-family="Didot" opacity="0.12">✶</text><text x="20%" y="80%" text-anchor="middle" fill="%238b5cf6" font-size="32" font-family="Courgette" opacity="0.10">☽</text><text x="80%" y="20%" text-anchor="middle" fill="%23d4af37" font-size="36" font-family="Didot" opacity="0.10">⟁</text><text x="50%" y="90%" text-anchor="middle" fill="%23ec4899" font-size="28" font-family="Courgette" opacity="0.09">✦</text></svg>');
+}
+
+/* Nebulosa Mágica - Botón CTA global */
+.cta-button, .btn-primary {
+  max-width: 720px;
+  background: linear-gradient(135deg, var(--color-gold), var(--color-purple), var(--color-blue), var(--color-pink));
+  color: #18121e;
+  font-family: var(--font-manuscrita), var(--font-mistica), serif;
+  font-size: 2.2rem;
+  letter-spacing: 2.5px;
+  font-family: var(--font-manuscrita), var(--font-mistica), serif;
+  font-size: 2.4rem;
+  color: #d4af37;
+  text-shadow: 0 0 14px #8b5cf6;
+  font-weight: 700;
+  font-size: 1.13rem;
+  text-decoration: none;
+  padding: 1rem 2.2rem;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px #8b5cf633, 0 0 0 2px #d4af37, 0 0 18px #8b5cf6;
+  cursor: pointer;
+  transition: all .3s cubic-bezier(.68,-0.55,.27,1.55);
+  margin: 1.5em auto 0 auto;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::after, .btn-primary::after {
+  content: '';
+  position: absolute;
+  left: -40%;
+  top: -40%;
+  width: 180%;
+  height: 180%;
+  background: radial-gradient(circle, #d4af37 0%, #8b5cf6 60%, transparent 100%);
+  opacity: 0.13;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+
+.cta-button:hover, .btn-primary:hover {
+  background: linear-gradient(135deg, var(--color-purple), var(--color-gold), var(--color-pink), var(--color-blue));
+  box-shadow: 0 12px 35px #8b5cf666, 0 0 0 3px #d4af37, 0 0 32px #ec4899;
+  transform: translateY(-3px) scale(1.06);
+}
+
+.cta-button:active, .btn-primary:active {
+  box-shadow: 0 4px 12px #d4af3766, 0 0 0 2px #8b5cf6;
+  transform: scale(0.98);
+}
+
+.menu-link, .footer-link {
+  background: none;
+  border: none;
+  color: #f8f9fa;
+  font-size: 1.08rem;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  transition: background .18s, color .18s;
+}
+
+.footer-link {
+  font-size: 0.9rem;
+  color: #f8f9fa;
+}
+
+.menu-link.active, .menu-link:hover,
+.footer-link:hover, .footer-link.active {
+  background: #d4af371a;
+  color: #d4af37;
+  box-shadow: 0 2px 8px #d4af3722;
+  transition: box-shadow .18s, background .18s, color .18s;
+}
+
+/* Fondo y detalles cósmicos Nebulosa Mágica */
+main, .main-content, .page-content {
+  padding: 1rem;
+  margin: 2rem auto;
+  position: relative;
+  z-index: 2;
+}
+.universe-message-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  background: rgba(24,18,30,0.6);
+  border: 1px solid var(--color-gold);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4),
+              0 0 16px var(--color-gold);
+}
+
+.icon-container {
+  font-size: 3rem;
+  color: var(--color-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-container h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  color: var(--color-gold);
+}
+
+.content-container .message-text {
+  font-size: 1.08rem;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.content-container .message-date {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .universe-message-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .content-container .message-date {
+    text-align: center;
+  }
+}
+
+  .cta-button::after, .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    background: radial-gradient(circle at 60% 40%, #fff8e1cc 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity .4s;
+  }
+  .cta-button:hover::after, .btn-primary:hover::after {
+    opacity: 0.18;
+  }
+
+/* Modal */
+
+.modal-overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  inset: 0;
+  background: rgba(24, 18, 30, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: var(--color-bg);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 420px;
+  width: 95%;
+  box-shadow: 0 0 20px var(--color-gold);
+  position: relative;
+  color: var(--color-text);
+}
+
+.modal-content button {
+  border: 1px solid #7b5bd13c;
+  box-shadow: 0 4px 28px #2c235f24;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #181f34 0%, #271854 100%);
+  max-width: 420px;
+  padding: 0.5rem;
+  color: var(--color-white);
+}
+
+.modal-content button:hover{
+  border: 1px solid #7b5bd13c;
+  box-shadow: 0 4px 28px #2c235f24;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #181f34 0%, #271854 100%);
+  max-width: 420px;
+  padding: 0.5rem;
+  color: var(--color-white);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.btn-logout {
+  background: transparent;
+  color: var(--color-white);
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.modal-content input {
+  border-radius: 8px;
+  border: 1px solid #8b5cf6;
+  padding: 0.5rem;
+  font-size: 1rem;
+  max-width: 400px;
+  color: var(--color-text);
+  background: transparent;
+  transition: box-shadow 0.3s ease;
+}
+.switch-mode {
+  background: transparent;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  text-decoration: underline;
+}
+
+.modal-content input:focus {
+  outline: none;
+  box-shadow: 0 0 8px var(--color-purple);
+}
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+form label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-white);
+}
+
+form .form-input {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid var(--color-muted);
+  background-color: #1c1630;
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+form .form-input:focus {
+  border-color: var(--color-gold);
+  outline: none;
+}
+
+.error-msg {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+.success-msg {
+  color: #3ad66e;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+form .btn-primary {
+  margin-top: 1.8rem;
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 0.8rem;
+  font-weight: 700;
+  box-shadow: 0 4px 10px var(--color-gold);
+  transition: 0.3s;
+}
+
+form .btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #f4e4bc, var(--color-gold));
+  box-shadow: 0 6px 15px var(--color-gold);
+}
+
+form .btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Newsletter */
+.newsletter-section { margin-top: 2rem; }
+.newsletter-msg { color: #a78bfa; margin-top: 0.5rem; text-align: center; }
+.form-input {
+  border-radius: 8px;
+  border: 1px solid #8b5cf6;
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  max-height: max-content;
+  color: var(--color-text);
+  background: transparent;
+  transition: box-shadow 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  box-shadow: 0 0 8px var(--color-purple);
+}
+
+.newsletter-cta-button {
+  margin-left: 1rem;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, var(--color-purple), var(--color-pink));
+  color: var(--color-bg);
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .form-input { width: 100%; max-width: 400px; }
+  .newsletter-cta-button { margin-left: 0; width: 100%; }
+  .newsletter-section form { flex-direction: column; align-items: center; }
+}
+
+/* FOOTER */
+.footer-main {
+  background: #18121e;
+  padding: 2rem 1rem 6rem 1rem;
+  text-align: center;
+  border-top: 1px solid #8b5cf633;
+  margin-top: 3rem;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-copy {
+  color: #b3bcdf;
+  font-size: 0.97em;
+  margin-top: 0.7em;
+}
+
+/* MENU */
+
+.header {
+  position: sticky; /* o fixed según prefieras */
+  top: 0;
+  max-width: 100%;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.15); /* translúcido */
+  backdrop-filter: blur(12px);           /* desenfoque de fondo */
+  -webkit-backdrop-filter: blur(12px);   /* compatibilidad Safari */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 1000;
+}
+
+.auth-menu button {
+  border: 1px solid #7b5bd13c;
+  box-shadow: 0 4px 28px #2c235f24;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #181f34 0%, #271854 100%);
+  max-width: 420px;
+  padding: 0.5rem;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.welcome-text {
+  color: #d4af37;
+  font-weight: 600;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+
+.auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-login, .btn-logout {
+  background: #8b5cf6;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .newsletter-section form { flex-direction: column; align-items: center; }
+  .form-input { width: 100%; margin-bottom: 0.7rem; }
+}
+
+.cookies-consent {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #232946;
+  color: #fff;
+  z-index: 99999;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 -2px 10px #00000088;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 600px) {
+  .cookies-consent {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    padding: 1rem 3rem;
+  }
+}

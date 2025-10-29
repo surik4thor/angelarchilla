@@ -1,0 +1,11 @@
+// Modelo Prisma para lecturas de tarot
+model TarotReading {
+  id         Int      @id @default(autoincrement())
+  userId     Int?
+  deck      String
+  spread    String
+  question  String
+  result    Json
+  createdAt DateTime @default(now())
+  // ...otros campos relevantes...
+}
