@@ -2,6 +2,7 @@ import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import { authenticate } from '../middleware/auth.js';
 import { interpretDreamAI } from '../services/llmService.js';
+import { checkDreamLimits, checkFeatureAccess } from '../middleware/subscriptionLimits.js';
 
 const prisma = new PrismaClient();
 const router = express.Router();
@@ -46,7 +47,7 @@ router.get('/limit-status', authenticate, async (req, res) => {
 });
 
 // Crear sueño
-router.post('/', authenticate, async (req, res) => {
+router.post('/', authenticate, checkDreamLimits, async (req, res) => {
   try {
     const { date, text, feelings } = req.body;
     console.log('[POST /dreams] req.user:', req.user);
@@ -96,7 +97,7 @@ router.post('/', authenticate, async (req, res) => {
 });
 
 // Obtener sueños del usuario
-router.get('/history', authenticate, async (req, res) => {
+router.get('/history', authenticate, checkFeatureAccess('dreams'), async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;

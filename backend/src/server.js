@@ -77,10 +77,12 @@ app.use(cookieParser());
 
 // Registrar rutas después de los body parsers
 import tarotReadingsRoutes from './routes/tarotReadings.js';
+import runesReadingsRoutes from './routes/runesReadings.js';
 app.use('/api/dreams', dreamsRoutes);
 app.use('/api/astrology', astrologyRoutes);
 app.use('/api/personalized-horoscope', personalizedHoroscopeRoutes);
 app.use('/api/tarotReadings', tarotReadingsRoutes);
+app.use('/api/runesReadings', runesReadingsRoutes);
 
 // Rutas API
 
@@ -99,6 +101,10 @@ app.use('/api/report', reportRoutes);
 app.use('/api/objetivos', objetivosRoutes);
 app.use('/api/decks', decksRoutes);
 app.use('/api/webhooks', webhooksRoutes);
+
+// Ruta para estadísticas de usuario y límites
+import userStatsRoutes from './routes/userStats.js';
+app.use('/api/user', userStatsRoutes);
 app.use('/api/planes', planesRoutes);
 // Endpoint público para planes (CSP)
 app.use('/api/planes', planesRoutes);
