@@ -5,6 +5,7 @@ import { useReading } from '../hooks/useReading.js';
 import TarotSpread from '../components/TarotSpread.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import AdModal from '../components/AdModal.jsx';
+import SpecialReadingDisplay from '../components/SpecialReadingDisplay.jsx';
 import '../styles/Reading.css';
 import CanvasExporter from '../components/CanvasExporter.jsx';
 
@@ -17,17 +18,20 @@ const TAROT_SPREADS = {
   'trabajo': { name: 'Tirada del Trabajo', description: 'Enfoque profesional y carrera', positions: 4 }
 };
 
+const DECK_SPREADS = {
+  'rider-waite': ['una-carta', 'tres-cartas', 'cruz-celta', 'herradura', 'amor', 'trabajo'],
+  'marsella': ['una-carta', 'tres-cartas', 'cruz-celta', 'herradura', 'amor', 'trabajo'],
+  'tarot-angeles': ['mensaje-angelical', 'trinidad-angelical', 'cruz-angelical', 'guia-semanal', 'proposito-vida', 'sanacion-angeles'],
+  'tarot-egipcio': ['siete-egipcias', 'piramide-egipcia', 'cruz-ankh', 'ojo-horus', 'nilo-sagrado']
+};
+
+import { tarotDecks, spreadDefinitions } from '../data/tarot-system.js';
+
 const TAROT_DECKS = {
-  'rider-waite': {
-    name: 'Rider-Waite',
-    description: 'Clásico y tradicional',
-    meditation: 'Cierra los ojos y conecta con la tradición y el simbolismo del Rider-Waite. Visualiza las escenas vibrantes y deja que los arquetipos universales te hablen. Siente la energía clásica y la guía espiritual que este mazo ofrece desde hace más de un siglo.'
-  },
-  'marsella': {
-    name: 'Tarot de Marsella',
-    description: 'Histórico y simbólico',
-    meditation: 'Respira profundo y conecta con la historia ancestral del Tarot de Marsella. Imagina los trazos antiguos y la sabiduría de siglos de tradición europea. Permite que la simbología pura y directa de este mazo te inspire claridad y verdad.'
-  }
+  'rider-waite': tarotDecks['rider-waite'],
+  'marsella': tarotDecks['marsella'],
+  'tarot-angeles': tarotDecks['tarot-angeles'],
+  'tarot-egipcio': tarotDecks['tarot-egipcio']
 };
 
 
@@ -82,14 +86,31 @@ export default function TarotReading() {
   const handleSpreadSelect = (spread) => {
   if (isLimited) return;
   setSpreadType(spread);
-  setDeckType('');
   setShowMeditation(false);
   };
 
   const handleDeckSelect = (deck) => {
   if (isLimited) return;
   setDeckType(deck);
+  setSpreadType(''); // Reset spread when deck changes
   setShowMeditation(false);
+  };
+
+  const getCurrentSpreads = () => {
+    const availableSpreads = DECK_SPREADS[deckType] || DECK_SPREADS['rider-waite'];
+    const spreadsObj = {};
+    
+    availableSpreads.forEach(spreadKey => {
+      if (spreadDefinitions[spreadKey]) {
+        spreadsObj[spreadKey] = {
+          name: spreadDefinitions[spreadKey].name,
+          description: spreadDefinitions[spreadKey].description,
+          positions: spreadDefinitions[spreadKey].positions.length
+        };
+      }
+    });
+    
+    return spreadsObj;
   };
 
   const handleQuestionSubmit = (e) => {
@@ -218,36 +239,46 @@ export default function TarotReading() {
         {/* Secuencia premium única, sin duplicados */}
         {isLimited === false && !showResult && (
           <>
-            {/* Paso 1: Seleccionar tirada */}
-            {!spreadType && (
+            {/* Paso 1: Seleccionar baraja */}
+            {!deckType && (
+              <div className="step-container select-deck">
+                <h3 className="tarot-color">Selecciona tu baraja de cartas</h3>
+                <p className="spread-desc">Cada baraja tiene su propia energía y metodología. Elige la que más resuene contigo.</p>
+                <div className="deck-options">
+                  {Object.entries(TAROT_DECKS).map(([key, deck]) => (
+                    <button key={key} className="deck-card tarot-btn" onClick={()=>handleDeckSelect(key)}>
+                      <h3>{deck.name}</h3>
+                      <div className="deck-description">{deck.description}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            {/* Paso 2: Seleccionar tirada */}
+            {deckType && !spreadType && (
               <div className="step-container select-spread">
-                <h3 className="tarot-color">Selecciona la tirada de tarot</h3>
-                <p className="spread-desc">Cada tirada ofrece una perspectiva diferente. Elige la que mejor se adapte a tu consulta.</p>
+                <h3 className="tarot-color">
+                  {deckType === 'tarot-angeles' ? 'Selecciona tu consulta angelical' : 'Selecciona la tirada de tarot'}
+                </h3>
+                <p className="spread-desc">
+                  {deckType === 'tarot-angeles' 
+                    ? 'Cada consulta te conecta con diferentes aspectos de la guía angelical.'
+                    : 'Cada tirada ofrece una perspectiva diferente. Elige la que mejor se adapte a tu consulta.'
+                  }
+                </p>
                 <div className="spread-options">
-                  {Object.entries(TAROT_SPREADS).map(([key, spread]) => (
+                  {Object.entries(getCurrentSpreads()).map(([key, spread]) => (
                     <button key={key} className="spread-card tarot-btn" onClick={()=>handleSpreadSelect(key)}>
                       <h3>{spread.name}</h3>
                       <div className="spread-description">{spread.description}</div>
                     </button>
                   ))}
                 </div>
-              </div>
-            )}
-            {/* Paso 2: Seleccionar baraja */}
-            {spreadType && !deckType && (
-              <div className="step-container select-deck">
-                <h3 className="tarot-color">Selecciona la baraja</h3>
-                <p className="deck-desc">Cada baraja tiene su propia energía y simbolismo.</p>
-                <div className="deck-options-flex">
-                  {Object.entries(decks).map(([key, deck]) => (
-                    <button key={key} className="main-btn tarot-btn deck-btn" onClick={()=>{setDeckType(key);}}>
-                      {deck.name}
-                      <div className="deck-description">{deck.description}</div>
-                    </button>
-                  ))}
-                </div>
-                <button className="main-btn back-btn" onClick={()=>setSpreadType('')}>
-                  <span role="img" aria-label="volver">⬅️</span> Volver a tirada
+                <button 
+                  className="back-btn"
+                  onClick={() => setDeckType('')}
+                >
+                  ← Cambiar baraja
                 </button>
               </div>
             )}
@@ -270,16 +301,36 @@ export default function TarotReading() {
             {/* Paso 4: Formulario de pregunta premium */}
             {spreadType && deckType && showMeditation && (
               <div className="step-container ask-question">
-                <h3 className="tarot-color">Haz tu pregunta al tarot</h3>
+                <h3 className="tarot-color">
+                  {deckType === 'tarot-angeles' ? 'Haz tu consulta a los ángeles' : 'Haz tu pregunta al tarot'}
+                </h3>
                 <div className="tarot-explainer premium-box" style={{background:'#232946',color:'#eebc1d',borderRadius:'14px',padding:'1.5em',margin:'1.2em 0',boxShadow:'0 2px 12px #23294688',fontSize:'1.12em',fontFamily:'var(--font-base)'}}>
-                  <h4 style={{color:'#d4af37',marginBottom:'0.7em'}}>¿Cómo funciona la consulta?</h4>
+                  <h4 style={{color:'#d4af37',marginBottom:'0.7em'}}>
+                    {deckType === 'tarot-angeles' ? '¿Cómo funciona la consulta angelical?' : '¿Cómo funciona la consulta?'}
+                  </h4>
                   <ul style={{marginLeft:'1.2em',marginBottom:'0.7em'}}>
-                    <li>Formula tu pregunta con respeto y apertura, conectando con la energía universal y los guías ancestrales.</li>
-                    <li>El tarot es un oráculo mágico que responde desde la sabiduría de dioses, diosas y arquetipos.</li>
-                    <li>La interpretación combina tradición, magia y tecnología para ofrecerte una guía profunda y personalizada.</li>
-                    <li>Recuerda que la respuesta es una orientación espiritual, no un diagnóstico.</li>
+                    {deckType === 'tarot-angeles' ? (
+                      <>
+                        <li>Abre tu corazón y formula tu consulta con amor y fe, conectando con la luz angelical.</li>
+                        <li>Los ángeles responden siempre con amor incondicional y guía divina para tu mayor bien.</li>
+                        <li>La interpretación canaliza mensajes de protección, sanación y orientación espiritual.</li>
+                        <li>Recibe esta bendición como una guía amorosa de tus ángeles guardianes.</li>
+                      </>
+                    ) : (
+                      <>
+                        <li>Formula tu pregunta con respeto y apertura, conectando con la energía universal y los guías ancestrales.</li>
+                        <li>El tarot es un oráculo mágico que responde desde la sabiduría de dioses, diosas y arquetipos.</li>
+                        <li>La interpretación combina tradición, magia y tecnología para ofrecerte una guía profunda y personalizada.</li>
+                        <li>Recuerda que la respuesta es una orientación espiritual, no un diagnóstico.</li>
+                      </>
+                    )}
                   </ul>
-                  <div style={{marginTop:'0.7em',color:'#fff'}}>Tu consulta es privada y respetuosa con la magia que te rodea.</div>
+                  <div style={{marginTop:'0.7em',color:'#fff'}}>
+                    {deckType === 'tarot-angeles' 
+                      ? 'Tu consulta es recibida con amor incondicional por tus ángeles guardianes.' 
+                      : 'Tu consulta es privada y respetuosa con la magia que te rodea.'
+                    }
+                  </div>
                 </div>
                 <form onSubmit={handleQuestionSubmit} className="question-form">
                   <label htmlFor="question">Tu pregunta para el tarot:</label>
@@ -305,6 +356,27 @@ export default function TarotReading() {
             )}
           </>
         )}
+        {/* Mostrar resultado */}
+        {showResult && result && (
+          <div className="result-container">
+            {(deckType === 'tarot-angeles' || deckType === 'tarot-egipcio') ? (
+              <SpecialReadingDisplay 
+                reading={result} 
+                deckType={deckType} 
+                onNewReading={resetReading}
+              />
+            ) : (
+              <TarotSpread 
+                cards={result.cartas} 
+                interpretation={result.interpretacion}
+                deckType={deckType}
+                spreadType={spreadType}
+                onNewReading={resetReading}
+              />
+            )}
+          </div>
+        )}
+        
         {error && (
           <div className="error-message">
             <span role="img" aria-label="pregunta">❓</span>

@@ -7,7 +7,7 @@ export default function PartnerData() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/admin/partners')
+    api.get('/api/admin/partners')
       .then(({ data }) => setPartners(data.partners))
       .catch(console.error)
       .finally(() => setLoading(false));

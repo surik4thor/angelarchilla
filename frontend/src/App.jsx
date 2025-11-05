@@ -22,7 +22,13 @@ import DreamInterpretation from './pages/DreamInterpretation.jsx';
 import TarotReading from './pages/TarotReading.jsx';
 import RunesReading from './pages/RunesReading.jsx';
 import HoroscopeDaily from './pages/HoroscopeDaily.jsx';
+import Tutoriales from './components/Tutoriales.jsx';
+import TutorialDetail from './components/TutorialDetail.jsx';
+import Planes from './components/Planes.jsx';
+import WeeklyBonus from './components/WeeklyBonus.jsx';
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton.jsx';
+import ForgotPassword from './components/ForgotPassword.jsx';
+import ResetPassword from './components/ResetPassword.jsx';
 
 // Componente para rutas protegidas
 function ProtectedRoute({ children, adminOnly = false }) {
@@ -71,12 +77,18 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/newsletter/confirmar" element={<NewsletterConfirm />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/tarot" element={<ProtectedRoute><TarotReading /></ProtectedRoute>} />
           <Route path="/runes" element={<ProtectedRoute><RunesReading /></ProtectedRoute>} />
           <Route path="/readings/history" element={<ProtectedRoute><Profile view="history" /></ProtectedRoute>} />
           <Route path="/dream-interpretation" element={<ProtectedRoute><DreamInterpretation /></ProtectedRoute>} />
           <Route path="/horoscope-daily" element={<ProtectedRoute><HoroscopeDaily /></ProtectedRoute>} />
+          <Route path="/tutoriales" element={<Tutoriales />} />
+          <Route path="/tutoriales/:slug" element={<TutorialDetail />} />
+          <Route path="/planes" element={<Planes />} />
+          <Route path="/bonos" element={<ProtectedRoute><WeeklyBonus /></ProtectedRoute>} />
           <Route path="/account" element={<ProtectedRoute><AccountSettings /></ProtectedRoute>} />
           <Route path="/edit-profile" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
           <Route path="/privacy" element={<PrivacyCookies />} />

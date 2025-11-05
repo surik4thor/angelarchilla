@@ -4,18 +4,78 @@ import { askPerplexity } from '../utils/perplexity.js';
 
 const router = express.Router();
 
-// Endpoint público para obtener información de planes disponibles
+// Endpoint público para obtener información de planes disponibles - ESTRUCTURA SIMPLIFICADA
 router.get('/', (req, res) => {
   res.setHeader(
     'Content-Security-Policy',
     "connect-src 'self' https://region1.google-analytics.com https://www.google-analytics.com https://www.googletagmanager.com;"
   );
-  res.json({ plans: [
-    { name: 'BÁSICO', price: 0 },
-    { name: 'PREMIUM', price: 9.99 },
-    { name: 'ADEPTO', price: 29.99 },
-    { name: 'MAESTRO', price: 99.99 }
-  ] });
+  
+  const newPlansStructure = [
+    { 
+      name: 'INVITADO', 
+      displayName: 'Explorador Cósmico 🌟',
+      price: 0,
+      recommended: false,
+      description: 'Perfecto para empezar tu journey espiritual',
+      features: {
+        readings: 3,
+        decks: ['rider-waite'],
+        horoscope: 'básico semanal',
+        history: false,
+        dreams: false,
+        natalCharts: false,
+        support: 'comunidad'
+      }
+    },
+    { 
+      name: 'ESENCIAL', 
+      displayName: 'Iniciado Místico ✨',
+      price: 4.99,
+      priceAnnual: 49.90,
+      savingsText: 'Ahorra 2 meses',
+      recommended: true,
+      popularBadge: 'Más Popular',
+      description: 'Ideal para practicantes regulares del esoterismo',
+      features: {
+        readings: 15,
+        decks: ['rider-waite', 'marsella', 'celta', 'egipcio', 'runas'],
+        horoscope: 'personalizado diario',
+        history: true,
+        dreams: false,
+        natalCharts: false,
+        support: 'email'
+      }
+    },
+    { 
+      name: 'PREMIUM', 
+      displayName: 'Maestro Espiritual 🔮',
+      price: 9.99,
+      priceAnnual: 99.90,
+      savingsText: 'Ahorra 2 meses + Descuento especial',
+      recommended: false,
+      valueBadge: 'Mejor Valor',
+      description: 'Experiencia completa para verdaderos entusiastas',
+      features: {
+        readings: -1, // Ilimitado
+        decks: 'todas + futuras',
+        horoscope: 'ultra-personalizado',
+        history: 'completo + exportar PDF',
+        dreams: true,
+        natalCharts: 'detalladas + compatibilidad',
+        support: 'VIP 24/7'
+      }
+    }
+  ];
+  
+  res.json({ 
+    plans: newPlansStructure,
+    businessLogic: {
+      psychology: 'Precio €9.99 para mantener barrera psicológica bajo €10',
+      migration: 'Legacy users: INICIADO->ESENCIAL, ADEPTO/MAESTRO->PREMIUM',
+      simplification: '4 planes reducidos a 3 para menor confusión'
+    }
+  });
 });
 
 // Endpoint para proponer planes comerciales y estratégicos con IA

@@ -24,27 +24,59 @@ export default function AuthModal({ isOpen, mode, error, loading, onClose, onSwi
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (mode === 'signup' && !acceptLegal) {
-      setFormError('Debes aceptar los términos legales para registrarte.');
+    
+    // Validación frontend mejorada
+    if (!email || !password) {
+      setFormError('Email y contraseña son obligatorios');
       return;
     }
-    if (mode === 'signup' && !acceptNewsletter) {
-      setFormError('Debes aceptar la recepción de newsletter/promociones para registrarte.');
-      return;
+    
+    if (mode === 'signup') {
+      if (!username || username.trim().length < 2) {
+        setFormError('El nombre de usuario debe tener al menos 2 caracteres');
+        return;
+      }
+      
+      if (!birthDate) {
+        setFormError('La fecha de nacimiento es obligatoria para el registro');
+        return;
+      }
+      
+      if (!acceptLegal) {
+        setFormError('Debes aceptar los términos legales para registrarte');
+        return;
+      }
+      
+      if (!acceptNewsletter) {
+        setFormError('Debes aceptar la recepción de newsletter/promociones para registrarte');
+        return;
+      }
+      
+      if (password.length < 6) {
+        setFormError('La contraseña debe tener al menos 6 caracteres');
+        return;
+      }
     }
+    
     setFormError('');
-    const result = await onSubmit({
-      email,
-      password,
-      username,
-      birthDate,
-      acceptLegal,
-      acceptNewsletter
-    });
-    // Si el login fue exitoso, navega al perfil
-    if (result && result.success !== false) {
-      navigate('/profile');
-      onClose();
+    
+    try {
+      const result = await onSubmit({
+        email,
+        password,
+        username,
+        birthDate,
+        acceptLegal,
+        acceptNewsletter
+      });
+      
+      // Si el login fue exitoso, navega al perfil
+      if (result && result.success !== false) {
+        navigate('/profile');
+        onClose();
+      }
+    } catch (error) {
+      setFormError(error.message || 'Error en el registro/inicio de sesión');
     }
   }
 
@@ -76,18 +108,24 @@ export default function AuthModal({ isOpen, mode, error, loading, onClose, onSwi
 
           {mode === 'signup' && (
             <>
-              <label style={{color:'#d4af37'}}>Usuario</label>
+              <label style={{color:'#d4af37'}}>Usuario (obligatorio)</label>
               <input
                 type="text"
+                required
+                minLength="2"
+                maxLength="30"
                 value={username}
                 autoComplete="username"
+                placeholder="Mínimo 2 caracteres"
                 onChange={e => setUsername(e.target.value)}
                 style={{border:'1.5px solid #8b5cf6',borderRadius:'8px',padding:'0.7em 1em',fontSize:'1.05rem',fontFamily:'var(--font-sans)',marginBottom:'0.7em',width:'100%',background:'#18121e',color:'#e6d7c3'}}
               />
-              <label style={{color:'#d4af37'}}>Fecha de nacimiento</label>
+              <label style={{color:'#d4af37'}}>Fecha de nacimiento (obligatorio)</label>
               <input
                 type="date"
+                required
                 value={birthDate}
+                max={new Date().toISOString().split('T')[0]}
                 onChange={e => setBirthDate(e.target.value)}
                 style={{border:'1.5px solid #8b5cf6',borderRadius:'8px',padding:'0.7em 1em',fontSize:'1.05rem',fontFamily:'var(--font-sans)',marginBottom:'0.7em',width:'100%',background:'#18121e',color:'#e6d7c3'}}
               />
@@ -118,12 +156,14 @@ export default function AuthModal({ isOpen, mode, error, loading, onClose, onSwi
             </>
           )}
 
-          <label style={{color:'#d4af37'}}>Contraseña</label>
+          <label style={{color:'#d4af37'}}>Contraseña{mode === 'signup' ? ' (mínimo 6 caracteres)' : ''}</label>
           <input
             type="password"
             required
+            minLength={mode === 'signup' ? 6 : 1}
             value={password}
             autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+            placeholder={mode === 'signup' ? 'Mínimo 6 caracteres' : ''}
             onChange={e => setPassword(e.target.value)}
             style={{border:'1.5px solid #8b5cf6',borderRadius:'8px',padding:'0.7em 1em',fontSize:'1.05rem',fontFamily:'var(--font-sans)',marginBottom:'0.7em',width:'100%',background:'#18121e',color:'#e6d7c3'}}
           />
@@ -141,9 +181,26 @@ export default function AuthModal({ isOpen, mode, error, loading, onClose, onSwi
         </form>
         <div className="switch-mode" style={{marginTop:'1.2em',textAlign:'center',color:'#b3bcdf',fontFamily:'var(--font-base)'}}>
           {mode === 'login' ? (
-            <span onClick={() => onSwitchMode('signup')} style={{cursor:'pointer'}}>
-              ¿No tienes cuenta? <b style={{color:'#d4af37'}}>Regístrate</b>
-            </span>
+            <>
+              <div style={{marginBottom:'0.8em'}}>
+                <a 
+                  href="/forgot-password" 
+                  style={{
+                    color:'#6366f1',
+                    textDecoration:'none',
+                    fontSize:'0.9em',
+                    fontWeight:'500'
+                  }}
+                  onMouseOver={(e) => e.target.style.textDecoration = 'underline'}
+                  onMouseOut={(e) => e.target.style.textDecoration = 'none'}
+                >
+                  🔒 ¿Olvidaste tu contraseña?
+                </a>
+              </div>
+              <span onClick={() => onSwitchMode('signup')} style={{cursor:'pointer'}}>
+                ¿No tienes cuenta? <b style={{color:'#d4af37'}}>Regístrate</b>
+              </span>
+            </>
           ) : (
             <span onClick={() => onSwitchMode('login')} style={{cursor:'pointer'}}>
               ¿Ya tienes cuenta? <b style={{color:'#d4af37'}}>Entra</b>

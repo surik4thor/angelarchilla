@@ -30,9 +30,31 @@ export default function DreamInterpretation() {
   const [loadingLimit, setLoadingLimit] = useState(false);
   const [exportTrigger, setExportTrigger] = useState(false);
   const [exportedImage, setExportedImage] = useState(null);
+  const [hasAccess, setHasAccess] = useState(false);
+  const [accessChecked, setAccessChecked] = useState(false);
 
-  // Chequeo de límite premium para sueños
+  // Verificar acceso a función de sueños (solo plan MAESTRO)
   useEffect(() => {
+    const token = localStorage.getItem('arcanaToken');
+    if (!user || !user.subscriptionPlan) {
+      setHasAccess(false);
+      setAccessChecked(true);
+      return;
+    }
+    
+    // Solo el plan MAESTRO tiene acceso a sueños
+    if (user.subscriptionPlan === 'MAESTRO') {
+      setHasAccess(true);
+    } else {
+      setHasAccess(false);
+    }
+    setAccessChecked(true);
+  }, [user]);
+
+  // Chequeo de límite premium para sueños (solo si tiene acceso)
+  useEffect(() => {
+    if (!hasAccess || !accessChecked) return;
+    
     setLoadingLimit(true);
     const token = localStorage.getItem('arcanaToken');
   fetch('/api/readings/limit-status?type=dreams', {
@@ -152,7 +174,31 @@ export default function DreamInterpretation() {
         <p>Descubre el mensaje oculto de tu subconsciente con ayuda de la IA y la sabiduría onírica.</p>
       </div>
       <div className="reading-content">
-        {isLimited === true ? (
+        {!accessChecked ? (
+          <div className="step-container">
+            <div className="loading-spinner-container">
+              <LoadingSpinner />
+              <p>Verificando acceso...</p>
+            </div>
+          </div>
+        ) : !hasAccess ? (
+          <div className="step-container limit-reached">
+            <div className="limit-message-block center-text">
+              <span role="img" aria-label="Restringido" className="limit-icon" style={{fontSize:'1.3em'}}>🔒</span>
+              <h2 className="limit-title">Función exclusiva del Plan MAESTRO</h2>
+              <p className="limit-desc dream-bg">
+                La interpretación de sueños está disponible únicamente para suscriptores del plan MAESTRO.
+                {user && user.subscriptionPlan && (
+                  <><br />Tu plan actual: <strong>{user.subscriptionPlan}</strong></>
+                )}
+              </p>
+              <button className="subscribe-btn" onClick={()=>window.location.href='/planes'}>
+                <span role="img" aria-label="Premium" className="mr-half" style={{fontSize:'1.2em'}}>⭐</span>
+                Actualizar a Plan MAESTRO
+              </button>
+            </div>
+          </div>
+        ) : isLimited === true ? (
           <div className="step-container limit-reached">
             <div className="limit-message-block center-text">
               <span role="img" aria-label="Límite" className="limit-icon" style={{fontSize:'1.3em'}}>❓</span>

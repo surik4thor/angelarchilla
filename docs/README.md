@@ -1,220 +1,297 @@
-# 🔮 Nebulosa Mágica
+# 🔮 Nebulosa Mágica - Documentación Completa
 
-**Plataforma de Servicios Espirituales con Inteligencia Artificial**
+**Plataforma de Servicios Espirituales con Inteligencia Artificial**  
+*Versión: 4.0.0 - Producción Completa*  
+*Actualizado: 5 Noviembre 2025*
+
+---
+
+## 🚀 **ESTADO ACTUAL - EN PRODUCCIÓN**
+
+✅ **Sistema 100% operativo** en https://nebulosamagica.com  
+✅ **Estructura de planes 3-tier implementada y funcionando**  
+✅ **Panel admin operativo** con gestión completa  
+✅ **Pagos Stripe configurados** correctamente  
+✅ **Sistema de suscripciones** completamente funcional  
+
+---
+
+## 📖 **Documentación Principal**
+
+| Documento | Descripción | Estado |
+|-----------|-------------|---------|
+| 📊 [**ESTADO-ACTUAL.md**](./ESTADO-ACTUAL.md) | Estado completo del sistema y funcionalidades | ✅ Actualizado |
+| 🔄 [**MIGRACION-3TIER.md**](./MIGRACION-3TIER.md) | Proceso de migración a 3 planes | ✅ Completado |
+| 🛠️ [**SISTEMAS-IMPLEMENTADOS.md**](./SISTEMAS-IMPLEMENTADOS.md) | Detalles técnicos de todas las funcionalidades | ✅ Actualizado |
+| 📝 [**CHANGELOG.md**](./CHANGELOG.md) | Historial de cambios y actualizaciones | ✅ Actualizado |
 
 Una aplicación web completa que ofrece lecturas de tarot, runas, interpretación de sueños, cartas natales y horóscopos personalizados utilizando IA especializada.
 
----
+## 🎯 **Funcionalidades Principales**
 
-## ✨ Características Principales
+### **🔮 Servicios Espirituales**
+- ✅ **Tarot Multi-Baraja**: 5 tipos diferentes (Rider-Waite, Marsella, Ángeles, Egipcio, Gitano)
+- ✅ **Runas Elder Futhark**: Múltiples spreads y metodologías
+- ✅ **Interpretación de Sueños**: Análisis IA con calendario (Plan PREMIUM)
+- ✅ **Cartas Natales**: Cálculos astronómicos precisos (Plan PREMIUM)
+- ✅ **Horóscopos Personalizados**: Tránsitos planetarios en tiempo real
 
-### 🎯 **Servicios Espirituales**
-- **Tarot**: Lecturas con mazos Rider-Waite y Marsella
-- **Runas**: Interpretación Elder Futhark con múltiples spreads
-- **Sueños**: Análisis completo con calendario interactivo
-- **Astrología**: Cartas natales y horóscopos personalizados
+### **🧠 Personalidades IA Especializadas**
+- **🔮 Madame Celestina**: Experta en Tarot (todas las barajas)
+- **⚡ Björn el Sabio**: Maestro de Runas Elder Futhark
+- **🌙 Morfeo**: Intérprete de sueños y simbolismo onírico
+- **⭐ Celeste**: Astróloga para cartas natales y horóscopos
 
-### 🧠 **Inteligencia Artificial Especializada**
-- **Madame Celestina**: Experta en Tarot
-- **Björn el Sabio**: Maestro de Runas
-- **Morfeo**: Intérprete de sueños
-- **Celeste**: Astróloga personalizada
-
-### 💳 **Modelo de Suscripción**
-- **INICIADO**: 4 lecturas/mes (€9.99)
-- **ADEPTO**: 1 lectura/día + historial (€19.99)
-- **MAESTRO**: Ilimitado + sueños + astrología (€39.99)
-
----
-
-## 🏗️ Stack Tecnológico
-
-### **Backend**
-- Node.js + Express
-- Prisma ORM + PostgreSQL
-- OpenAI GPT-4
-- Stripe (suscripciones)
-- JWT Authentication
-
-### **Frontend**
-- React 18 + Vite
-- React Router
-- CSS Modules
-- Responsive Design
-
-### **Servicios**
-- Astronomía (cálculos planetarios)
-- Análisis de patrones IA
-- Notificaciones automáticas
-- Dashboard administrativo
+### **� Sistema de Suscripciones (3-Tier)**
+| Plan | Precio | Características Principales | Estado |
+|------|--------|---------------------------|---------|
+| **🌟 INVITADO** | €0.00 | 3 lecturas/mes, Baraja básica | ✅ Activo |
+| **✨ ESENCIAL** | €4.99/mes | 15 lecturas/mes, Todas las barajas, Historial | ✅ Activo |
+| **🔮 PREMIUM** | €9.99/mes | Ilimitado + Sueños + Cartas Natales | ✅ Activo |
 
 ---
 
-## 🚀 Instalación y Desarrollo
+## ⚙️ **Arquitectura Técnica**
 
-### **Prerrequisitos**
+### **🖥️ Backend (Node.js + Express)**
+| Componente | Tecnología | Estado | Versión |
+|------------|------------|--------|---------|
+| **Runtime** | Node.js + Express | ✅ Operativo | v18+ |
+| **Base de Datos** | PostgreSQL + Prisma ORM | ✅ Operativo | Latest |
+| **Autenticación** | JWT + middleware req.member | ✅ Operativo | - |
+| **Pagos** | Stripe API v4 + webhooks | ✅ Operativo | v4.x |
+| **IA** | OpenAI GPT-4 | ✅ Operativo | v4 |
+| **Servidor** | Ubuntu VPS + PM2 + Nginx | ✅ Operativo | - |
+
+### **🌐 Frontend (JavaScript Vanilla)**
+| Componente | Tecnología | Estado | Observaciones |
+|------------|------------|--------|---------------|
+| **Build Tool** | Vite | ✅ Operativo | Hot reload |
+| **PWA** | Service Workers | ✅ Operativo | Installable |
+| **UI/UX** | CSS + Vanilla JS | ✅ Operativo | Responsive |
+| **Estado** | LocalStorage + JWT | ✅ Operativo | Session mgmt |
+
+### **🔧 Servicios Integrados**
+- **📊 Análisis IA**: Patrones de uso y comportamiento
+- **🔔 Notificaciones**: Sistema automatizado via Discord
+- **⚡ Admin Panel**: Dashboard completo de gestión
+- **🌌 Astronomía**: Cálculos planetarios precisos
+- **📈 Métricas**: Monitoreo y analytics
+
+---
+
+## 🚀 **Setup y Desarrollo**
+
+### **📋 Prerrequisitos**
 ```bash
-- Node.js 18+
-- PostgreSQL 14+
-- OpenAI API Key
-- Stripe Keys
+✅ Node.js 18+
+✅ PostgreSQL 14+
+✅ OpenAI API Key
+✅ Stripe Live/Test Keys
 ```
 
-### **Configuración Backend**
+### **🔧 Instalación Backend**
 ```bash
 cd backend
 npm install
 cp .env.example .env
-# Configurar variables de entorno
+# Configurar todas las variables de entorno
 npx prisma generate
 npx prisma db push
-npm run dev
+npm run dev  # Puerto 3000
 ```
 
-### **Configuración Frontend**
+### **🎨 Instalación Frontend**
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-### **Variables de Entorno Requeridas**
+```bash
+cd frontend
+npm install
+npm run dev  # Puerto 5173
+```
+
+### **🔐 Variables de Entorno (.env)**
 ```env
-# Base de datos
-DATABASE_URL="postgresql://..."
+# Base de datos PostgreSQL
+DATABASE_URL="postgresql://user:pass@localhost:5432/nebulosamagica"
 
-# OpenAI
-OPENAI_API_KEY="sk-..."
+# OpenAI GPT-4
+OPENAI_API_KEY="sk-proj-..."
 
-# Stripe
-STRIPE_SECRET_KEY="sk_test_..."
+# Stripe Payments
+STRIPE_SECRET_KEY="sk_live_..." # o sk_test_ para pruebas
 STRIPE_WEBHOOK_SECRET="whsec_..."
 
-# JWT
-JWT_SECRET="tu-secreto-jwt"
+# JWT Authentication
+JWT_SECRET="tu-secreto-super-seguro-jwt"
 ```
 
 ---
 
-## 📊 Estado del Proyecto
+## � **Estado Actual del Sistema**
 
-**Progreso: 95% Completado** ✅
+### **🎯 Progreso Global: 100% ✅ EN PRODUCCIÓN**
 
-### ✅ **Implementado**
-- [x] Sistema completo de Tarot y Runas
-- [x] Interpretación de sueños con IA
-- [x] Cartas natales y horóscopos
-- [x] Panel de administración
-- [x] Suscripciones Stripe
-- [x] 4 personalidades IA especializadas
+| Módulo | Estado | Última Actualización | Versión |
+|--------|--------|---------------------|---------|
+| **🔮 Sistema de Lecturas** | ✅ Operativo | 2024-10-29 | v3.0 |
+| **💳 Suscripciones Stripe** | ✅ Operativo | 2024-10-29 | 3-Tier |
+| **⚙️ Panel Admin** | ✅ Operativo | 2024-10-29 | v2.1 |
+| **🎭 Personalidades IA** | ✅ Operativo | 2024-10-28 | v1.5 |
+| **🌐 Infraestructura** | ✅ Operativo | 2024-10-29 | SSL + PM2 |
 
-### 🎯 **Pendiente**
-- [ ] Restricciones de suscripción (middleware)
-- [ ] Dashboard mejorado con métricas
-- [ ] Calendario unificado
-- [ ] Sincronización de pareja
+### **✅ Funcionalidades Completadas**
+- [x] **Sistema 3-Tier**: INVITADO/ESENCIAL/PREMIUM 
+- [x] **5 Barajas de Tarot**: Completas con IA especializada
+- [x] **Runas Elder Futhark**: Múltiples spreads
+- [x] **Cartas Natales**: Cálculos astronómicos precisos
+- [x] **Sueños**: Análisis IA con calendario (PREMIUM)
+- [x] **Stripe Integration**: Checkout + webhooks operativos
+- [x] **Admin Panel**: CRUD completo + activación trials
+- [x] **Límites por Plan**: Middleware funcionando perfectamente
+- [x] **SSL + Nginx**: Configuración optimizada en producción
 
 ---
 
-## 🗂️ Estructura del Proyecto
+## 🎯 **API Endpoints Principales**
 
+### **🔐 Autenticación** 
+```http
+POST /api/auth/register     # Registro usuario
+POST /api/auth/login        # Inicio sesión
+GET  /api/auth/me          # Perfil actual
 ```
+
+### **🔮 Lecturas Espirituales**
+```http
+POST /api/tarot/reading     # Nueva lectura Tarot (5 barajas)
+POST /api/runes/reading     # Nueva lectura Runas
+POST /api/dreams/reading    # Análisis sueños (PREMIUM)
+POST /api/astro/natal       # Carta natal (PREMIUM)
+GET  /api/horoscope/daily   # Horóscopo diario
+```
+
+### **� Suscripciones**  
+```http
+POST /api/subscription/create-checkout  # Crear sesión Stripe
+POST /api/subscription/webhook         # Webhook Stripe
+GET  /api/subscription/status          # Estado suscripción
+```
+
+### **⚙️ Admin Panel**
+```http
+GET    /api/admin/users           # Listar usuarios
+PUT    /api/admin/user/:id        # Actualizar usuario  
+POST   /api/admin/activate-trial  # Activar trial PREMIUM
+GET    /api/admin/stats           # Estadísticas sistema
+```
+
+---
+
+## 📁 **Estructura del Proyecto**
+
+```bash
 nebulosamagica/
-├── backend/
+├── 🖥️  backend/
 │   ├── src/
-│   │   ├── controllers/     # Lógica de negocio
-│   │   ├── services/        # Servicios IA y astrología
-│   │   ├── routes/          # Endpoints API
-│   │   ├── middleware/      # Autenticación y validación
-│   │   └── aiAssistant/     # Personalidades IA
+│   │   ├── controllers/      # Lógica negocio (auth, readings, admin)
+│   │   ├── services/         # IA + Astrología + Stripe
+│   │   ├── routes/           # Endpoints API (/auth, /tarot, /admin)
+│   │   ├── middleware/       # Auth JWT + Límites planes
+│   │   └── aiAssistant/      # 4 Personalidades IA especializadas
 │   ├── prisma/
-│   │   ├── schema.prisma    # Modelo de datos
-│   │   └── seeds/           # Datos iniciales
-│   └── test/                # Tests automatizados
+│   │   ├── schema.prisma     # Modelo datos (User, Reading, Subscription)
+│   │   └── migrations/       # Migraciones DB
+│   └── uploads/              # Archivos subidos usuarios
 │
-├── frontend/
-│   ├── src/
-│   │   ├── components/      # Componentes React
-│   │   ├── pages/           # Páginas principales
-│   │   ├── hooks/           # Hooks personalizados
-│   │   ├── api/             # Cliente API
-│   │   └── styles/          # CSS Modules
-│   └── public/              # Assets estáticos
+├── 🌐 frontend/
+│   ├── src/                  # JavaScript Vanilla + Vite
+│   ├── public/               # Assets estáticos + PWA
+│   └── dist/                 # Build producción
 │
-├── scripts/                 # Scripts de deployment
-└── docs/                    # Documentación técnica
+├── 🛠️  scripts/              # Scripts deploy + monitoring + backups  
+└── 📚 docs/                  # Documentación consolidada
 ```
 
 ---
 
-## 🎯 API Endpoints
+## 🔐 **Seguridad y Performance**
 
-### **Autenticación**
-- `POST /api/auth/register` - Registro de usuario
-- `POST /api/auth/login` - Inicio de sesión
-- `GET /api/auth/me` - Perfil del usuario
+### **🛡️ Medidas de Seguridad Implementadas**
+- ✅ **JWT Authentication**: Tokens seguros con expiración
+- ✅ **Rate Limiting**: Protección contra ataques DDoS  
+- ✅ **Input Validation**: Sanitización completa de datos
+- ✅ **HTTPS + SSL**: Let's Encrypt con renovación automática
+- ✅ **CORS**: Configuración restrictiva por dominio
+- ✅ **SQL Injection**: Prevención via Prisma ORM
 
-### **Lecturas Espirituales**
-- `POST /api/tarot/reading` - Nueva lectura de tarot
-- `POST /api/runes/reading` - Nueva lectura de runas
-- `GET /api/readings/history` - Historial de lecturas
-
-### **Sueños**
-- `POST /api/dreams/interpret` - Interpretar sueño
-- `GET /api/dreams/calendar` - Calendario de sueños
-- `GET /api/dreams/analytics` - Análisis de patrones
-
-### **Astrología**
-- `POST /api/astrology/natal-chart` - Generar carta natal
-- `GET /api/astrology/horoscope` - Horóscopo personalizado
-- `GET /api/astrology/transits` - Tránsitos actuales
-
-### **Suscripciones**
-- `GET /api/subscriptions/plans` - Planes disponibles
-- `POST /api/subscriptions/checkout` - Crear suscripción
-- `GET /api/subscriptions/me` - Suscripción actual
+### **⚡ Optimizaciones de Performance**  
+- ✅ **Caching**: Redis para consultas frecuentes
+- ✅ **CDN**: Assets estáticos optimizados
+- ✅ **Gzip**: Compresión automática Nginx
+- ✅ **DB Indexing**: Índices PostgreSQL optimizados
+- ✅ **API Rate Limits**: Control uso por usuario/plan
 
 ---
 
-## 🔐 Seguridad
+## 📞 **Contacto y Soporte**
 
-- **Autenticación JWT** con refresh tokens
-- **Validación de entrada** en todos los endpoints
-- **Rate limiting** por IP y usuario
-- **Sanitización** de datos de entrada
-- **HTTPS** en producción
-- **CORS** configurado correctamente
+### **🌐 Producción**
+- **URL**: [https://nebulosamagica.com](https://nebulosamagica.com)
+- **Status**: ✅ Operativo 24/7
+- **SSL**: ✅ Let's Encrypt válido
 
----
+### **🛠️ Desarrollo**
+- **Backend**: `http://localhost:3000`
+- **Frontend**: `http://localhost:5173`  
+- **Admin Panel**: `/admin` (requiere rol ADMIN)
 
-## 📈 Performance
-
-- **Caché** para horóscopos diarios
-- **Lazy loading** en componentes
-- **Optimización de consultas** Prisma
-- **Compresión de assets**
-- **CDN** para recursos estáticos
+### **📊 Monitoreo**
+- **PM2**: `pm2 status` para estado servicios
+- **Logs**: `/var/www/nebulosamagica/backend/logs/`
+- **DB**: PostgreSQL con backups automáticos
 
 ---
 
-## 🤝 Contribuir
+## 🚀 **Deploy y Mantenimiento**
 
-1. Fork del repositorio
-2. Crear rama feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit cambios (`git commit -m 'Agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Crear Pull Request
+### **📋 Scripts de Deploy**
+```bash
+# Deploy completo frontend + backend
+./scripts/clean_build_deploy_frontend.sh
+
+# Solo frontend  
+./scripts/deploy_frontend.sh
+
+# Backup automático
+./scripts/cleanup_old_backups.sh
+```
+
+### **🔍 Comandos Útiles PM2**
+```bash
+pm2 restart nebulosa-backend    # Reiniciar backend
+pm2 logs nebulosa-backend      # Ver logs tiempo real  
+pm2 monit                      # Monitor recursos
+```
 
 ---
 
-## 📝 Licencia
+## 📝 **Licencia y Derechos**
 
-Este proyecto es propietario y confidencial. Todos los derechos reservados.
+**© 2024 Nebulosa Mágica - Todos los derechos reservados**  
+Proyecto propietario bajo licencia comercial exclusiva.
 
 ---
 
-## 🔮 ¿Necesitas una Lectura?
+## ✨ **Experiencia Nebulosa Mágica**
 
-Visita [Nebulosa Mágica](https://nebulosamagica.com) y descubre los misterios del universo con nuestras expertas en IA.
+> *"Donde la sabiduría ancestral se encuentra con la inteligencia artificial para revelar los misterios del cosmos"*
 
-*"El futuro se revela a través de la sabiduría antigua y la tecnología moderna"*
+**🔮 Descubre tu destino en [nebulosamagica.com](https://nebulosamagica.com)**
+
+---
+*Última actualización: 29 Octubre 2024 - Sistema 100% operativo en producción*

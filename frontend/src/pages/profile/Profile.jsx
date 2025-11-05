@@ -284,12 +284,12 @@ export default function Profile() {
                                         {Array.isArray(reading.cards)
                                           ? reading.cards.map((card, i) => (
                                               typeof card === 'object' && card !== null
-                                                ? <li key={i}>{Object.entries(card).map(([k, v]) => `${k}: ${v}`).join(', ')}</li>
-                                                : <li key={i}>{card}</li>
+                                                ? <li key={i}>{Object.entries(card).map(([k, v]) => `${k}: ${typeof v === 'object' && v !== null ? JSON.stringify(v) : v}`).join(', ')}</li>
+                                                : <li key={i}>{String(card)}</li>
                                             ))
                                           : (typeof reading.cards === 'object' && reading.cards !== null
-                                              ? <li>{Object.entries(reading.cards).map(([k, v]) => `${k}: ${v}`).join(', ')}</li>
-                                              : <li>{reading.cards}</li>)}
+                                              ? <li>{Object.entries(reading.cards).map(([k, v]) => `${k}: ${typeof v === 'object' && v !== null ? JSON.stringify(v) : v}`).join(', ')}</li>
+                                              : <li>{String(reading.cards)}</li>)}
                                       </ul>
                                     </div>
                                   )}

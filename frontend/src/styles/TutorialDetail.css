@@ -1,0 +1,236 @@
+/* TutorialDetail.css */
+.tutorial-detail {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #232946 0%, #121212 50%, #232946 100%);
+  color: white;
+  font-family: var(--font-base);
+}
+
+.tutorial-detail-header {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  padding: 2rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  position: relative;
+}
+
+.back-btn {
+  display: inline-block;
+  color: #d4af37;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.back-btn:hover {
+  background: rgba(212, 175, 55, 0.2);
+  transform: translateX(-5px);
+}
+
+.tutorial-detail-header h1 {
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #d4af37 0%, #eebc1d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.coupon-badge {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border-radius: 20px;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.tutorial-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  line-height: 1.7;
+}
+
+.tutorial-content h2 {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  color: #d4af37;
+  margin: 2rem 0 1rem;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.tutorial-content h3 {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  color: #eebc1d;
+  margin: 2rem 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tutorial-content h4 {
+  color: #8b5cf6;
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.tutorial-content p {
+  margin-bottom: 1.5rem;
+  color: rgba(229, 231, 235, 0.9);
+}
+
+.tutorial-content ul, .tutorial-content ol {
+  margin: 1rem 0 1.5rem 2rem;
+}
+
+.tutorial-content li {
+  margin-bottom: 0.5rem;
+  color: rgba(229, 231, 235, 0.9);
+}
+
+.tutorial-content li strong {
+  color: #d4af37;
+}
+
+.card-position {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.card-position h4 {
+  color: #8b5cf6;
+  margin-bottom: 0.5rem;
+}
+
+.tutorial-cta {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.tutorial-cta h3 {
+  color: #d4af37;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+.tutorial-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  flex-wrap: wrap;
+}
+
+.cta-btn {
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.cta-btn.primary {
+  background: linear-gradient(135deg, #d4af37 0%, #eebc1d 100%);
+  color: #232946;
+}
+
+.cta-btn.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+}
+
+.cta-btn.secondary {
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: white;
+}
+
+.cta-btn.secondary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+}
+
+.cta-btn.tertiary {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  color: white;
+}
+
+.cta-btn.tertiary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+}
+
+.tutorial-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #232946 0%, #121212 100%);
+  color: white;
+  text-align: center;
+}
+
+.tutorial-not-found h2 {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #d4af37;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tutorial-detail-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .tutorial-detail-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .coupon-badge {
+    position: static;
+    display: inline-block;
+    margin-top: 1rem;
+  }
+
+  .tutorial-content {
+    padding: 2rem 1rem;
+  }
+
+  .tutorial-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .tutorial-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-btn {
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+  }
+}

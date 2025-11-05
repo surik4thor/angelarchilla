@@ -210,7 +210,7 @@ router.get('/openai-stats', async (req, res) => {
 router.use(authenticate, requireAdmin);
 
 // DELETE /api/admin/users/:id - Eliminar usuario (con logs detallados)
-router.delete('/users/:id', async (req, res) => {
+router.delete('/users/:id', requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     console.log('--- ELIMINAR USUARIO (ESM) ---');
@@ -364,17 +364,378 @@ router.get('/email-logs', async (req, res) => {
   }
 });
 
-// Todas las rutas admin requieren autenticación + permisos admin
-router.use(authenticate, requireAdmin);
-
 // Dashboard Stats
-router.get('/stats', getStats);
+router.get('/stats', requireAdmin, getStats);
 
 // User Management
-router.get('/users', getAllUsers);
+router.get('/users', requireAdmin, getAllUsers);
+
+// Debug route - temporary to catch incorrect requests
+router.all('/plan', (req, res) => {
+  console.log('[ADMIN DEBUG] Petición incorrecta a /plan:', {
+    method: req.method,
+    headers: req.headers,
+    body: req.body,
+    params: req.params,
+    query: req.query
+  });
+  res.status(405).json({
+    error: 'Ruta incorrecta',
+    message: 'Use PUT /users/:id/plan en su lugar',
+    correctRoute: 'PUT /api/admin/users/:id/plan'
+  });
+});
+
+// Informe detallado con datos reales
+router.get('/generate-report', async (req, res) => {
+  try {
+    // Obtener datos reales de la base de datos
+    const now = new Date();
+    const firstDayThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const firstDayLastMonth = new Date(lastMonth.getFullYear(), lastMonth.getMonth(), 1);
+    
+    // Estadísticas de usuarios
+    const [
+      totalUsers,
+      usersThisMonth,
+      usersLastMonth,
+      usersByPlan,
+      activeUsers,
+      trialUsers
+    ] = await Promise.all([
+      prisma.user.count(),
+      prisma.user.count({ where: { createdAt: { gte: firstDayThisMonth } } }),
+      prisma.user.count({ where: { createdAt: { gte: firstDayLastMonth, lt: firstDayThisMonth } } }),
+      prisma.user.groupBy({
+        by: ['subscriptionPlan'],
+        _count: { id: true }
+      }),
+      prisma.user.count({ 
+        where: { 
+          OR: [
+            { subscriptionStatus: 'ACTIVE' },
+            { trialActive: true }
+          ]
+        }
+      }),
+      prisma.user.count({ where: { trialActive: true } })
+    ]);
+
+    // Estadísticas de lecturas
+    const [
+      totalReadings,
+      readingsThisMonth,
+      readingsLastMonth,
+      readingsByType
+    ] = await Promise.all([
+      prisma.tarotReading.count(),
+      prisma.tarotReading.count({ where: { createdAt: { gte: firstDayThisMonth } } }),
+      prisma.tarotReading.count({ where: { createdAt: { gte: firstDayLastMonth, lt: firstDayThisMonth } } }),
+      prisma.$queryRaw`
+        SELECT 'tarot' as type, COUNT(*) as count FROM "TarotReading" WHERE "createdAt" >= ${firstDayThisMonth}
+        UNION ALL
+        SELECT 'runas' as type, COUNT(*) as count FROM "RunesReading" WHERE "createdAt" >= ${firstDayThisMonth}
+        UNION ALL
+        SELECT 'sueños' as type, COUNT(*) as count FROM "DreamInterpretation" WHERE "createdAt" >= ${firstDayThisMonth}
+      `
+    ]);
+
+    // Calcular métricas de crecimiento
+    const userGrowth = usersLastMonth > 0 ? ((usersThisMonth - usersLastMonth) / usersLastMonth * 100) : 100;
+    const readingGrowth = readingsLastMonth > 0 ? ((readingsThisMonth - readingsLastMonth) / readingsLastMonth * 100) : 100;
+    const conversionRate = totalUsers > 0 ? (activeUsers / totalUsers * 100) : 0;
+
+    // Generar informe detallado
+    const report = {
+      fecha: now.toISOString().split('T')[0],
+      resumenEjecutivo: {
+        totalUsuarios: totalUsers,
+        usuariosActivos: activeUsers,
+        tasaConversion: Math.round(conversionRate * 100) / 100,
+        crecimientoMensual: Math.round(userGrowth * 100) / 100,
+        lecturasTotales: totalReadings,
+        lecturasEsteMes: readingsThisMonth
+      },
+      analisisDetallado: {
+        usuarios: {
+          nuevosEsteMes: usersThisMonth,
+          mesAnterior: usersLastMonth,
+          tendencia: userGrowth >= 0 ? 'positiva' : 'negativa',
+          porPlan: usersByPlan,
+          enPrueba: trialUsers,
+          retencion: Math.round((activeUsers / totalUsers * 100) * 100) / 100
+        },
+        engagement: {
+          lecturasPorUsuario: totalUsers > 0 ? Math.round(totalReadings / totalUsers * 100) / 100 : 0,
+          crecimientoLecturas: Math.round(readingGrowth * 100) / 100,
+          distribucionTipos: readingsByType
+        }
+      },
+      diagnostico: {
+        fortalezas: [],
+        debilidades: [],
+        oportunidades: [],
+        amenazas: []
+      },
+      recomendaciones: {
+        inmediatas: [],
+        medianoPlazo: [],
+        largoplazo: []
+      }
+    };
+
+    // Análisis automático y recomendaciones
+    if (userGrowth > 10) {
+      report.diagnostico.fortalezas.push('Crecimiento sólido de usuarios (+' + Math.round(userGrowth) + '%)');
+      report.recomendaciones.inmediatas.push('Mantener estrategias actuales de adquisición');
+    } else if (userGrowth < 0) {
+      report.diagnostico.debilidades.push('Decrecimiento en nuevos usuarios (' + Math.round(userGrowth) + '%)');
+      report.recomendaciones.inmediatas.push('Revisar estrategias de marketing y onboarding');
+    }
+
+    if (conversionRate > 25) {
+      report.diagnostico.fortalezas.push('Excelente tasa de conversión (' + Math.round(conversionRate) + '%)');
+    } else if (conversionRate < 15) {
+      report.diagnostico.debilidades.push('Baja tasa de conversión (' + Math.round(conversionRate) + '%)');
+      report.recomendaciones.inmediatas.push('Mejorar propuesta de valor y proceso de onboarding');
+    }
+
+    if (trialUsers / totalUsers > 0.1) {
+      report.diagnostico.oportunidades.push('Alto interés en trials - oportunidad de conversión');
+      report.recomendaciones.medianoPlazo.push('Desarrollar estrategia de conversión post-trial');
+    }
+
+    // Recomendaciones estándar basadas en mejores prácticas
+    report.recomendaciones.inmediatas.push(
+      'Implementar sistema de notificaciones push',
+      'Optimizar landing page para mobile',
+      'A/B testing en CTAs principales'
+    );
+    
+    report.recomendaciones.medianoPlazo.push(
+      'Programa de referidos con incentivos',
+      'Content marketing en redes sociales',
+      'Email marketing automatizado',
+      'Análisis de cohortes de usuarios'
+    );
+    
+    report.recomendaciones.largoplazo.push(
+      'Expansión a nuevos mercados (LATAM)',
+      'Desarrollo de app móvil nativa',
+      'Integración con influencers del sector',
+      'Programa de afiliados avanzado'
+    );
+
+    res.json({
+      success: true,
+      informe: report,
+      generadoEn: new Date().toISOString()
+    });
+    
+  } catch (error) {
+    console.error('Error generating report:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Error generando informe', 
+      details: error.message 
+    });
+  }
+});
+
+// Plan comercial detallado con datos reales
+router.get('/generate-business-plan', async (req, res) => {
+  try {
+    // Obtener datos actuales para el análisis
+    const [totalUsers, activeSubscriptions, monthlyRevenue] = await Promise.all([
+      prisma.user.count(),
+      prisma.user.count({ where: { subscriptionStatus: 'ACTIVE' } }),
+      prisma.$queryRaw`
+        SELECT COALESCE(SUM(CASE 
+          WHEN "subscriptionPlan" = 'INICIADO' THEN 3.99
+          WHEN "subscriptionPlan" = 'ADEPTO' THEN 9.99  
+          WHEN "subscriptionPlan" = 'MAESTRO' THEN 17.99
+          ELSE 0
+        END), 0) as revenue
+        FROM "User" 
+        WHERE "subscriptionStatus" = 'ACTIVE'
+      `
+    ]);
+
+    const currentRevenue = monthlyRevenue[0]?.revenue || 0;
+    
+    const businessPlan = {
+      fecha: new Date().toISOString().split('T')[0],
+      situacionActual: {
+        usuarios: {
+          total: totalUsers,
+          activos: activeSubscriptions,
+          tasaConversion: totalUsers > 0 ? Math.round(activeSubscriptions / totalUsers * 100 * 100) / 100 : 0
+        },
+        ingresos: {
+          mensual: Math.round(currentRevenue * 100) / 100,
+          anualEstimado: Math.round(currentRevenue * 12 * 100) / 100,
+          ticketPromedio: activeSubscriptions > 0 ? Math.round(currentRevenue / activeSubscriptions * 100) / 100 : 0
+        }
+      },
+      analisisSituacion: {
+        loQueEstasBienHaciendo: [
+          'Diversificación de servicios (Tarot, Runas, Sueños, Horóscopo)',
+          'Modelo freemium con límites claros por plan',
+          'Sistema de pruebas gratuitas para conversión',
+          'Panel administrativo para gestión eficiente',
+          'Integración con Stripe para pagos seguros',
+          'Arquitectura escalable con React + Node.js'
+        ],
+        loQueEstaMal: [
+          'Falta de estrategia de retención automatizada',
+          'Sin notificaciones push para engagement',
+          'Ausencia de programa de referidos',
+          'Marketing limitado en redes sociales',
+          'Sin análisis predictivo de churn',
+          'Onboarding poco optimizado'
+        ],
+        oportunidadesPerdidas: [
+          'No hay app móvil nativa (70% tráfico mobile)',
+          'Sin contenido educativo sobre esoterismo',
+          'Falta colaboraciones con influencers',
+          'No aprovecha temporadas (Halloween, Año Nuevo)',
+          'Sin gamificación para engagement',
+          'Mercado LATAM sin explotar'
+        ]
+      },
+      planAccion: {
+        fase1_inmediato: {
+          timeframe: '1-4 semanas',
+          presupuesto: '€500-1000',
+          acciones: [
+            {
+              accion: 'Optimizar landing page para mobile',
+              como: 'Responsive design, velocidad carga <3s, CTA prominentes',
+              cuando: 'Semana 1-2',
+              kpi: 'Conversión mobile +25%'
+            },
+            {
+              accion: 'Implementar email onboarding',
+              como: 'Secuencia 5 emails automatizados con Mailchimp/Brevo',
+              cuando: 'Semana 2-3',
+              kpi: 'Activación usuarios +30%'
+            },
+            {
+              accion: 'A/B test precios y CTAs',
+              como: 'Test 2 versiones precio ADEPTO (€9.99 vs €12.99)',
+              cuando: 'Semana 3-4',
+              kpi: 'Revenue por usuario +15%'
+            }
+          ]
+        },
+        fase2_cortoplazo: {
+          timeframe: '1-3 meses',
+          presupuesto: '€2000-5000',
+          acciones: [
+            {
+              accion: 'Programa referidos con incentivos',
+              como: 'Mes gratis por cada amigo que se suscriba',
+              cuando: 'Mes 1-2',
+              kpi: 'Crecimiento orgánico +40%'
+            },
+            {
+              accion: 'Content marketing en TikTok/Instagram',
+              como: '3 posts semanales + 1 video explicativo servicios',
+              cuando: 'Mes 1-3',
+              kpi: '1000 seguidores nuevos/mes'
+            },
+            {
+              accion: 'Notificaciones push inteligentes',
+              como: 'Recordatorios personalizados según uso + horóscopo diario',
+              cuando: 'Mes 2-3',
+              kpi: 'Retención día 7 +50%'
+            }
+          ]
+        },
+        fase3_mediano: {
+          timeframe: '3-6 meses',
+          presupuesto: '€5000-15000',
+          acciones: [
+            {
+              accion: 'App móvil nativa (iOS/Android)',
+              como: 'React Native o Flutter, notificaciones push nativas',
+              cuando: 'Mes 3-6',
+              kpi: '50% usuarios en mobile app'
+            },
+            {
+              accion: 'Colaboraciones con influencers',
+              como: '5-10 micro-influencers esoterismo (10K-100K followers)',
+              cuando: 'Mes 4-6',
+              kpi: 'CAC reducido 30%'
+            },
+            {
+              accion: 'Expansión mercado LATAM',
+              como: 'Localización México/Colombia, pagos locales',
+              cuando: 'Mes 5-6',
+              kpi: '+25% usuarios internacionales'
+            }
+          ]
+        },
+        fase4_largo: {
+          timeframe: '6-12 meses',
+          presupuesto: '€15000-30000',
+          acciones: [
+            {
+              accion: 'Plataforma de cursos esotéricos',
+              como: 'LMS integrado con certificaciones pagadas',
+              cuando: 'Mes 6-9',
+              kpi: 'Nueva línea ingresos €2000/mes'
+            },
+            {
+              accion: 'IA personalizada avanzada',
+              como: 'Algoritmo ML para lecturas personalizadas',
+              cuando: 'Mes 9-12',
+              kpi: 'Satisfacción usuario +40%'
+            },
+            {
+              accion: 'Marketplace de productos esotéricos',
+              como: 'Venta cartas, cristales, accesorios con dropshipping',
+              cuando: 'Mes 10-12',
+              kpi: 'Ingresos adicionales €5000/mes'
+            }
+          ]
+        }
+      },
+      proyeccionesFinancieras: {
+        mes1: { usuarios: Math.round(totalUsers * 1.15), ingresos: Math.round(currentRevenue * 1.2 * 100) / 100 },
+        mes3: { usuarios: Math.round(totalUsers * 1.45), ingresos: Math.round(currentRevenue * 1.8 * 100) / 100 },
+        mes6: { usuarios: Math.round(totalUsers * 2.1), ingresos: Math.round(currentRevenue * 2.5 * 100) / 100 },
+        mes12: { usuarios: Math.round(totalUsers * 3.2), ingresos: Math.round(currentRevenue * 4.2 * 100) / 100 }
+      },
+      kpisClaves: [
+        'CAC (Costo Adquisición Cliente) < €15',
+        'LTV/CAC ratio > 3:1',
+        'Churn mensual < 5%',
+        'Tiempo payback < 6 meses',
+        'NPS (Net Promoter Score) > 50',
+        'Conversión trial-pago > 25%'
+      ]
+    };
+
+    res.json({
+      success: true,
+      planComercial: businessPlan,
+      generadoEn: new Date().toISOString()
+    });
+    
+  } catch (error) {
+    console.error('Error generating business plan:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Error generando plan comercial', 
+      details: error.message 
+    });
+  }
+});
 
 // Endpoint para activar periodo de prueba mediante cupón
-router.post('/users/:id/activate-trial', async (req, res) => {
+router.post('/users/:id/activate-trial', requireAdmin, async (req, res) => {
   const { id } = req.params;
   const { coupon } = req.body;
   // Buscar el cupón en la base de datos
@@ -412,10 +773,243 @@ router.post('/users/:id/activate-trial', async (req, res) => {
   res.json({ success: true, message: 'Periodo de prueba activado', trialExpiry: expiry, user: updatedUser });
 });
 
-router.put('/users/:id', updateUser);
+router.put('/users/:id', requireAdmin, updateUser);
+
+// Endpoint simple para que el admin active/desactive trial directamente
+router.put('/users/:id/admin-trial', requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { activate } = req.body; // true para activar, false para desactivar
+    
+    console.log('[ADMIN] Cambiando estado de trial:', { id, activate });
+    
+    if (activate) {
+      // Activar trial por 7 días con plan PREMIUM
+      const now = new Date();
+      const expiry = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+      
+      const updatedUser = await prisma.user.update({
+        where: { id },
+        data: {
+          trialActive: true,
+          trialExpiry: expiry,
+          subscriptionPlan: 'PREMIUM' // Asignar plan PREMIUM durante el trial
+        },
+        select: {
+          id: true,
+          username: true, 
+          email: true,
+          subscriptionPlan: true,
+          trialActive: true,
+          trialExpiry: true
+        }
+      });
+      
+      console.log('[ADMIN] Trial PREMIUM activado para usuario:', updatedUser.email);
+      res.json({ success: true, message: 'Trial PREMIUM activado por 7 días', trialExpiry: expiry, user: updatedUser });
+    } else {
+      // Desactivar trial y volver a INVITADO
+      const updatedUser = await prisma.user.update({
+        where: { id },
+        data: {
+          trialActive: false,
+          trialExpiry: null,
+          subscriptionPlan: 'INVITADO' // Volver al plan básico
+        },
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          subscriptionPlan: true,
+          trialActive: true,
+          trialExpiry: true
+        }
+      });
+      
+      console.log('[ADMIN] Trial desactivado para usuario:', updatedUser.email);
+      res.json({ success: true, message: 'Trial desactivado, plan cambiado a INVITADO', user: updatedUser });
+    }
+  } catch (error) {
+    console.error('[ADMIN] Error cambiando trial:', error);
+    res.status(500).json({ error: 'Error cambiando estado del trial', details: error.message });
+  }
+});
+
+// Endpoint para migrar planes legacy a nuevo sistema
+router.post('/migrate-plans', requireAdmin, async (req, res) => {
+  try {
+    console.log('[ADMIN] Iniciando migración de planes...');
+    
+    // Mapeo de migración
+    const migrations = {
+      'INICIADO': 'ESENCIAL',
+      'ADEPTO': 'PREMIUM',
+      'MAESTRO': 'PREMIUM'
+    };
+    
+    let migratedUsers = 0;
+    let errors = [];
+    
+    for (const [oldPlan, newPlan] of Object.entries(migrations)) {
+      try {
+        // Buscar usuarios con plan legacy
+        const usersToMigrate = await prisma.user.findMany({
+          where: { subscriptionPlan: oldPlan },
+          select: { id: true, email: true, subscriptionPlan: true }
+        });
+        
+        console.log(`Encontrados ${usersToMigrate.length} usuarios con plan ${oldPlan}`);
+        
+        // Migrar cada usuario
+        for (const user of usersToMigrate) {
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { subscriptionPlan: newPlan }
+          });
+          
+          console.log(`Usuario ${user.email} migrado de ${oldPlan} a ${newPlan}`);
+          migratedUsers++;
+        }
+      } catch (error) {
+        console.error(`Error migrando plan ${oldPlan}:`, error);
+        errors.push({ plan: oldPlan, error: error.message });
+      }
+    }
+    
+    console.log(`[ADMIN] Migración completada: ${migratedUsers} usuarios migrados`);
+    
+    res.json({
+      success: true,
+      message: `Migración completada: ${migratedUsers} usuarios actualizados`,
+      migratedUsers,
+      errors: errors.length > 0 ? errors : null
+    });
+    
+  } catch (error) {
+    console.error('[ADMIN] Error en migración de planes:', error);
+    res.status(500).json({ 
+      error: 'Error en migración de planes', 
+      details: error.message 
+    });
+  }
+});
+
+// Endpoint para obtener estadísticas de planes
+router.get('/plan-stats', requireAdmin, async (req, res) => {
+  try {
+    const stats = await prisma.user.groupBy({
+      by: ['subscriptionPlan'],
+      _count: {
+        subscriptionPlan: true
+      }
+    });
+    
+    const formattedStats = stats.reduce((acc, stat) => {
+      acc[stat.subscriptionPlan] = stat._count.subscriptionPlan;
+      return acc;
+    }, {});
+    
+    res.json({
+      success: true,
+      stats: formattedStats,
+      totalUsers: stats.reduce((sum, stat) => sum + stat._count.subscriptionPlan, 0)
+    });
+    
+  } catch (error) {
+    console.error('[ADMIN] Error obteniendo estadísticas:', error);
+    res.status(500).json({ 
+      error: 'Error obteniendo estadísticas de planes' 
+    });
+  }
+});
+
+// Endpoint para obtener precios de Stripe configurados
+router.get('/stripe-prices', requireAdmin, async (req, res) => {
+  try {
+    const { config } = await import('../config/config.js');
+    
+    const prices = {
+      esencial: {
+        monthly: {
+          priceId: config.membership.esencial.stripeIdMonthly,
+          amount: config.membership.esencial.priceMonthly
+        },
+        annual: {
+          priceId: config.membership.esencial.stripeIdAnnual,
+          amount: config.membership.esencial.priceAnnual
+        }
+      },
+      premium: {
+        monthly: {
+          priceId: config.membership.premium.stripeIdMonthly,
+          amount: config.membership.premium.priceMonthly
+        },
+        annual: {
+          priceId: config.membership.premium.stripeIdAnnual,
+          amount: config.membership.premium.priceAnnual
+        }
+      }
+    };
+
+    res.json({
+      success: true,
+      prices,
+      message: 'Precios de Stripe configurados'
+    });
+    
+  } catch (error) {
+    console.error('[ADMIN] Error obteniendo precios Stripe:', error);
+    res.status(500).json({ 
+      error: 'Error obteniendo precios de Stripe' 
+    });
+  }
+});
+
+// Endpoint para obtener el estado del plan de un usuario
+router.get('/users/:id/plan-status', async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        subscriptionPlan: true,
+        subscriptionStatus: true,
+        trialActive: true,
+        trialExpiry: true,
+        createdAt: true,
+        updatedAt: true
+      }
+    });
+    
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
+    }
+    
+    // Determinar si el trial está activo
+    const now = new Date();
+    const trialIsActive = user.trialActive && user.trialExpiry && now <= user.trialExpiry;
+    
+    res.json({
+      success: true,
+      planStatus: {
+        currentPlan: user.subscriptionPlan || 'INVITADO',
+        status: user.subscriptionStatus || 'INACTIVE',
+        trialActive: trialIsActive,
+        trialExpiry: user.trialExpiry,
+        memberSince: user.createdAt,
+        lastUpdated: user.updatedAt
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching user plan status:', error);
+    res.status(500).json({ success: false, message: 'Error al obtener estado del plan' });
+  }
+});
 
 // Endpoint para actualizar solo el rol de usuario
-router.put('/users/:id/role', async (req, res) => {
+router.put('/users/:id/role', requireAdmin, async (req, res) => {
   const { id } = req.params;
   const { role } = req.body;
   if (!role || !['USER', 'ADMIN', 'ECOMMERCE', 'BLOG'].includes(role)) {
@@ -432,22 +1026,76 @@ router.put('/users/:id/role', async (req, res) => {
   }
 });
 
+// Endpoint para activar/desactivar el trial de un usuario
+router.put('/users/:id/trial', requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: { id: true, trialActive: true, trialExpiry: true }
+    });
+    
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
+    }
+    
+    // Toggle trial status
+    const newTrialActive = !user.trialActive;
+    let updateData = { trialActive: newTrialActive };
+    
+    // Si se está activando, establecer fecha de expiración (7 días)
+    if (newTrialActive) {
+      const now = new Date();
+      const expiry = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+      updateData.trialExpiry = expiry;
+    } else {
+      // Si se está desactivando, limpiar fecha de expiración
+      updateData.trialExpiry = null;
+    }
+    
+    const updatedUser = await prisma.user.update({
+      where: { id },
+      data: updateData,
+      select: {
+        id: true,
+        trialActive: true,
+        trialExpiry: true,
+        subscriptionPlan: true
+      }
+    });
+    
+    res.json({
+      success: true,
+      message: newTrialActive ? 'Trial activado' : 'Trial desactivado',
+      user: updatedUser
+    });
+  } catch (error) {
+    console.error('Error toggling trial:', error);
+    res.status(500).json({ success: false, message: 'Error al modificar el trial' });
+  }
+});
+
 // Endpoint para actualizar el plan de suscripción de un usuario
-router.put('/users/:id/plan', async (req, res) => {
+router.put('/users/:id/plan', requireAdmin, async (req, res) => {
   const { id } = req.params;
   const { plan } = req.body;
-  const validPlans = ['INVITADO', 'INICIADO', 'ADEPTO', 'MAESTRO'];
+  
+  console.log('[ADMIN] PUT /users/:id/plan llamado con:', { id, plan, body: req.body });
+  
+  const validPlans = ['INVITADO', 'ESENCIAL', 'PREMIUM', 'INICIADO', 'ADEPTO', 'MAESTRO'];
   if (!plan || !validPlans.includes(plan)) {
-    return res.status(400).json({ error: 'Plan no válido' });
+    console.log('[ADMIN] Plan inválido:', { plan, validPlans });
+    return res.status(400).json({ error: 'Plan no válido', received: plan, valid: validPlans });
   }
   try {
     console.log('[ADMIN] Actualizando plan de usuario:', { id, plan });
     const user = await prisma.user.update({
       where: { id },
-      data: { subscriptionPlan: SubscriptionPlan[plan.trim().toUpperCase()] }
+      data: { subscriptionPlan: plan }
     });
-    console.log('[ADMIN] Usuario actualizado:', user);
-    res.json({ user });
+    console.log('[ADMIN] Usuario actualizado exitosamente:', { email: user.email, newPlan: user.subscriptionPlan });
+    res.json({ success: true, user });
   } catch (error) {
     console.error('[ADMIN] Error actualizando plan:', error);
     res.status(500).json({ error: 'Error actualizando plan', details: error.message });

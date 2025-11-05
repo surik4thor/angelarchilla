@@ -26,7 +26,7 @@ export function useReading() {
     setLoading(true);
     setError(null);
     try {
-      const { data } = await api.get('/readings/history');
+      const { data } = await api.get('/api/readings/history');
       return data.history;
     } catch (err) {
       setError(err.response?.data?.message || 'Error al obtener historial');

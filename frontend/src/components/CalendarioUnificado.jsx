@@ -21,9 +21,9 @@ const CalendarioUnificado = ({ user }) => {
       
       // Obtener todos los eventos del mes
       const [tarotRes, runesRes, dreamsRes] = await Promise.all([
-        api.get('/tarotReadings/history').catch(() => ({ data: [] })),
-        api.get('/runesReadings/history').catch(() => ({ data: [] })),
-        api.get('/dreams/history').catch(() => ({ data: [] }))
+        api.get('/api/tarotReadings/history').catch(() => ({ data: [] })),
+        api.get('/api/runesReadings/history').catch(() => ({ data: [] })),
+        api.get('/api/dreams/history').catch(() => ({ data: [] }))
       ]);
 
       const allEvents = [];

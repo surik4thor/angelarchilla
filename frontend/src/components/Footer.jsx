@@ -10,6 +10,8 @@ export default function Footer() {
   const [newsletterMsg, setNewsletterMsg] = useState('');
   // Items de navegación legal
   const items = [
+    { to: '/planes', txt: 'Planes', icon: '💎' },
+    { to: '/tutoriales', txt: 'Tutoriales', icon: '📚' },
     { to: '/terms', txt: 'Términos', icon: '📜' },
     { to: '/privacy', txt: 'Privacidad', icon: '🔒' },
     { to: '/disclaimer', txt: 'Descargo', icon: '⚠️' },

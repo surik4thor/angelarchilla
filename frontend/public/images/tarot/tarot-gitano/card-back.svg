@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="back-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#8B0000;stop-opacity:1" />
+    </radialGradient>
+    
+    <pattern id="back-pattern" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <rect width="30" height="30" fill="none"/>
+      <circle cx="15" cy="15" r="3" fill="#FFD700" opacity="0.4"/>
+      <rect x="12" y="12" width="6" height="6" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+  </defs>
+  
+  <rect x="5" y="5" width="190" height="340" rx="15" ry="15" 
+        fill="url(#back-bg)" 
+        stroke="#8B0000" 
+        stroke-width="3"/>
+  
+  <rect x="15" y="15" width="170" height="320" rx="10" ry="10" 
+        fill="url(#back-pattern)"/>
+  
+  <text x="100" y="180" 
+        text-anchor="middle" 
+        font-family="serif" 
+        font-size="20" 
+        font-weight="bold"
+        fill="#FFD700">
+    TAROT
+  </text>
+  
+  <text x="100" y="205" 
+        text-anchor="middle" 
+        font-family="serif" 
+        font-size="14" 
+        fill="#FFD700" 
+        opacity="0.8">
+    NEBULOSA MÁGICA
+  </text>
+  
+</svg>

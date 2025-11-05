@@ -1,0 +1,385 @@
+/* Estilos para el componente WeeklyBonus */
+
+.weekly-bonus-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: var(--font-base, 'Inter', sans-serif);
+}
+
+.weekly-bonus-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.weekly-bonus-header h2 {
+  color: var(--primary-color, #d4af37);
+  font-size: 2.2em;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #d4af37, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bonus-subtitle {
+  color: var(--text-color, #333);
+  font-size: 1.1em;
+  opacity: 0.8;
+}
+
+/* Mensajes */
+.error-message {
+  background: #fee;
+  border: 1px solid #fcc;
+  color: #c33;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.success-message {
+  background: #efe;
+  border: 1px solid #cfc;
+  color: #363;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Card de bono activo */
+.active-bonus-card {
+  background: linear-gradient(135deg, #232946, #121629);
+  border: 2px solid #d4af37;
+  border-radius: 16px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.active-bonus-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+  animation: pulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.7; }
+}
+
+.active-bonus-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.active-bonus-header h3 {
+  color: #d4af37;
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.bonus-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.bonus-badge.active {
+  background: linear-gradient(135deg, #00ff88, #00cc6a);
+  color: #000;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 10px rgba(0, 255, 136, 0.5); }
+  100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.8); }
+}
+
+.bonus-badge.purchased {
+  background: #3498db;
+  color: white;
+}
+
+.bonus-badge.expired {
+  background: #95a5a6;
+  color: white;
+}
+
+.active-bonus-info {
+  color: #eee;
+  position: relative;
+  z-index: 1;
+}
+
+.active-bonus-info p {
+  margin: 8px 0;
+  font-size: 1.05em;
+}
+
+.bonus-features {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.feature-tag {
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+/* Card de información */
+.bonus-info-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.bonus-info-card h3 {
+  color: var(--primary-color, #d4af37);
+  margin-bottom: 20px;
+  font-size: 1.3em;
+}
+
+.bonus-price {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.bonus-price .price {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #d4af37;
+}
+
+.bonus-price .duration {
+  display: block;
+  color: #666;
+  font-size: 1.1em;
+  margin-top: 5px;
+}
+
+.bonus-features-list {
+  margin: 20px 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+  font-size: 1.05em;
+}
+
+.feature-icon {
+  margin-right: 12px;
+  font-size: 1.1em;
+}
+
+/* Botones */
+.purchase-bonus-btn, .activate-bonus-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #d4af37, #ffd700);
+  color: #000;
+  border: none;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.purchase-bonus-btn:hover, .activate-bonus-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+.purchase-bonus-btn:disabled, .activate-bonus-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Bonos comprados */
+.purchased-bonuses {
+  margin: 30px 0;
+}
+
+.purchased-bonuses h3 {
+  color: var(--primary-color, #d4af37);
+  margin-bottom: 20px;
+}
+
+.bonus-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.bonus-card.purchased {
+  border-color: #3498db;
+}
+
+.bonus-card.active {
+  border-color: #00ff88;
+}
+
+.bonus-card.expired {
+  border-color: #95a5a6;
+  opacity: 0.7;
+}
+
+.bonus-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.bonus-amount {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #d4af37;
+}
+
+.bonus-details p {
+  margin: 8px 0;
+  color: #666;
+}
+
+.activation-note {
+  color: #e67e22;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* Historial */
+.bonus-history {
+  margin: 30px 0;
+}
+
+.bonus-history h3 {
+  color: var(--primary-color, #d4af37);
+  margin-bottom: 20px;
+}
+
+.bonus-list {
+  display: grid;
+  gap: 15px;
+}
+
+/* Call to Action */
+.cta-card {
+  background: linear-gradient(135deg, #232946, #121629);
+  color: #fff;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  margin: 30px 0;
+}
+
+.cta-card h3 {
+  color: #d4af37;
+  margin-bottom: 20px;
+  font-size: 1.4em;
+}
+
+.cta-card ul {
+  text-align: left;
+  max-width: 400px;
+  margin: 20px auto;
+  list-style: none;
+  padding: 0;
+}
+
+.cta-card li {
+  margin: 10px 0;
+  padding-left: 25px;
+  position: relative;
+}
+
+.cta-card li::before {
+  content: '✨';
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.cta-price {
+  font-size: 1.3em;
+  margin-top: 20px;
+  color: #d4af37;
+}
+
+.cta-price strong {
+  font-size: 1.5em;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 1.1em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .weekly-bonus-container {
+    padding: 15px;
+  }
+  
+  .weekly-bonus-header h2 {
+    font-size: 1.8em;
+  }
+  
+  .bonus-price .price {
+    font-size: 2em;
+  }
+  
+  .active-bonus-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .bonus-features {
+    justify-content: center;
+  }
+  
+  .bonus-card-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

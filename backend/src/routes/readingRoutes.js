@@ -7,11 +7,23 @@ import { checkReadingLimits, checkFeatureAccess } from '../middleware/subscripti
 
 const router = express.Router();
 
+// Endpoint informativo para GET /readings
+router.get('/', (req, res) => {
+  res.json({
+    message: 'API de Lecturas - Nebulosa Mágica',
+    endpoints: {
+      'POST /': 'Crear nueva lectura (requiere autenticación)',
+      'GET /history': 'Obtener historial de lecturas (requiere autenticación)',
+      'GET /limit-status': 'Verificar estado de límites de lecturas'
+    },
+    documentation: 'Para crear lecturas, usa POST con los datos requeridos'
+  });
+});
 
-// Invitados pueden crear primera lectura gratis (optionalAuth + checkReadingLimit)
-router.post('/', optionalAuth, checkReadingLimit, validateReading, createReading);
+// Solo usuarios registrados pueden crear lecturas
+router.post('/', authenticate, checkReadingLimits, validateReading, createReading);
 
-// Miembros pueden crear lecturas según su membresía con nuevos límites
+// Endpoint legacy - redirigir al principal
 router.post('/create', authenticate, checkReadingLimits, validateReading, createReading);
 
 // Historial de lecturas (solo miembros con acceso)
@@ -19,6 +31,6 @@ router.get('/history', authenticate, checkFeatureAccess('history'), getReadingHi
 
 // Endpoint unificado para límite de lecturas
 import { getUnifiedLimitStatus } from '../controllers/readingController.js';
-router.get('/limit-status', authenticate, getUnifiedLimitStatus);
+router.get('/limit-status', optionalAuth, getUnifiedLimitStatus);
 
 export default router;

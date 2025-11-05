@@ -1,0 +1,8 @@
+<svg width="200" height="350" xmlns="http://www.w3.org/2000/svg">
+      <rect width="200" height="350" fill="#f8f9fa" stroke="#dee2e6" stroke-width="2"/>
+      <text x="100" y="175" text-anchor="middle" font-family="serif" font-size="14" fill="#6c757d">
+        <tspan x="100" dy="0">TAROT-EGIPCIO</tspan>
+        <tspan x="100" dy="20">LA EMPERATRIZ</tspan>
+        <tspan x="100" dy="30">Placeholder</tspan>
+      </text>
+    </svg>

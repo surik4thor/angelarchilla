@@ -72,6 +72,13 @@ export default function Menu() {
             </div>
           ) : !user ? (
             <div className="menu-auth-buttons">
+              <Link 
+                to="/planes" 
+                className="menu-button menu-button-secondary"
+                onClick={() => setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100)}
+              >
+                💎 Planes
+              </Link>
               <button 
                 className="menu-button menu-button-primary"
                 onClick={() => openAuthModal('login')}
@@ -140,16 +147,47 @@ export default function Menu() {
                     <Link 
                       to="/profile" 
                       className="dropdown-item"
-                      onClick={() => setShowUserDropdown(false)}
+                      onClick={() => {
+                        setShowUserDropdown(false);
+                        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
+                      }}
                     >
                       <span role="img" aria-label="Perfil" style={{fontSize:'1em'}}>👤</span>
                       Mi Perfil
                     </Link>
 
                     <Link 
+                      to="/tutoriales" 
+                      className="dropdown-item"
+                      onClick={() => {
+                        setShowUserDropdown(false);
+                        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
+                      }}
+                    >
+                      <span role="img" aria-label="Tutoriales" style={{fontSize:'1em'}}>📚</span>
+                      Tutoriales
+                      <span className="coupon-indicator-mini">🎁</span>
+                    </Link>
+
+                    <Link 
+                      to="/planes" 
+                      className="dropdown-item"
+                      onClick={() => {
+                        setShowUserDropdown(false);
+                        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
+                      }}
+                    >
+                      <span role="img" aria-label="Planes" style={{fontSize:'1em'}}>💎</span>
+                      Planes & Precios
+                    </Link>
+
+                    <Link 
                       to="/account" 
                       className="dropdown-item"
-                      onClick={() => setShowUserDropdown(false)}
+                      onClick={() => {
+                        setShowUserDropdown(false);
+                        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
+                      }}
                     >
                       <span role="img" aria-label="Configuración" style={{fontSize:'1em'}}>⚙️</span>
                       Configuración
@@ -161,7 +199,10 @@ export default function Menu() {
                         <Link 
                           to="/admin" 
                           className="dropdown-item admin-item"
-                          onClick={() => setShowUserDropdown(false)}
+                          onClick={() => {
+                            setShowUserDropdown(false);
+                            setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
+                          }}
                         >
                           <span role="img" aria-label="Admin" style={{fontSize:'1em'}}>🛡️</span>
                           Panel Admin

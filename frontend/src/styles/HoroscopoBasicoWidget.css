@@ -1,0 +1,371 @@
+/* HoroscopoBasicoWidget.css */
+.horoscopo-basico-widget {
+  background: linear-gradient(135deg, #232946 0%, #1a1a2e 50%, #16213e 100%);
+  padding: 3rem 1rem;
+  margin: 2rem 0;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.widget-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.widget-header {
+  margin-bottom: 2.5rem;
+}
+
+.widget-header h2 {
+  font-family: var(--font-title);
+  font-size: 2.2rem;
+  background: linear-gradient(135deg, #d4af37 0%, #eebc1d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.widget-header p {
+  font-size: 1.1rem;
+  color: rgba(229, 231, 235, 0.9);
+  line-height: 1.6;
+}
+
+.zodiac-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.zodiac-button {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  border-radius: 15px;
+  padding: 1rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.zodiac-button:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+}
+
+.zodiac-button.selected {
+  background: linear-gradient(135deg, #d4af37 0%, #eebc1d 100%);
+  border-color: #d4af37;
+  color: #232946;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+.sign-symbol {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.sign-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.widget-actions {
+  margin: 2rem 0;
+}
+
+.get-horoscope-btn {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 auto;
+  min-width: 250px;
+}
+
+.get-horoscope-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+}
+
+.get-horoscope-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.horoscope-result {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem 0;
+  backdrop-filter: blur(10px);
+}
+
+.result-header h3 {
+  font-family: var(--font-title);
+  color: #d4af37;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.result-content p {
+  color: rgba(229, 231, 235, 0.95);
+  line-height: 1.6;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.horoscope-message,
+.horoscope-advice,
+.lucky-numbers,
+.color-day {
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border-left: 3px solid #d4af37;
+}
+
+.horoscope-message p,
+.horoscope-advice p,
+.lucky-numbers p,
+.color-day p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.horoscope-message strong,
+.horoscope-advice strong,
+.lucky-numbers strong,
+.color-day strong {
+  color: #d4af37;
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.register-prompt {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(212, 175, 55, 0.1) 100%);
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-top: 2rem;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.prompt-header {
+  margin-bottom: 2rem;
+}
+
+.prompt-header h3 {
+  font-family: var(--font-title);
+  color: #d4af37;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.prompt-header p {
+  color: rgba(229, 231, 235, 0.9);
+  font-size: 1.1rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  color: rgba(229, 231, 235, 0.9);
+  font-weight: 500;
+}
+
+.benefit-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2rem 0;
+}
+
+.cta-primary {
+  background: linear-gradient(135deg, #d4af37 0%, #eebc1d 100%);
+  color: #232946;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+}
+
+.cta-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.social-proof {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-proof p {
+  color: rgba(229, 231, 235, 0.8);
+  font-size: 0.95rem;
+}
+
+.social-proof strong {
+  color: #d4af37;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .horoscopo-basico-widget {
+    padding: 2rem 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .widget-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .zodiac-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+  }
+
+  .zodiac-button {
+    min-height: 70px;
+    padding: 0.8rem 0.3rem;
+  }
+
+  .sign-symbol {
+    font-size: 1.5rem;
+  }
+
+  .sign-name {
+    font-size: 0.8rem;
+  }
+
+  .get-horoscope-btn {
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
+    min-width: 200px;
+  }
+
+  .register-prompt {
+    padding: 1.5rem;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-primary,
+  .cta-secondary {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .zodiac-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .widget-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .result-content p {
+    font-size: 1rem;
+  }
+}

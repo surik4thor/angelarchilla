@@ -167,7 +167,7 @@ export default function UserDashboard({ user }) {
   useEffect(() => {
     const fetchUserStats = async () => {
       try {
-        const response = await api.get('/user/usage-stats');
+        const response = await api.get('/api/user/usage-stats');
         setUserStats(response.data);
       } catch (error) {
         console.error('Error fetching user stats:', error);
@@ -302,6 +302,73 @@ export default function UserDashboard({ user }) {
           <CalendarioUnificado user={user} />
         </div>
       )}
+
+      {/* Biblioteca de Tutoriales */}
+      <div className="dashboard-block dashboard-tutorials">
+        <div className="action-card secondary">
+          <div className="action-icon">
+            <span role="img" aria-label="Tutoriales">📚</span>
+          </div>
+          <div className="action-content">
+            <h3 style={{fontFamily: 'var(--font-title)'}}>Biblioteca de Conocimiento Místico</h3>
+            <p style={{fontFamily: 'var(--font-base)'}}>
+              Aprende las artes esotéricas con nuestras guías completas y especializadas. 
+              <strong style={{color: '#eebc1d'}}> ¡Acceso incluido en tu plan actual!</strong>
+            </p>
+            <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center'}}>
+              <Link 
+                to="/tutoriales" 
+                className="action-btn" 
+                style={{
+                  background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+                  color: 'white',
+                  borderRadius: 8,
+                  padding: '8px 16px',
+                  textDecoration: 'none',
+                  fontWeight: 'bold',
+                  display: 'inline-block',
+                  marginTop: '0.5rem'
+                }}
+              >
+                📖 Explorar Tutoriales
+              </Link>
+              <Link 
+                to="/planes" 
+                className="action-btn" 
+                style={{
+                  background: 'linear-gradient(135deg, #d4af37 0%, #eebc1d 100%)',
+                  color: '#232946',
+                  borderRadius: 8,
+                  padding: '8px 16px',
+                  textDecoration: 'none',
+                  fontWeight: 'bold',
+                  display: 'inline-block',
+                  marginTop: '0.5rem'
+                }}
+              >
+                👑 Ver Todos los Planes
+              </Link>
+            </div>
+            <div style={{
+              fontSize: '0.9rem',
+              color: '#4ade80',
+              fontWeight: 'bold',
+              marginTop: '0.8rem',
+              padding: '0.5rem',
+              background: 'rgba(74, 222, 128, 0.1)',
+              borderRadius: '6px',
+              border: '1px solid rgba(74, 222, 128, 0.3)'
+            }}>
+              ✅ Tutoriales disponibles para usuarios {getPlanLabel(user.subscriptionPlan)} y superiores
+              {!planActivo && (
+                <div style={{marginTop: '0.5rem', color: '#eebc1d'}}>
+                  🎁 ¡Actualiza tu plan y encuentra cupones especiales de bienvenida!
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

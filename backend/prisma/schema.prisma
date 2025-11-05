@@ -34,6 +34,8 @@ model User {
   preferences Json?
   username  String?
   password  String
+  resetPasswordToken String?
+  resetPasswordExpires DateTime?
   avatar    String?
   birthDate DateTime?
   zodiacSign String?
@@ -65,6 +67,7 @@ model User {
   dreams       Dream[]
   natalChart   NatalChart?
   personalizedHoroscopes PersonalizedHoroscope[]
+  weeklyBonuses WeeklyBonus[]
   @@map("users")
 }
 
@@ -326,6 +329,9 @@ enum UserRole {
 
 enum SubscriptionPlan {
   INVITADO
+  ESENCIAL
+  PREMIUM
+  // Legacy plans for migration
   INICIADO
   ADEPTO
   MAESTRO
@@ -355,4 +361,31 @@ enum ExpenseCategory {
   OFFICE
   LEGAL
   OTHER
+}
+
+model WeeklyBonus {
+  id          String   @id @default(cuid())
+  userId      String
+  amount      Float    // Precio del bono (ej: 8.99)
+  currency    String   @default("EUR")
+  purchaseDate DateTime @default(now())
+  activatedAt DateTime?
+  expiresAt   DateTime?
+  status      BonusStatus @default(PURCHASED)
+  paymentMethod String? // "bizum", "card", etc.
+  paymentReference String?
+  features    Json?    // Características del bono
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("weekly_bonuses")
+}
+
+enum BonusStatus {
+  PURCHASED   // Comprado pero no activado
+  ACTIVE      // Activo y en uso
+  EXPIRED     // Expirado
+  REFUNDED    // Reembolsado
 }

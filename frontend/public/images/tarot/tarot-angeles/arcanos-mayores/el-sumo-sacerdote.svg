@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradiente de fondo -->
+    <linearGradient id="bg-tarot-angeles" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#F0F8FF;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0.6" />
+    </linearGradient>
+    
+    <!-- Patrón decorativo -->
+    <pattern id="pattern-tarot-angeles" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <rect width="40" height="40" fill="none"/>
+      <circle cx="20" cy="20" r="2" fill="#F0F8FF" opacity="0.3"/>
+      <path d="M0,20 Q20,0 40,20 Q20,40 0,20" fill="none" stroke="#F0F8FF" stroke-width="0.5" opacity="0.2"/>
+    </pattern>
+    
+    <!-- Sombra -->
+    <filter id="shadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="2" dy="2" result="offset"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Fondo de carta -->
+  <rect x="5" y="5" width="190" height="340" rx="15" ry="15" 
+        fill="url(#bg-tarot-angeles)" 
+        stroke="#FFD700" 
+        stroke-width="2"
+        filter="url(#shadow)"/>
+  
+  <!-- Patrón decorativo de fondo -->
+  <rect x="10" y="10" width="180" height="330" rx="10" ry="10" 
+        fill="url(#pattern-tarot-angeles)" 
+        opacity="0.3"/>
+  
+  <!-- Borde interior -->
+  <rect x="15" y="15" width="170" height="320" rx="10" ry="10" 
+        fill="none" 
+        stroke="#F0F8FF" 
+        stroke-width="1" 
+        opacity="0.6"/>
+  
+  <!-- Número romano (si aplica) -->
+  
+    <text x="30" y="40" 
+          font-family="serif" 
+          font-size="18" 
+          font-weight="bold"
+          fill="#F0F8FF" 
+          opacity="0.8">
+      V
+    </text>
+  
+  
+  <!-- Símbolo central decorativo -->
+  <g transform="translate(100, 175)">
+    <!-- Estrella de 8 puntas -->
+    <path d="M0,-30 L7.5,-7.5 L30,0 L7.5,7.5 L0,30 L-7.5,7.5 L-30,0 L-7.5,-7.5 Z" 
+          fill="#F0F8FF" 
+          opacity="0.4"
+          stroke="#FFD700" 
+          stroke-width="1"/>
+    
+    <!-- Círculo interior -->
+    <circle cx="0" cy="0" r="15" 
+            fill="none" 
+            stroke="#F0F8FF" 
+            stroke-width="2" 
+            opacity="0.6"/>
+  </g>
+  
+  <!-- Título de la carta -->
+  <text x="100" y="280" 
+        text-anchor="middle" 
+        font-family="serif" 
+        font-size="16" 
+        font-weight="bold"
+        fill="#FFD700">
+    El Sumo Sacerdote
+  </text>
+  
+  <!-- Subtítulo del mazo -->
+  <text x="100" y="300" 
+        text-anchor="middle" 
+        font-family="serif" 
+        font-size="12" 
+        fill="#FFD700" 
+        opacity="0.8">
+    Guía Angelical
+  </text>
+  
+  <!-- Información del mazo -->
+  <text x="100" y="315" 
+        text-anchor="middle" 
+        font-family="serif" 
+        font-size="10" 
+        fill="#FFD700" 
+        opacity="0.6">
+    Espiritual
+  </text>
+  
+  <!-- Marca de placeholder -->
+  <text x="100" y="330" 
+        text-anchor="middle" 
+        font-family="sans-serif" 
+        font-size="8" 
+        fill="#FFD700" 
+        opacity="0.4">
+    PLACEHOLDER
+  </text>
+  
+  <!-- Decoraciones en las esquinas -->
+  <g opacity="0.3">
+    <!-- Esquina superior izquierda -->
+    <path d="M20,25 Q25,20 30,25 Q25,30 20,25" fill="#F0F8FF"/>
+    <!-- Esquina superior derecha -->
+    <path d="M170,25 Q175,20 180,25 Q175,30 170,25" fill="#F0F8FF"/>
+    <!-- Esquina inferior izquierda -->
+    <path d="M20,325 Q25,320 30,325 Q25,330 20,325" fill="#F0F8FF"/>
+    <!-- Esquina inferior derecha -->
+    <path d="M170,325 Q175,320 180,325 Q175,330 170,325" fill="#F0F8FF"/>
+  </g>
+  
+</svg>

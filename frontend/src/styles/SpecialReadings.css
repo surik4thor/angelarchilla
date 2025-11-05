@@ -1,0 +1,547 @@
+/* Estilos para lecturas especiales - Ángeles y Egipcio */
+
+/* LECTURA ANGELICAL */
+.angel-reading-container {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(221, 160, 221, 0.05) 100%);
+  border: 2px solid rgba(255, 215, 0, 0.2);
+  border-radius: 25px;
+  padding: 2rem;
+  margin: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.angel-reading-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+  animation: angelGlow 8s ease-in-out infinite;
+}
+
+.angel-reading-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.angel-reading-header h2 {
+  color: #ffd700;
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+}
+
+.angel-light-beam {
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ffd700, transparent);
+  margin: 0 auto;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.angel-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.angel-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 20px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.angel-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(255, 215, 0, 0.2);
+  border-color: rgba(255, 215, 0, 0.5);
+}
+
+.angel-card-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.angel-position {
+  color: #ffd700;
+  font-family: var(--font-title);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.angel-name {
+  color: #f0f8ff;
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.angel-message {
+  background: rgba(255, 215, 0, 0.08);
+  border-left: 3px solid #ffd700;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.angel-message p {
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.6;
+  margin: 0;
+  font-style: italic;
+}
+
+.angel-guidance {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.angel-guidance h5 {
+  color: #ffd700;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.angel-guidance p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.angel-affirmation {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(221, 160, 221, 0.1));
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 15px;
+  padding: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.angel-affirmation h5 {
+  color: #ffd700;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.angel-affirmation p {
+  color: #f0f8ff;
+  font-weight: 600;
+  font-style: italic;
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.angel-energy {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.energy-label {
+  color: #ffd700;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.energy-color-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-style: italic;
+}
+
+.angel-symbol {
+  background: rgba(255, 215, 0, 0.05);
+  border-left: 2px solid #ffd700;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.angel-symbol h5 {
+  color: #ffd700;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.angel-symbol p {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* LECTURA EGIPCIA */
+.egyptian-reading-container {
+  background: linear-gradient(135deg, rgba(218, 165, 32, 0.08) 0%, rgba(139, 69, 19, 0.05) 50%, rgba(65, 105, 225, 0.05) 100%);
+  border: 2px solid rgba(218, 165, 32, 0.3);
+  border-radius: 25px;
+  padding: 2rem;
+  margin: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.egyptian-reading-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.egyptian-reading-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.egyptian-reading-header h2 {
+  color: #daa520;
+  font-family: var(--font-title);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 8px rgba(218, 165, 32, 0.4);
+  letter-spacing: 2px;
+}
+
+.temple-name {
+  color: rgba(218, 165, 32, 0.8);
+  font-style: italic;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.egyptian-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.egyptian-card {
+  background: linear-gradient(135deg, rgba(139, 69, 19, 0.1) 0%, rgba(218, 165, 32, 0.05) 100%);
+  border: 2px solid rgba(218, 165, 32, 0.3);
+  border-radius: 20px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.egyptian-card::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(circle, rgba(218, 165, 32, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.egyptian-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(218, 165, 32, 0.25);
+  border-color: rgba(218, 165, 32, 0.6);
+}
+
+.egyptian-card-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(218, 165, 32, 0.3);
+}
+
+.egyptian-position {
+  color: #daa520;
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.egyptian-deity {
+  color: #f4a460;
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.egyptian-symbol {
+  color: rgba(218, 165, 32, 0.8);
+  margin: 0;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+.egyptian-planes {
+  margin-bottom: 1.5rem;
+}
+
+.egyptian-plane {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  border-left: 3px solid;
+}
+
+.upper-plane {
+  background: rgba(218, 165, 32, 0.08);
+  border-left-color: #daa520;
+}
+
+.center-plane {
+  background: rgba(139, 69, 19, 0.08);
+  border-left-color: #8b4513;
+}
+
+.lower-plane {
+  background: rgba(65, 105, 225, 0.08);
+  border-left-color: #4169e1;
+}
+
+.egyptian-plane h5 {
+  color: #daa520;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.egyptian-plane p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.egyptian-integrated {
+  background: linear-gradient(135deg, rgba(218, 165, 32, 0.1), rgba(139, 69, 19, 0.05));
+  border: 1px solid rgba(218, 165, 32, 0.3);
+  border-radius: 15px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.egyptian-integrated h5 {
+  color: #daa520;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.egyptian-integrated p {
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 500;
+}
+
+.egyptian-advice {
+  background: rgba(139, 69, 19, 0.1);
+  border-left: 3px solid #8b4513;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.egyptian-advice h5 {
+  color: #daa520;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.egyptian-advice p {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.egyptian-meditation {
+  background: rgba(65, 105, 225, 0.08);
+  border: 1px solid rgba(65, 105, 225, 0.3);
+  padding: 0.8rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.egyptian-meditation h5 {
+  color: #4169e1;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.egyptian-meditation p {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-style: italic;
+}
+
+/* Mensajes generales y bendiciones */
+.overall-angel-message,
+.overall-egyptian-message {
+  background: rgba(255, 215, 0, 0.08);
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  margin: 2rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.overall-egyptian-message {
+  background: rgba(218, 165, 32, 0.08);
+  border-color: rgba(218, 165, 32, 0.3);
+}
+
+.overall-angel-message h3,
+.overall-egyptian-message h3 {
+  color: #ffd700;
+  font-family: var(--font-title);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.overall-egyptian-message h3 {
+  color: #daa520;
+}
+
+.angelical-blessing,
+.pharaoh-blessing {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  border-radius: 25px;
+  padding: 2rem;
+  text-align: center;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.pharaoh-blessing {
+  background: linear-gradient(135deg, rgba(218, 165, 32, 0.1) 0%, rgba(139, 69, 19, 0.05) 100%);
+  border-color: rgba(218, 165, 32, 0.4);
+}
+
+.angelical-blessing::before {
+  content: '✨';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #232946;
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  border: 2px solid rgba(255, 215, 0, 0.4);
+}
+
+.pharaoh-blessing::before {
+  content: '👑';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #232946;
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  border: 2px solid rgba(218, 165, 32, 0.4);
+}
+
+.blessing-text {
+  color: #f0f8ff;
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.maat-teaching {
+  background: rgba(65, 105, 225, 0.08);
+  border: 1px solid rgba(65, 105, 225, 0.3);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.maat-teaching h3 {
+  color: #4169e1;
+  font-family: var(--font-title);
+  margin-bottom: 1rem;
+}
+
+.maat-teaching p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Animaciones */
+@keyframes angelGlow {
+  0%, 100% { 
+    opacity: 0.3; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.6; 
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .angel-cards-grid,
+  .egyptian-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .angel-reading-container,
+  .egyptian-reading-container {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .angel-reading-header h2,
+  .egyptian-reading-header h2 {
+    font-size: 1.4rem;
+  }
+  
+  .angelical-blessing,
+  .pharaoh-blessing {
+    padding: 1.5rem;
+  }
+}

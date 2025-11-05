@@ -33,8 +33,8 @@
 }
 
 body {
-  background: var(--nebulosa-gradient), url('/nebulosa-bg.svg');
-  background-blend-mode: lighten, screen;
+  background: var(--nebulosa-gradient);
+  /* background-blend-mode: lighten, screen; */
   color: var(--color-text);
   font-family: var(--font-base) !important;
   margin: 0;

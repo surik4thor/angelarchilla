@@ -1,43 +1,101 @@
 import prisma from '../config/database.js';
 
-// Definición de límites por plan
+// === ESTRUCTURA DEFINITIVA (3 PLANES) ===
 const SUBSCRIPTION_LIMITS = {
   INVITADO: {
-    maxReadingsPerMonth: 0,
-    maxReadingsPerDay: 0,
+    maxReadingsPerMonth: 3,      // 3 lecturas básicas al mes
+    maxReadingsPerDay: null,     // Sin límite diario
     hasDreams: false,
     hasNatalCharts: false,
     hasPersonalizedHoroscopes: false,
     hasHistory: false,
-    hasPartnerSync: false
+    hasPartnerSync: false,
+    hasAllDecks: false,          // Solo Rider-Waite básico
+    hasAdvancedDashboard: false,
+    hasExportPDF: false,
+    hasPrioritySupport: false
   },
+  
+  ESENCIAL: {
+    maxReadingsPerMonth: 15,     // 15 lecturas completas al mes
+    maxReadingsPerDay: null,     // Sin límite diario
+    hasDreams: false,
+    hasNatalCharts: false,
+    hasPersonalizedHoroscopes: true,   // Horóscopos personalizados
+    hasHistory: true,                   // Historial completo
+    hasPartnerSync: false,
+    hasAllDecks: true,                  // Todas las barajas
+    hasAdvancedDashboard: true,         // Dashboard con métricas
+    hasExportPDF: false,
+    hasPrioritySupport: false
+  },
+  
+  PREMIUM: {
+    maxReadingsPerMonth: null,   // Lecturas ilimitadas
+    maxReadingsPerDay: null,     
+    hasDreams: true,                    // Interpretación de sueños
+    hasNatalCharts: true,               // Cartas natales detalladas
+    hasPersonalizedHoroscopes: true,    // Horóscopos ultra-personalizados
+    hasHistory: true,
+    hasPartnerSync: true,               // Funciones de pareja
+    hasAllDecks: true,
+    hasAdvancedDashboard: true,
+    hasExportPDF: true,                 // Exportar a PDF
+    hasPrioritySupport: true            // Soporte VIP
+  },
+
+  // === MIGRACIÓN AUTOMÁTICA: Mapeo de planes legacy ===
   INICIADO: {
-    maxReadingsPerMonth: 4,
-    maxReadingsPerDay: null, // Sin límite diario, solo mensual
+    // Mapeo automático a ESENCIAL
+    maxReadingsPerMonth: 15,
+    maxReadingsPerDay: null,
     hasDreams: false,
     hasNatalCharts: false,
-    hasPersonalizedHoroscopes: false,
-    hasHistory: false,
-    hasPartnerSync: false
-  },
-  ADEPTO: {
-    maxReadingsPerMonth: null, // Sin límite mensual
-    maxReadingsPerDay: 1,
-    hasDreams: false,
-    hasNatalCharts: true,
     hasPersonalizedHoroscopes: true,
     hasHistory: true,
-    hasPartnerSync: false
+    hasPartnerSync: false,
+    hasAllDecks: true,
+    hasAdvancedDashboard: true,
+    hasExportPDF: false,
+    hasPrioritySupport: false
   },
-  MAESTRO: {
+  
+  ADEPTO: {
+    // Mapeo automático a PREMIUM
     maxReadingsPerMonth: null,
-    maxReadingsPerDay: null, // Ilimitado
+    maxReadingsPerDay: null,
     hasDreams: true,
     hasNatalCharts: true,
     hasPersonalizedHoroscopes: true,
     hasHistory: true,
-    hasPartnerSync: true
+    hasPartnerSync: true,
+    hasAllDecks: true,
+    hasAdvancedDashboard: true,
+    hasExportPDF: true,
+    hasPrioritySupport: true
+  },
+  
+  MAESTRO: {
+    // Mapeo automático a PREMIUM
+    maxReadingsPerMonth: null,
+    maxReadingsPerDay: null,
+    hasDreams: true,
+    hasNatalCharts: true,
+    hasPersonalizedHoroscopes: true,
+    hasHistory: true,
+    hasPartnerSync: true,
+    hasAllDecks: true,
+    hasAdvancedDashboard: true,
+    hasExportPDF: true,
+    hasPrioritySupport: true
   }
+};
+
+// Mapeo de planes legacy a nuevos planes
+const PLAN_MIGRATION_MAP = {
+  INICIADO: 'ESENCIAL',
+  ADEPTO: 'PREMIUM', 
+  MAESTRO: 'PREMIUM'
 };
 
 // Middleware para verificar límites de lecturas
@@ -159,23 +217,23 @@ export const checkFeatureAccess = (feature) => {
     switch (feature) {
       case 'dreams':
         hasAccess = limits.hasDreams;
-        requiredPlan = 'MAESTRO';
+        requiredPlan = 'PREMIUM';
         break;
       case 'natal_charts':
         hasAccess = limits.hasNatalCharts;
-        requiredPlan = 'ADEPTO';
+        requiredPlan = 'PREMIUM';
         break;
       case 'personalized_horoscopes':
         hasAccess = limits.hasPersonalizedHoroscopes;
-        requiredPlan = 'ADEPTO';
+        requiredPlan = 'ESENCIAL';
         break;
       case 'history':
         hasAccess = limits.hasHistory;
-        requiredPlan = 'ADEPTO';
+        requiredPlan = 'ESENCIAL';
         break;
       case 'partner_sync':
         hasAccess = limits.hasPartnerSync;
-        requiredPlan = 'MAESTRO';
+        requiredPlan = 'PREMIUM';
         break;
       default:
         return res.status(400).json({ 
@@ -214,15 +272,15 @@ export const checkDreamLimits = async (req, res, next) => {
     if (!limits.hasDreams) {
       return res.status(403).json({
         error: 'Función premium',
-        message: 'La interpretación de sueños requiere el plan MAESTRO',
+        message: 'La interpretación de sueños requiere el plan PREMIUM',
         currentPlan: userPlan,
-        requiredPlan: 'MAESTRO',
+        requiredPlan: 'PREMIUM',
         upgradeRequired: true
       });
     }
 
-    // Para el plan MAESTRO, verificar límites diarios si aplica
-    if (userPlan === 'MAESTRO') {
+    // Para planes PREMIUM, verificar límites diarios si aplica
+    if (userPlan === 'PREMIUM' || userPlan === 'MAESTRO' || userPlan === 'ADEPTO') {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const tomorrow = new Date(today);
@@ -321,4 +379,39 @@ export const getUserUsageStats = async (userId) => {
   }
 };
 
-export { SUBSCRIPTION_LIMITS };
+// Función para obtener el plan equivalente actualizado
+export const getUpdatedPlan = (currentPlan) => {
+  return PLAN_MIGRATION_MAP[currentPlan] || currentPlan;
+};
+
+// Función para migrar usuario a nuevo sistema de planes
+export const migrateUserPlan = async (userId) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId }
+    });
+
+    if (!user) return null;
+
+    const currentPlan = user.subscriptionPlan;
+    const newPlan = getUpdatedPlan(currentPlan);
+
+    if (newPlan !== currentPlan) {
+      console.log(`Migrando usuario ${userId} de ${currentPlan} a ${newPlan}`);
+      
+      const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: { subscriptionPlan: newPlan }
+      });
+
+      return updatedUser;
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Error migrating user plan:', error);
+    return null;
+  }
+};
+
+export { SUBSCRIPTION_LIMITS, PLAN_MIGRATION_MAP };

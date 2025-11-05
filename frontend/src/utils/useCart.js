@@ -5,7 +5,14 @@ export default function useCart() {
 
   useEffect(() => {
     const saved = localStorage.getItem('cart');
-    if (saved) setCart(JSON.parse(saved));
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setCart(Array.isArray(parsed) ? parsed : []);
+      } catch (e) {
+        setCart([]);
+      }
+    }
   }, []);
 
   useEffect(() => {

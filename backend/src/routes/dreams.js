@@ -10,7 +10,7 @@ const router = express.Router();
 // Obtener estado de límites
 router.get('/limit-status', authenticate, async (req, res) => {
   try {
-    const user = req.user;
+    const user = req.member;
     const today = new Date();
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     
@@ -47,12 +47,12 @@ router.get('/limit-status', authenticate, async (req, res) => {
 });
 
 // Crear sueño
-router.post('/', authenticate, checkDreamLimits, async (req, res) => {
+router.post('/', authenticate, checkFeatureAccess('dreams'), checkDreamLimits, async (req, res) => {
   try {
     const { date, text, feelings } = req.body;
-    console.log('[POST /dreams] req.user:', req.user);
+    console.log('[POST /dreams] req.member:', req.member);
     console.log('[POST /dreams] body:', req.body);
-    if (!req.user || !req.user.id) {
+    if (!req.member || !req.member.id) {
       return res.status(401).json({ error: 'Usuario no autenticado' });
     }
     if (!date || !text) {
@@ -68,7 +68,7 @@ router.post('/', authenticate, checkDreamLimits, async (req, res) => {
       text,
       feelings: feelings || [],
       date: parsedDate.toISOString(),
-      userId: req.user.id
+      userId: req.member.id
     };
 
     // Interpretación por IA
@@ -81,7 +81,7 @@ router.post('/', authenticate, checkDreamLimits, async (req, res) => {
     }
     const dream = await prisma.dream.create({
       data: {
-        userId: req.user.id,
+        userId: req.member.id,
         dreamText: text,
         date: parsedDate,
         feelings: feelings || [],
@@ -104,7 +104,7 @@ router.get('/history', authenticate, checkFeatureAccess('dreams'), async (req, r
     const offset = (page - 1) * limit;
 
     const dreams = await prisma.dream.findMany({
-      where: { userId: req.user.id },
+      where: { userId: req.member.id },
       orderBy: { date: 'desc' },
       skip: offset,
       take: limit,
@@ -119,7 +119,7 @@ router.get('/history', authenticate, checkFeatureAccess('dreams'), async (req, r
     });
 
     const total = await prisma.dream.count({
-      where: { userId: req.user.id }
+      where: { userId: req.member.id }
     });
 
     res.json({ 

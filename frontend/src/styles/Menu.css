@@ -437,3 +437,10 @@
     display: none;
   }
 }
+
+/* Indicador de cupón en el menú */
+.coupon-indicator-mini {
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+  animation: pulse 2s infinite;
+}

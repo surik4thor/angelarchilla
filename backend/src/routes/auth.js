@@ -196,6 +196,145 @@ router.post('/login', sensitiveLimiter, async (req, res) => {
   }
 });
 
+// Solicitar recuperación de contraseña
+import { 
+  generateResetToken, 
+  saveResetToken, 
+  canRequestReset,
+  validateResetToken,
+  clearResetToken
+} from '../utils/passwordReset.js';
+import { sendPasswordResetEmail } from '../utils/email.js';
+
+router.post('/forgot-password', sensitiveLimiter, async (req, res) => {
+  const { email } = req.body;
+  
+  if (!email) {
+    return res.status(400).json({ error: 'El email es obligatorio' });
+  }
+
+  try {
+    // Verificar que el usuario existe
+    const user = await prisma.user.findUnique({ 
+      where: { email },
+      select: { id: true, email: true, username: true }
+    });
+
+    // Por seguridad, siempre respondemos con éxito, incluso si el usuario no existe
+    if (!user) {
+      return res.json({ 
+        success: true, 
+        message: 'Si el email existe en nuestro sistema, recibirás un enlace de recuperación.' 
+      });
+    }
+
+    // Verificar que puede solicitar reset (anti-spam)
+    const canRequest = await canRequestReset(email);
+    if (!canRequest) {
+      return res.status(429).json({ 
+        error: 'Ya se envió un enlace de recuperación recientemente. Espera 10 minutos antes de solicitar otro.' 
+      });
+    }
+
+    // Generar token y guardarlo
+    const resetToken = generateResetToken();
+    const saved = await saveResetToken(email, resetToken);
+    
+    if (!saved) {
+      return res.status(500).json({ error: 'Error interno. Inténtalo de nuevo.' });
+    }
+
+    // Enviar email
+    await sendPasswordResetEmail(email, resetToken, user.username);
+
+    res.json({ 
+      success: true, 
+      message: 'Te hemos enviado un enlace de recuperación a tu email. Revisa tu bandeja de entrada y spam.' 
+    });
+
+  } catch (error) {
+    console.error('Error en forgot-password:', error);
+    res.status(500).json({ error: 'Error interno. Inténtalo de nuevo más tarde.' });
+  }
+});
+
+// Validar token de reset (opcional - para verificar antes de mostrar formulario)
+router.get('/validate-reset-token/:token', async (req, res) => {
+  const { token } = req.params;
+
+  if (!token) {
+    return res.status(400).json({ error: 'Token requerido' });
+  }
+
+  try {
+    const user = await validateResetToken(token);
+    
+    if (!user) {
+      return res.status(400).json({ 
+        error: 'Token inválido o expirado',
+        expired: true
+      });
+    }
+
+    res.json({ 
+      success: true, 
+      message: 'Token válido',
+      email: user.email 
+    });
+
+  } catch (error) {
+    console.error('Error validando token:', error);
+    res.status(500).json({ error: 'Error interno' });
+  }
+});
+
+// Restablecer contraseña
+router.post('/reset-password', sensitiveLimiter, async (req, res) => {
+  const { token, password } = req.body;
+
+  if (!token || !password) {
+    return res.status(400).json({ error: 'Token y nueva contraseña son obligatorios' });
+  }
+
+  if (password.length < 6) {
+    return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres' });
+  }
+
+  try {
+    // Validar token
+    const user = await validateResetToken(token);
+    
+    if (!user) {
+      return res.status(400).json({ 
+        error: 'Token inválido o expirado. Solicita un nuevo enlace de recuperación.',
+        expired: true
+      });
+    }
+
+    // Hashear nueva contraseña
+    const hashedPassword = await hashPassword(password);
+
+    // Actualizar contraseña y limpiar token
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password: hashedPassword,
+        resetPasswordToken: null,
+        resetPasswordExpires: null
+      }
+    });
+
+    res.json({ 
+      success: true, 
+      message: 'Tu contraseña ha sido restablecida exitosamente. Ya puedes iniciar sesión con tu nueva contraseña.' 
+    });
+
+  } catch (error) {
+    console.error('Error en reset-password:', error);
+    res.status(500).json({ error: 'Error interno. Inténtalo de nuevo.' });
+  }
+});
+
 // Ruta para obtener usuario autenticado
 router.get('/me', authenticate, async (req, res) => {
   try {

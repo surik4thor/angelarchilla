@@ -64,23 +64,30 @@ app.use(
     message: 'Demasiadas peticiones desde esta IP, intenta de nuevo más tarde.'
   })
 );
-// CORS gestionado solo por Nginx. No usar cors() en Express.
-
-
+// CORS: habilitar para desarrollo local, nginx lo maneja en producción
+if (process.env.NODE_ENV !== 'production') {
+  app.use(cors({
+    origin: ['http://localhost:5173', 'http://localhost:3000', 'https://nebulosamagica.com'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  }));
+}
 
 // Confirmado: no hay handler OPTIONS global ni rutas con '*'.
-
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
 // Registrar rutas después de los body parsers
+import readingRoutes from './routes/readingRoutes.js';
 import tarotReadingsRoutes from './routes/tarotReadings.js';
 import runesReadingsRoutes from './routes/runesReadings.js';
 app.use('/api/dreams', dreamsRoutes);
 app.use('/api/astrology', astrologyRoutes);
 app.use('/api/personalized-horoscope', personalizedHoroscopeRoutes);
+app.use('/api/readings', readingRoutes);
 app.use('/api/tarotReadings', tarotReadingsRoutes);
 app.use('/api/runesReadings', runesReadingsRoutes);
 

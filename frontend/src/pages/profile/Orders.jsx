@@ -7,7 +7,7 @@ export default function Orders() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get('/shop/orders')
+    api.get('/api/shop/orders')
       .then(({ data }) => setOrders(data.orders))
       .catch(console.error)
       .finally(() => setLoading(false));

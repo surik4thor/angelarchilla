@@ -23,17 +23,17 @@ export async function login({ email, password }) {
 }
 
 export async function logout() {
-  await api.post('/auth/logout');
+  await api.post('/api/auth/logout');
   localStorage.removeItem('arcanaToken');
 }
 
 export async function getMe() {
-  const { data } = await api.get('/auth/me');
+  const { data } = await api.get('/api/auth/me');
   return data.member; 
 }
 
 export async function updateProfile(updates) {
-  const { data } = await api.put('/auth/profile', updates);
+  const { data } = await api.put('/api/auth/profile', updates);
   return data.member;
 }
 
@@ -44,55 +44,55 @@ export async function updateProfile(updates) {
 export const adminAPI = {
   // Obtener todos los usuarios
   async getAllUsers() {
-    const { data } = await api.get('/admin/users');
+    const { data } = await api.get('/api/admin/users');
     return data;
   },
 
   // Obtener estadísticas del sistema
   async getStats() {
-    const { data } = await api.get('/admin/stats');
+    const { data } = await api.get('/api/admin/stats');
     return data;
   },
 
   // Eliminar usuario
   async deleteUser(userId) {
-    const { data } = await api.delete(`/admin/users/${userId}`);
+    const { data } = await api.delete(`/api/admin/users/${userId}`);
     return data;
   },
 
   // Actualizar rol de usuario
   async updateUserRole(userId, role) {
-    const { data } = await api.put(`/admin/users/${userId}/role`, { role });
+    const { data } = await api.put(`/api/admin/users/${userId}/role`, { role });
     return data;
   },
 
   // Actualizar plan de suscripción
   async updateUserPlan(userId, plan) {
-    const { data } = await api.put(`/admin/users/${userId}/plan`, { plan });
+    const { data } = await api.put(`/api/admin/users/${userId}/plan`, { plan });
     return data;
   },
 
   // Obtener logs de actividad
   async getLogs(page = 1, limit = 50) {
-    const { data } = await api.get(`/admin/logs?page=${page}&limit=${limit}`);
+    const { data } = await api.get(`/api/admin/logs?page=${page}&limit=${limit}`);
     return data;
   },
 
   // Verificar estado del sistema
   async getSystemStatus() {
-    const { data } = await api.get('/admin/system/status');
+    const { data } = await api.get('/api/admin/system/status');
     return data;
   },
 
   // Backup de base de datos
   async createBackup() {
-    const { data } = await api.post('/admin/system/backup');
+    const { data } = await api.post('/api/admin/system/backup');
     return data;
   },
 
   // Restaurar backup
   async restoreBackup(backupId) {
-    const { data } = await api.post(`/admin/system/restore/${backupId}`);
+    const { data } = await api.post(`/api/admin/system/restore/${backupId}`);
     return data;
   }
 };

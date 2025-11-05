@@ -1,0 +1,68 @@
+{
+  "imageConfig": {
+    "rider-waite": {
+      "path": "/images/rider-waite/",
+      "totalCards": 78,
+      "hasMinorArcana": true,
+      "backImage": "back.jpg",
+      "majorArcana": {
+        "count": 22,
+        "format": "{number}-{name-en}.jpg",
+        "example": "00-fool.jpg"
+      },
+      "minorArcana": {
+        "suits": ["wands", "cups", "swords", "pentacles"],
+        "format": "{rank}-{suit}.jpg",
+        "example": "ace-wands.jpg"
+      }
+    },
+    "marsella": {
+      "path": "/images/marsella/",
+      "totalCards": 78,
+      "hasMinorArcana": true,
+      "backImage": "back.jpg",
+      "majorArcana": {
+        "count": 22,
+        "format": "{number}-{name-fr}.jpg",
+        "example": "01-bateleur.jpg"
+      },
+      "minorArcana": {
+        "suits": ["batons", "coupes", "epees", "deniers"],
+        "format": "{rank}-{suit}.jpg",
+        "example": "as-batons.jpg"
+      }
+    },
+    "tarot-angeles": {
+      "path": "/images/tarot-angeles/",
+      "totalCards": 44,
+      "hasMinorArcana": false,
+      "backImage": "back.jpg",
+      "format": "angel-{number}-{name}.jpg",
+      "example": "angel-001-arcangel-miguel.jpg"
+    },
+    "tarot-egipcio": {
+      "path": "/images/tarot-egipcio/", 
+      "totalCards": 78,
+      "hasMinorArcana": true,
+      "backImage": "back.jpg",
+      "majorArcana": {
+        "count": 22,
+        "format": "egypt-major-{number}-{name}.jpg",
+        "example": "egypt-major-01-mago.jpg"
+      },
+      "minorArcana": {
+        "suits": ["bastos", "copas", "espadas", "oros"],
+        "format": "egypt-minor-{suit}-{rank}.jpg",
+        "example": "egypt-minor-bastos-as.jpg"
+      }
+    },
+    "tarot-gitano": {
+      "path": "/images/tarot-gitano/",
+      "totalCards": 36,
+      "hasMinorArcana": false,
+      "backImage": "back.jpg", 
+      "format": "gitano-{number}-{name}.jpg",
+      "example": "gitano-01-amor.jpg"
+    }
+  }
+}

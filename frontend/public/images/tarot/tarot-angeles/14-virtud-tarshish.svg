@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .card-border { fill: none; stroke: #228B22; stroke-width: 3; }
+      .background { fill: url(#bgGradient); }
+      .hierarchy-text { font-family: 'Georgia', serif; font-size: 10px; fill: #228B22; font-weight: bold; }
+      .number { font-family: 'Arial Black', sans-serif; font-size: 24px; fill: #32CD32; font-weight: bold; }
+      .name { font-family: 'Times New Roman', serif; font-size: 12px; fill: #228B22; font-weight: bold; }
+      .symbol { font-size: 40px; fill: #32CD32; text-anchor: middle; }
+      .tier-text { font-family: 'Arial', sans-serif; font-size: 8px; fill: #228B22; font-style: italic; }
+      .divine-light { fill: none; stroke: #98FB98; stroke-width: 1; opacity: 0.6; }
+    </style>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#98FB98;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#32CD32;stop-opacity:0.1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Fondo de la carta -->
+  <rect width="200" height="300" class="background" rx="15"/>
+  
+  <!-- Borde de la carta -->
+  <rect width="194" height="294" x="3" y="3" class="card-border" rx="12"/>
+  
+  <!-- Rayos de luz divina -->
+  <g class="divine-light" opacity="0.4">
+    <line x1="100" y1="20" x2="100" y2="280" />
+    <line x1="20" y1="150" x2="180" y2="150" />
+    <line x1="40" y1="60" x2="160" y2="240" />
+    <line x1="160" y1="60" x2="40" y2="240" />
+  </g>
+  
+  <!-- Número de carta (esquina superior izquierda) -->
+  <text x="15" y="30" class="number">14</text>
+  
+  <!-- Jerarquía (parte superior) -->
+  <text x="100" y="45" class="hierarchy-text" text-anchor="middle">VIRTUDES</text>
+  
+  <!-- Nivel jerárquico -->
+  <text x="100" y="55" class="tier-text" text-anchor="middle">Segunda Jerarquía</text>
+  
+  <!-- Símbolo angelical central -->
+  <text x="100" y="140" class="symbol" filter="url(#glow)">✤</text>
+  
+  <!-- Nombre del ángel (líneas múltiples si es necesario) -->
+  <g class="name" text-anchor="middle">
+    <text x="100" y="185">Virtud Tarshish</text>
+  </g>
+  
+  <!-- Elementos decorativos en las esquinas -->
+  <circle cx="25" cy="275" r="8" fill="#98FB98" opacity="0.6"/>
+  <circle cx="175" cy="275" r="8" fill="#98FB98" opacity="0.6"/>
+  <circle cx="25" cy="25" r="8" fill="#98FB98" opacity="0.6"/>
+  <circle cx="175" cy="25" r="8" fill="#98FB98" opacity="0.6"/>
+  
+  <!-- Aura angelical -->
+  <circle cx="100" cy="120" r="60" fill="none" stroke="#98FB98" stroke-width="1" opacity="0.3"/>
+  <circle cx="100" cy="120" r="45" fill="none" stroke="#32CD32" stroke-width="1" opacity="0.2"/>
+  
+  <!-- Número en esquina inferior derecha -->
+  <text x="185" y="285" class="number" text-anchor="end" font-size="18">14</text>
+  
+  <!-- Marca de autenticidad -->
+  <text x="100" y="270" class="tier-text" text-anchor="middle" opacity="0.7">TAROT DE LOS ÁNGELES</text>
+</svg>

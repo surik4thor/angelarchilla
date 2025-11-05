@@ -8,46 +8,14 @@ import { getLimits, isMaestroOrTrial } from '../helpers/limitHelper.js';
 export const getUnifiedLimitStatus = async (req, res) => {
   try {
     const type = (req.query.type || '').toLowerCase();
-    // Helper centralizado para límites
-    // Invitado real (no autenticado, sin req.member)
+    
+    // USUARIOS NO REGISTRADOS: Sin acceso a lecturas
     if (!req.member) {
-      const guestId = req.ip || 'unknown';
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      if (type === 'dreams' || type === 'sueños') {
-        const guestDreamsToday = await prisma.dream.count({
-          where: {
-            userId: null,
-            createdAt: { gte: today, lt: tomorrow }
-          }
-        });
-        if (guestDreamsToday >= 1) {
-          return res.json({
-            limited: true,
-            message: 'Has usado tu interpretación gratuita de sueños. ¡Únete al club para más!'
-          });
-        }
-        return res.json({ limited: false });
-      } else {
-        const readingType = type === 'runes' ? 'RUNES' : 'TAROT';
-        const guestReadingsToday = await prisma.reading.count({
-          where: {
-            userId: null,
-            anonGender: guestId,
-            type: readingType,
-            createdAt: { gte: today, lt: tomorrow }
-          }
-        });
-        if (guestReadingsToday >= 1) {
-          return res.json({
-            limited: true,
-            message: `Has usado tu consulta gratuita de ${(type === 'runes') ? 'runas' : 'tarot'}. ¡Únete al club para más!`
-          });
-        }
-        return res.json({ limited: false });
-      }
+      return res.json({
+        limited: true,
+        message: 'Debes registrarte para acceder a las lecturas. ¡Únete a Nebulosa Mágica!',
+        action: 'register_required'
+      });
     }
     // Usuario autenticado
     const member = req.member;
@@ -78,6 +46,8 @@ export const getUnifiedLimitStatus = async (req, res) => {
       return res.json({ limited: false });
     } else if (type === 'runes' || type === 'runas' || type === 'tarot') {
       const readingType = type === 'runes' || type === 'runas' ? 'RUNES' : 'TAROT';
+      
+      // TODOS los planes usan límites MENSUALES
       const readingsThisMonth = await prisma.reading.count({
         where: {
           userId: member.id,
@@ -88,11 +58,23 @@ export const getUnifiedLimitStatus = async (req, res) => {
           }
         }
       });
-      const monthlyLimit = limits.monthly || 1;
+      
+      const monthlyLimit = limits.monthly;
+      if (monthlyLimit === Infinity) {
+        return res.json({ limited: false });
+      }
+      
       if (readingsThisMonth >= monthlyLimit) {
+        let planMessage = '';
+        if (member.subscriptionPlan.toLowerCase() === 'invitado') {
+          planMessage = 'Hazte miembro para más lecturas';
+        } else {
+          planMessage = 'Hazte premium para lecturas ilimitadas';
+        }
+        
         return res.json({
           limited: true,
-          message: `Has alcanzado tu límite mensual de ${(readingType === 'RUNES') ? 'consultas de runas' : 'lecturas de tarot'} (${monthlyLimit}). ¡Hazte premium para más!`
+          message: `Has alcanzado tu límite mensual de ${(readingType === 'RUNES') ? 'consultas de runas' : 'lecturas de tarot'} (${readingsThisMonth}/${monthlyLimit}). ${planMessage}!`
         });
       }
       return res.json({ limited: false });
@@ -109,46 +91,14 @@ export const getUnifiedLimitStatus = async (req, res) => {
 export const getReadingLimitStatus = async (req, res) => {
   try {
     const type = (req.query.type || '').toLowerCase();
-    // Helper centralizado para límites
-    // Invitado real (no autenticado, sin req.member)
+    
+    // USUARIOS NO REGISTRADOS: Sin acceso a lecturas
     if (!req.member) {
-      const guestId = req.ip || 'unknown';
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      if (type === 'dreams' || type === 'sueños') {
-        const guestDreamsToday = await prisma.dream.count({
-          where: {
-            userId: null,
-            createdAt: { gte: today, lt: tomorrow }
-          }
-        });
-        if (guestDreamsToday >= 1) {
-          return res.json({
-            limited: true,
-            message: 'Has usado tu interpretación gratuita de sueños. ¡Únete al club para más!'
-          });
-        }
-        return res.json({ limited: false });
-      } else {
-        const readingType = type === 'runes' ? 'RUNES' : 'TAROT';
-        const guestReadingsToday = await prisma.reading.count({
-          where: {
-            userId: null,
-            anonGender: guestId,
-            type: readingType,
-            createdAt: { gte: today, lt: tomorrow }
-          }
-        });
-        if (guestReadingsToday >= 1) {
-          return res.json({
-            limited: true,
-            message: `Has usado tu consulta gratuita de ${(type === 'runes') ? 'runas' : 'tarot'}. ¡Únete al club para más!`
-          });
-        }
-        return res.json({ limited: false });
-      }
+      return res.json({
+        limited: true,
+        message: 'Debes registrarte para acceder a las lecturas. ¡Únete a Nebulosa Mágica!',
+        action: 'register_required'
+      });
     }
     // Usuario autenticado
     const member = req.member;
@@ -179,6 +129,8 @@ export const getReadingLimitStatus = async (req, res) => {
       return res.json({ limited: false });
     } else if (type === 'runes' || type === 'runas' || type === 'tarot') {
       const readingType = type === 'runes' || type === 'runas' ? 'RUNES' : 'TAROT';
+      
+      // TODOS los planes usan límites MENSUALES
       const readingsThisMonth = await prisma.reading.count({
         where: {
           userId: member.id,
@@ -189,11 +141,23 @@ export const getReadingLimitStatus = async (req, res) => {
           }
         }
       });
-      const monthlyLimit = limits.monthly || 1;
+      
+      const monthlyLimit = limits.monthly;
+      if (monthlyLimit === Infinity) {
+        return res.json({ limited: false });
+      }
+      
       if (readingsThisMonth >= monthlyLimit) {
+        let planMessage = '';
+        if (member.subscriptionPlan.toLowerCase() === 'invitado') {
+          planMessage = 'Hazte miembro para más lecturas';
+        } else {
+          planMessage = 'Hazte premium para lecturas ilimitadas';
+        }
+        
         return res.json({
           limited: true,
-          message: `Has alcanzado tu límite mensual de ${(readingType === 'RUNES') ? 'consultas de runas' : 'lecturas de tarot'} (${monthlyLimit}). ¡Hazte premium para más!`
+          message: `Has alcanzado tu límite mensual de ${(readingType === 'RUNES') ? 'consultas de runas' : 'lecturas de tarot'} (${readingsThisMonth}/${monthlyLimit}). ${planMessage}!`
         });
       }
       return res.json({ limited: false });

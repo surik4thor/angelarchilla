@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_BACKEND_URL,
+  baseURL: import.meta.env.VITE_BACKEND_URL || (
+    import.meta.env.DEV ? 'http://localhost:5050' : ''
+  ),
   withCredentials: true,            // Envía cookies (JWT)
   headers: {
     'Content-Type': 'application/json'

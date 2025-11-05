@@ -1,10 +1,12 @@
 // Helper para gestión de límites de lecturas
 
 const membershipLimits = {
-  invitado: { daily: 1, dailyDreams: 1 },
-  iniciado: { monthly: 5, dailyDreams: 2 },
-  adepto: { monthly: 20, dailyDreams: 5 },
-  maestro: { monthly: Infinity, dailyDreams: Infinity },
+  invitado: { monthly: 3, dailyDreams: 1 },      // 3 lecturas mensuales para INVITADO
+  esencial: { monthly: 15, dailyDreams: 2 },     // 15 lecturas mensuales para ESENCIAL  
+  iniciado: { monthly: 15, dailyDreams: 2 },     // Legacy: mapea a ESENCIAL
+  premium: { monthly: Infinity, dailyDreams: Infinity }, // Ilimitado para PREMIUM
+  adepto: { monthly: Infinity, dailyDreams: Infinity },  // Legacy: mapea a PREMIUM
+  maestro: { monthly: Infinity, dailyDreams: Infinity }, // Legacy: mapea a PREMIUM
 };
 
 export function getLimits(plan = 'invitado') {

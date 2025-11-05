@@ -37,14 +37,22 @@ export const config = {
     cookieExpiresIn: parseInt(process.env.JWT_COOKIE_EXPIRES_IN) || 7
   },
 
-  // Límites por membresía
+  // Límites por membresía - Estructura simplificada
   membershipLimits: {
     invitado: {
       daily: parseInt(process.env.LIMIT_INVITADO_DAILY) || 1,
-      dailyDreams: 1,
-      monthly: 1,
-      features: ['lectura_bienvenida']
+      monthly: 3,
+      features: ['lectura_bienvenida', 'horoscopo_basico']
     },
+    esencial: {
+      monthly: parseInt(process.env.LIMIT_ESENCIAL_MONTHLY) || 15,
+      features: ['todas_las_barajas', 'historial_completo', 'horoscopo_personalizado', 'dashboard_basico']
+    },
+    premium: {
+      monthly: parseInt(process.env.LIMIT_PREMIUM_MONTHLY) || 999, // ilimitado
+      features: ['lecturas_ilimitadas', 'interpretacion_suenos', 'cartas_natales_detalladas', 'horoscopo_ultra_personalizado', 'exportacion_pdf', 'soporte_vip']
+    },
+    // Legacy: mantener compatibilidad durante migración
     iniciado: {
       monthly: parseInt(process.env.LIMIT_INICIADO_MONTHLY) || 15,
       features: ['lecturas_ilimitadas_basicas', 'horoscopo_diario']
@@ -78,23 +86,36 @@ export const config = {
     ]
   },
 
-  // Precios de membresías
+  // Precios de membresías simplificados (anual = 10 meses, ahorro de 2 meses)
   membership: {
+    esencial: {
+      priceMonthly: parseFloat(process.env.PRICE_ESENCIAL_MONTHLY) || 4.99,
+      priceAnnual: parseFloat(process.env.PRICE_ESENCIAL_ANNUAL) || 49.90,
+      stripeIdMonthly: process.env.STRIPE_ESENCIAL_PRICE_ID_MONTHLY,
+      stripeIdAnnual: process.env.STRIPE_ESENCIAL_PRICE_ID_ANNUAL
+    },
+    premium: {
+      priceMonthly: parseFloat(process.env.PRICE_PREMIUM_MONTHLY) || 9.99,
+      priceAnnual: parseFloat(process.env.PRICE_PREMIUM_ANNUAL) || 99.90,
+      stripeIdMonthly: process.env.STRIPE_PREMIUM_PRICE_ID_MONTHLY,
+      stripeIdAnnual: process.env.STRIPE_PREMIUM_PRICE_ID_ANNUAL
+    },
+    // Legacy: mantener compatibilidad durante migración
     iniciado: {
-      priceMonthly: parseFloat(process.env.PRICE_INICIADO_MONTHLY) || 7.99,
-      priceAnnual: parseFloat(process.env.PRICE_INICIADO_ANNUAL) || 0,
+      priceMonthly: parseFloat(process.env.PRICE_INICIADO_MONTHLY) || 3.99,
+      priceAnnual: parseFloat(process.env.PRICE_INICIADO_ANNUAL) || 39.90,
       stripeIdMonthly: process.env.STRIPE_INICIADO_PRICE_ID_MONTHLY,
       stripeIdAnnual: process.env.STRIPE_INICIADO_PRICE_ID_ANNUAL
     },
     adepto: {
-      priceMonthly: parseFloat(process.env.PRICE_ADEPTO_MONTHLY) || 19.99,
-      priceAnnual: parseFloat(process.env.PRICE_ADEPTO_ANNUAL) || 0,
+      priceMonthly: parseFloat(process.env.PRICE_ADEPTO_MONTHLY) || 9.99,
+      priceAnnual: parseFloat(process.env.PRICE_ADEPTO_ANNUAL) || 99.90,
       stripeIdMonthly: process.env.STRIPE_ADEPTO_PRICE_ID_MONTHLY,
       stripeIdAnnual: process.env.STRIPE_ADEPTO_PRICE_ID_ANNUAL
     },
     maestro: {
-      priceMonthly: parseFloat(process.env.PRICE_MAESTRO_MONTHLY) || 39.99,
-      priceAnnual: parseFloat(process.env.PRICE_MAESTRO_ANNUAL) || 0,
+      priceMonthly: parseFloat(process.env.PRICE_MAESTRO_MONTHLY) || 17.99,
+      priceAnnual: parseFloat(process.env.PRICE_MAESTRO_ANNUAL) || 179.90,
       stripeIdMonthly: process.env.STRIPE_MAESTRO_PRICE_ID_MONTHLY,
       stripeIdAnnual: process.env.STRIPE_MAESTRO_PRICE_ID_ANNUAL
     }

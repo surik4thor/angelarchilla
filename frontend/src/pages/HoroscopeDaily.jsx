@@ -198,7 +198,7 @@ export default function HoroscopeDaily({ user }) {
                   {horoscope.energyLevel || 75}% - {horoscope.energyDescription}
                 </p>
               </div>
-              <button onClick={loadDailyHoroscope} className="refresh-btn">
+              <button onClick={loadPersonalizedHoroscope} className="refresh-btn">
                 🔄 Actualizar Horóscopo
               </button>
             </div>

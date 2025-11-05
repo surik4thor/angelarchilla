@@ -5,7 +5,17 @@ const openai = new OpenAI({
 });
 
 export async function generarHoroscopoIA(signo, fecha) {
-  const prompt = `Genera un horóscopo completo y detallado para el signo ${signo} para la fecha ${fecha}.\nDebe incluir:\n- Predicción general del día (150-200 caracteres)\n- Consejo místico personalizado (100 caracteres)\n- 3 números de la suerte (entre 1-50)\n- Un color del día con su significado\nTono: místico, positivo, profesional y poético.\nFormato: JSON con campos: mensaje, consejo, numerosSuerte (array), colorDia`;
+  const prompt = `Genera un horóscopo para el signo ${signo} para la fecha ${fecha}.
+Formato JSON ESTRICTO:
+{
+  "mensaje": "predicción del día (150-200 caracteres)",
+  "consejo": "consejo místico (100 caracteres)",
+  "numerosSuerte": [número1, número2, número3],
+  "colorDia": "solo nombre del color (ejemplo: Azul, Rojo, Verde)"
+}
+
+IMPORTANTE: colorDia debe ser SOLO texto simple, NO un objeto.
+Tono: místico, positivo, profesional.`;
 
   const response = await openai.chat.completions.create({
     model: process.env.OPENAI_MODEL || 'gpt-4',
@@ -14,5 +24,12 @@ export async function generarHoroscopoIA(signo, fecha) {
     max_tokens: Number(process.env.OPENAI_MAX_TOKENS) || 500,
   });
 
-  return JSON.parse(response.choices[0].message.content);
+  const result = JSON.parse(response.choices[0].message.content);
+  
+  // Asegurar que colorDia sea siempre un string
+  if (result.colorDia && typeof result.colorDia === 'object') {
+    result.colorDia = result.colorDia.color || Object.values(result.colorDia)[0] || 'Azul';
+  }
+  
+  return result;
 }

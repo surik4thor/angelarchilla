@@ -1,0 +1,322 @@
+/* Tutoriales.css */
+.tutoriales-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #232946 0%, #121212 50%, #232946 100%);
+  padding: 2rem 1rem;
+  font-family: var(--font-base);
+}
+
+.tutoriales-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.tutoriales-header h1 {
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #d4af37 0%, #eebc1d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.tutoriales-header p {
+  font-size: 1.2rem;
+  color: #e5e7eb;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.tutoriales-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.search-bar {
+  position: relative;
+  max-width: 400px;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1rem;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #d4af37;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.search-input::placeholder {
+  color: rgba(229, 231, 235, 0.6);
+}
+
+.search-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #d4af37;
+}
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+}
+
+.filter-btn:hover {
+  background: rgba(212, 175, 55, 0.2);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #d4af37 0%, #eebc1d 100%);
+  color: #232946;
+  border-color: #d4af37;
+}
+
+.tutoriales-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto 3rem;
+}
+
+.tutorial-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.tutorial-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.tutorial-header {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.tutorial-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tutorial-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.difficulty-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.read-time {
+  color: rgba(229, 231, 235, 0.8);
+  font-size: 0.9rem;
+}
+
+.tutorial-content {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.tutorial-content h3 {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  color: white;
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
+}
+
+.tutorial-content p {
+  color: rgba(229, 231, 235, 0.9);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.tutorial-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.read-btn {
+  background: #d4af37;
+  color: #232946;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.read-btn:hover {
+  background: #eebc1d;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(212, 175, 55, 0.3);
+}
+
+.practice-btn {
+  background: rgba(139, 92, 246, 0.8);
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.practice-btn:hover {
+  background: rgba(139, 92, 246, 1);
+  transform: translateY(-2px);
+}
+
+.coupon-indicator {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.promo-banner {
+  background: linear-gradient(135deg, #232946 0%, #d4af37 100%);
+  padding: 2rem;
+  border-radius: 20px;
+  text-align: center;
+  margin: 3rem auto;
+  max-width: 800px;
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+}
+
+.promo-banner h2 {
+  font-family: var(--font-title);
+  color: white;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.promo-banner p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.promo-banner strong {
+  color: #eebc1d;
+  font-weight: bold;
+}
+
+.no-results {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: rgba(229, 231, 235, 0.8);
+}
+
+.no-results h3 {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tutoriales-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .tutoriales-header h1 {
+    font-size: 2rem;
+  }
+
+  .tutoriales-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .tutorial-card {
+    margin: 0 0.5rem;
+  }
+
+  .category-filters {
+    padding: 0 1rem;
+  }
+
+  .filter-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .tutorial-actions {
+    flex-direction: column;
+  }
+
+  .read-btn, .practice-btn {
+    text-align: center;
+  }
+}
