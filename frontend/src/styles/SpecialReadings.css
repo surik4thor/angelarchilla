@@ -545,3 +545,89 @@
     padding: 1.5rem;
   }
 }
+
+/* Estilos para ReactMarkdown en lecturas especiales */
+.angel-message p,
+.angel-guidance p,
+.overall-angel-message p,
+.egyptian-integrated p,
+.egyptian-advice p,
+.egyptian-meditation p,
+.overall-egyptian-message p,
+.maat-teaching p {
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.angel-message h1, .angel-message h2, .angel-message h3,
+.angel-guidance h1, .angel-guidance h2, .angel-guidance h3,
+.overall-angel-message h1, .overall-angel-message h2, .overall-angel-message h3,
+.egyptian-integrated h1, .egyptian-integrated h2, .egyptian-integrated h3,
+.egyptian-advice h1, .egyptian-advice h2, .egyptian-advice h3,
+.egyptian-meditation h1, .egyptian-meditation h2, .egyptian-meditation h3,
+.overall-egyptian-message h1, .overall-egyptian-message h2, .overall-egyptian-message h3,
+.maat-teaching h1, .maat-teaching h2, .maat-teaching h3 {
+  color: #ffd700;
+  margin: 1rem 0 0.5rem 0;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.angel-message strong, .angel-guidance strong, .overall-angel-message strong,
+.egyptian-integrated strong, .egyptian-advice strong, .egyptian-meditation strong,
+.overall-egyptian-message strong, .maat-teaching strong {
+  color: #ffd700;
+  font-weight: 600;
+}
+
+.angel-message em, .angel-guidance em, .overall-angel-message em,
+.egyptian-integrated em, .egyptian-advice em, .egyptian-meditation em,
+.overall-egyptian-message em, .maat-teaching em {
+  color: #dda0dd;
+  font-style: italic;
+}
+
+.angel-message ul, .angel-message ol,
+.angel-guidance ul, .angel-guidance ol,
+.overall-angel-message ul, .overall-angel-message ol,
+.egyptian-integrated ul, .egyptian-integrated ol,
+.egyptian-advice ul, .egyptian-advice ol,
+.egyptian-meditation ul, .egyptian-meditation ol,
+.overall-egyptian-message ul, .overall-egyptian-message ol,
+.maat-teaching ul, .maat-teaching ol {
+  margin: 0.8rem 0;
+  padding-left: 2rem;
+}
+
+.angel-message li, .angel-guidance li, .overall-angel-message li,
+.egyptian-integrated li, .egyptian-advice li, .egyptian-meditation li,
+.overall-egyptian-message li, .maat-teaching li {
+  margin-bottom: 0.4rem;
+  position: relative;
+}
+
+.angel-message ul li:before, .angel-guidance ul li:before, .overall-angel-message ul li:before {
+  content: "👼";
+  position: absolute;
+  left: -1.8rem;
+  font-size: 0.8rem;
+}
+
+.egyptian-integrated ul li:before, .egyptian-advice ul li:before, .egyptian-meditation ul li:before,
+.overall-egyptian-message ul li:before, .maat-teaching ul li:before {
+  content: "𓂀";
+  position: absolute;
+  left: -1.8rem;
+  font-size: 0.8rem;
+}
+
+.angel-message blockquote, .angel-guidance blockquote, .overall-angel-message blockquote,
+.egyptian-integrated blockquote, .egyptian-advice blockquote, .egyptian-meditation blockquote,
+.overall-egyptian-message blockquote, .maat-teaching blockquote {
+  border-left: 3px solid #ffd700;
+  padding-left: 1rem;
+  margin: 0.8rem 0;
+  font-style: italic;
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: 0 8px 8px 0;
+}

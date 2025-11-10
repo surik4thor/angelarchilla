@@ -57,29 +57,37 @@ export default function TarotReading() {
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []);
 
-  // Consulta límite tarot al cargar
+  // Verificar acceso Premium al cargar
   useEffect(() => {
     setLoadingLimit(true);
     const token = localStorage.getItem('arcanaToken');
-    // Si el usuario es MAESTRO o está en periodo TRIAL, nunca hay límite
-    const isMaestro = user && (user.subscriptionPlan || '').toUpperCase() === 'MAESTRO';
-    const isTrial = user && user.trialActive && user.trialExpiry && new Date() < new Date(user.trialExpiry);
-    if (isMaestro || isTrial) {
+    
+    // Si es admin o tiene Premium activo, no hay límites
+    const isAdmin = user && user.role === 'ADMIN';
+    const hasPremium = user && user.subscriptionPlan === 'PREMIUM' && user.subscriptionStatus === 'ACTIVE';
+    const hasTrial = user && user.trialActive && user.trialExpiry && new Date() < new Date(user.trialExpiry);
+    
+    if (isAdmin || hasPremium || hasTrial) {
       setIsLimited(false);
       setLimitMessage('');
       setLoadingLimit(false);
       return;
     }
-  fetch('/api/readings/limit-status?type=tarot', {
+
+    // Verificar estado de acceso
+    fetch('/api/readings/access-status', {
       credentials: 'include',
       headers: token ? { Authorization: `Bearer ${token}` } : {}
     })
       .then(res => res.json())
       .then(json => {
-        setIsLimited(!!json.limited);
-        setLimitMessage(json.limited ? (json.message || 'Has alcanzado el límite de lecturas de tarot para tu plan.') : '');
+        setIsLimited(!json.hasAccess);
+        setLimitMessage(!json.hasAccess ? (json.message || 'Necesitas Premium para acceder a las lecturas de tarot') : '');
       })
-      .catch(() => setIsLimited(false))
+      .catch(() => {
+        setIsLimited(true);
+        setLimitMessage('Necesitas Premium para acceder a las lecturas de tarot');
+      })
       .finally(() => setLoadingLimit(false));
   }, [user]);
 
@@ -371,6 +379,7 @@ export default function TarotReading() {
                 interpretation={result.interpretacion}
                 deckType={deckType}
                 spreadType={spreadType}
+                isRevealed={true}
                 onNewReading={resetReading}
               />
             )}

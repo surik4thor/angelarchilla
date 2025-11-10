@@ -1056,3 +1056,59 @@
   border-color: rgba(255, 215, 0, 0.4);
   box-shadow: 0 8px 25px rgba(255, 215, 0, 0.15);
 }
+
+/* Estilos para ReactMarkdown en interpretaciones de runas */
+.interpretation-text p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.interpretation-text h1,
+.interpretation-text h2,
+.interpretation-text h3,
+.interpretation-text h4 {
+  color: #d4af37;
+  margin: 1.5rem 0 1rem 0;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.interpretation-text strong {
+  color: #ffd700;
+  font-weight: 600;
+}
+
+.interpretation-text em {
+  color: #dda0dd;
+  font-style: italic;
+}
+
+.interpretation-text ul,
+.interpretation-text ol {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+.interpretation-text li {
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.interpretation-text ul li:before {
+  content: "⚡";
+  position: absolute;
+  left: -1.5rem;
+  font-size: 0.8rem;
+  color: #d4af37;
+}
+
+.interpretation-text blockquote {
+  border-left: 3px solid #d4af37;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #e6e6fa;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 0 8px 8px 0;
+}

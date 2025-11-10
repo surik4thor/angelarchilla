@@ -94,6 +94,14 @@ app.use('/api/runesReadings', runesReadingsRoutes);
 // Rutas API
 
 app.use('/api/auth', authRoutes);
+
+// Nuevo sistema de plan único (PRIORITARIO)
+import singlePlanRoutes from './routes/singlePlan.js';
+import singlePlanAdminRoutes from './routes/singlePlanAdmin.js';
+app.use('/api/subscription', singlePlanRoutes);
+app.use('/api/admin/single-plan', singlePlanAdminRoutes);
+
+// Rutas legacy (mantener por compatibilidad temporal)
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/stats', statsRoutes);
@@ -120,6 +128,14 @@ app.use('/api/subscriptions', subscriptionRoutes);
 
 app.use('/images', express.static('/var/www/NebulosaMagica/content/images'));
 
+// Servir archivos estáticos del frontend en producción
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(process.cwd(), '../frontend/dist')));
+}
+
+// Rutas directas para compatibilidad con frontend (sin /api prefix)
+app.use('/readings', readingRoutes);
+
 // Health check
 app.get('/api/health', async (req, res) => {
   try {
@@ -143,21 +159,40 @@ app.use((err, req, res, next) => {
 });
 
 
-// Middleware para 404 con CSP amigable (debe ir tras todos los routers)
-app.use((req, res, next) => {
-  res.setHeader(
-    'Content-Security-Policy',
-    "connect-src 'self' https://region1.google-analytics.com https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com https://www.google.com https://ssl.google-analytics.com;"
-  );
-  res.status(404).json({ error: 'Ruta no encontrada' });
-});
+// Manejo de rutas SPA del frontend (debe ir DESPUÉS de todas las rutas API)
+if (process.env.NODE_ENV === 'production') {
+  // Catch-all handler para rutas SPA (usar middleware en lugar de app.get con *)
+  app.use((req, res) => {
+    // Skip API routes
+    if (req.path.startsWith('/api/')) {
+      return res.status(404).json({ 
+        error: 'Ruta API no encontrada',
+        path: req.originalUrl
+      });
+    }
+    res.sendFile(path.join(process.cwd(), '../frontend/dist/index.html'));
+  });
+} else {
+  // Middleware para 404 con CSP amigable (desarrollo)
+  app.use((req, res, next) => {
+    res.setHeader(
+      'Content-Security-Policy',
+      "connect-src 'self' https://region1.google-analytics.com https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com https://www.google.com https://ssl.google-analytics.com;"
+    );
+    res.status(404).json({ error: 'Ruta no encontrada' });
+  });
+}
+
+// Ruta raíz: devuelve mensaje simple o documentación de API (solo en desarrollo)
+if (process.env.NODE_ENV !== 'production') {
+  app.get('/', (req, res) => {
+    res.json({ status: 'OK', msg: 'Backend Nebulosa Mágica en funcionamiento' });
+  });
+}
 
 app.listen(PORT, () => {
   logger.info(`🚀 Nebulosa Mágica API listening on port ${PORT}`);
   console.log(`🚀 Backend Express escuchando en el puerto ${PORT}`);
-});
-
-// Ruta raíz: devuelve mensaje simple o documentación de API
-app.get('/', (req, res) => {
-  res.json({ status: 'OK', msg: 'Backend Nebulosa Mágica en funcionamiento' });
+  console.log(`🌍 NODE_ENV: ${process.env.NODE_ENV}`);
+  console.log(`📁 Serving static files: ${process.env.NODE_ENV === 'production' ? 'YES' : 'NO'}`);
 });

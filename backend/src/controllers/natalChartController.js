@@ -46,7 +46,7 @@ export const createOrUpdateNatalChart = async (req, res) => {
     
     // Buscar si ya existe una carta natal para el usuario
     const existingChart = await prisma.natalChart.findUnique({
-      where: { userId: req.user.id }
+      where: { userId: req.member.id }
     });
 
     let savedChart;
@@ -54,7 +54,7 @@ export const createOrUpdateNatalChart = async (req, res) => {
     if (existingChart) {
       // Actualizar carta natal existente
       savedChart = await prisma.natalChart.update({
-        where: { userId: req.user.id },
+        where: { userId: req.member.id },
         data: {
           birthDate: parsedBirthDate,
           birthTime: chartData.birthTime,
@@ -70,7 +70,7 @@ export const createOrUpdateNatalChart = async (req, res) => {
       // Crear nueva carta natal
       savedChart = await prisma.natalChart.create({
         data: {
-          userId: req.user.id,
+          userId: req.member.id,
           birthDate: parsedBirthDate,
           birthTime: chartData.birthTime,
           birthLocation: chartData.birthLocation,
@@ -109,7 +109,7 @@ export const createOrUpdateNatalChart = async (req, res) => {
 export const getNatalChart = async (req, res) => {
   try {
     const natalChart = await prisma.natalChart.findUnique({
-      where: { userId: req.user.id }
+      where: { userId: req.member.id }
     });
 
     if (!natalChart) {
@@ -148,7 +148,7 @@ export const generatePersonalizedHoroscope = async (req, res) => {
   try {
     // Obtener carta natal del usuario
     const natalChart = await prisma.natalChart.findUnique({
-      where: { userId: req.user.id }
+      where: { userId: req.member.id }
     });
 
     if (!natalChart) {

@@ -15,3 +15,77 @@
   transition: width 0.5s cubic-bezier(.4,2,.6,1);
   width: var(--energy-width, 75%);
 }
+
+/* Estilos para ReactMarkdown en horóscopos */
+.main-message p,
+.area-card div p,
+.mystical-advice p {
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.main-message h1,
+.main-message h2,
+.main-message h3,
+.area-card div h1,
+.area-card div h2,
+.area-card div h3,
+.mystical-advice h1,
+.mystical-advice h2,
+.mystical-advice h3 {
+  color: #d4af37;
+  margin: 1rem 0 0.5rem 0;
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+}
+
+.main-message strong,
+.area-card div strong,
+.mystical-advice strong {
+  color: #ffd700;
+  font-weight: 600;
+}
+
+.main-message em,
+.area-card div em,
+.mystical-advice em {
+  color: #dda0dd;
+  font-style: italic;
+}
+
+.main-message ul,
+.main-message ol,
+.area-card div ul,
+.area-card div ol,
+.mystical-advice ul,
+.mystical-advice ol {
+  margin: 0.8rem 0;
+  padding-left: 1.5rem;
+}
+
+.main-message li,
+.area-card div li,
+.mystical-advice li {
+  margin-bottom: 0.3rem;
+  position: relative;
+}
+
+.main-message ul li:before,
+.area-card div ul li:before,
+.mystical-advice ul li:before {
+  content: "⭐";
+  position: absolute;
+  left: -1.2rem;
+  font-size: 0.8rem;
+}
+
+.main-message blockquote,
+.area-card div blockquote,
+.mystical-advice blockquote {
+  border-left: 2px solid #d4af37;
+  padding-left: 1rem;
+  margin: 0.8rem 0;
+  font-style: italic;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 0 5px 5px 0;
+}

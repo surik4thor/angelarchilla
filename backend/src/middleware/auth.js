@@ -145,13 +145,25 @@ export const authenticate = async (req, res, next) => {
         message: messages.auth.userNotFound
       });
     }
-    // Si el usuario tiene trial activo y no ha expirado, simular Maestro
-    if (member.trialActive && member.trialExpiry && new Date() < new Date(member.trialExpiry)) {
+    // Verificar si es administrador y darle acceso Premium automático
+    const isAdminByRole = member.role === 'ADMIN';
+    const isAdminByEmail = member.email === 'surik4thor@icloud.com' || 
+                           process.env.ADMIN_EMAILS?.split(',').includes(member.email);
+    
+    if (isAdminByRole || isAdminByEmail) {
       req.member = {
         ...member,
-        subscriptionPlan: 'MAESTRO',
+        subscriptionPlan: 'PREMIUM',
         subscriptionStatus: 'ACTIVE',
-        isTrialMaestro: true
+        isAdmin: true
+      };
+    } else if (member.trialActive && member.trialExpiry && new Date() < new Date(member.trialExpiry)) {
+      // Si el usuario tiene trial activo y no ha expirado, simular Premium
+      req.member = {
+        ...member,
+        subscriptionPlan: 'PREMIUM',
+        subscriptionStatus: 'ACTIVE',
+        isTrialPremium: true
       };
     } else {
       req.member = member;

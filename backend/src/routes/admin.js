@@ -1083,7 +1083,7 @@ router.put('/users/:id/plan', requireAdmin, async (req, res) => {
   
   console.log('[ADMIN] PUT /users/:id/plan llamado con:', { id, plan, body: req.body });
   
-  const validPlans = ['INVITADO', 'ESENCIAL', 'PREMIUM', 'INICIADO', 'ADEPTO', 'MAESTRO'];
+  const validPlans = ['FREE', 'PREMIUM', 'INVITADO', 'ESENCIAL', 'INICIADO', 'ADEPTO', 'MAESTRO'];
   if (!plan || !validPlans.includes(plan)) {
     console.log('[ADMIN] Plan inválido:', { plan, validPlans });
     return res.status(400).json({ error: 'Plan no válido', received: plan, valid: validPlans });
@@ -2095,6 +2095,42 @@ router.delete('/cashflow/expenses/:id', async (req, res) => {
     } else {
       res.status(500).json({ success: false, message: 'Error al eliminar el gasto' });
     }
+  }
+});
+
+// Actualizar objetivos
+router.put('/objetivos', requireAdminAccess, async (req, res) => {
+  try {
+    const { objetivos } = req.body;
+    
+    if (!objetivos || !Array.isArray(objetivos)) {
+      return res.status(400).json({ success: false, message: 'Objetivos inválidos' });
+    }
+
+    // Eliminar objetivos existentes y crear nuevos
+    await prisma.objetivo.deleteMany({});
+    
+    if (objetivos.length > 0) {
+      await prisma.objetivo.createMany({
+        data: objetivos.map(obj => ({
+          tipo: obj.tipo || 'general',
+          meta: obj.meta || 0,
+          actual: obj.actual || 0,
+          descripcion: obj.descripcion || ''
+        }))
+      });
+    }
+
+    const updatedObjetivos = await prisma.objetivo.findMany();
+    
+    res.json({
+      success: true,
+      message: 'Objetivos actualizados correctamente',
+      objetivos: updatedObjetivos
+    });
+  } catch (error) {
+    console.error('Error updating objetivos:', error);
+    res.status(500).json({ success: false, message: 'Error al actualizar objetivos' });
   }
 });
 

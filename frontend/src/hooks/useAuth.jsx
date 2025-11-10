@@ -10,32 +10,68 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const checkAuth = async () => {
-      let finished = false;
       try {
         const token = localStorage.getItem('arcanaToken');
+        const storedUser = localStorage.getItem('authUser');
+        
+        console.log('🔍 Verificando autenticación...', { hasToken: !!token, hasStoredUser: !!storedUser });
+        
         if (!token) {
+          console.log('❌ No hay token - usuario no autenticado');
           setUser(null);
-          finished = true;
           return;
         }
+
+        // Si hay usuario guardado, usarlo inicialmente
+        if (storedUser) {
+          try {
+            const parsed = JSON.parse(storedUser);
+            console.log('📱 Usuario desde localStorage:', parsed.email);
+            setUser(parsed);
+          } catch (e) {
+            console.warn('⚠️ Error parseando usuario guardado:', e);
+            localStorage.removeItem('authUser');
+          }
+        }
+
+        // Verificar con el backend
+        console.log('🌐 Verificando usuario con backend...');
         const userData = await getMe();
-        // Si la respuesta es nula o inesperada, forzar usuario null
         if (!userData || typeof userData !== 'object') {
+          console.error('❌ Respuesta inválida del backend:', userData);
+          localStorage.removeItem('arcanaToken');
+          localStorage.removeItem('authUser');
           setUser(null);
         } else {
+          console.log('✅ Usuario autenticado:', userData.email);
           setUser(userData);
+          localStorage.setItem('authUser', JSON.stringify(userData));
         }
       } catch (error) {
-        // Si hay error 401, limpiar token inválido
+        console.error('❌ Error en verificación de auth:', error);
+        // Si hay error 401, limpiar tokens inválidos
         if (error?.response?.status === 401) {
           localStorage.removeItem('arcanaToken');
+          localStorage.removeItem('authUser');
         }
         setUser(null);
       } finally {
         setLoading(false);
       }
     };
+
+    // Listener para evento personalizado de limpieza de auth
+    const handleAuthCleared = () => {
+      console.log('🔄 Auth cleared event - resetting user');
+      setUser(null);
+    };
+
+    window.addEventListener('auth-cleared', handleAuthCleared);
     checkAuth();
+
+    return () => {
+      window.removeEventListener('auth-cleared', handleAuthCleared);
+    };
   }, []);
 
   const login = async (email, password) => {
@@ -43,6 +79,8 @@ export function AuthProvider({ children }) {
     try {
       const userData = await apiLogin({ email, password })
       setUser(userData)
+      // Guardar usuario en localStorage para persistencia
+      localStorage.setItem('authUser', JSON.stringify(userData))
       return userData
     } catch (error) {
       throw error
@@ -66,13 +104,14 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     localStorage.removeItem('arcanaToken');
+    localStorage.removeItem('authUser');
     setUser(null);
   }
 
   // Actualizar perfil
   const updateProfile = async (profileData) => {
     try {
-      const { data } = await api.put('/auth/profile', profileData)
+      const { data } = await api.put('/api/auth/profile', profileData)
       setUser(data.member)
       return data.member
     } catch (error) {
@@ -83,16 +122,16 @@ export function AuthProvider({ children }) {
   // Cambiar contraseña
   const updatePassword = async (currentPassword, newPassword) => {
     try {
-      await api.put('/auth/password', { currentPassword, newPassword })
+      await api.put('/api/auth/password', { currentPassword, newPassword })
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Error al cambiar la contraseña')
     }
   }
 
-  // Actualizar notificaciones
+  // Actualizar preferencias de notificación
   const updateNotifications = async (notifications) => {
     try {
-      const { data } = await api.put('/auth/notifications', { preferences: notifications })
+      const { data } = await api.put('/api/auth/notifications', { preferences: notifications })
       setUser(data.user)
       return data.user
     } catch (error) {
@@ -106,7 +145,7 @@ export function AuthProvider({ children }) {
       const formData = new FormData();
       formData.append('avatar', file);
       // No sobreescribas Authorization, el interceptor lo añade
-      const { data } = await api.post('/auth/avatar', formData, {
+      const { data } = await api.post('/api/auth/avatar', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -121,7 +160,7 @@ export function AuthProvider({ children }) {
   // Eliminar avatar
   const deleteAvatar = async () => {
     try {
-      const { data } = await api.delete('/auth/avatar')
+      const { data } = await api.delete('/api/auth/avatar')
       setUser(data.user)
       return data.user
     } catch (error) {
@@ -132,7 +171,7 @@ export function AuthProvider({ children }) {
   // Eliminar cuenta
   const deleteAccount = async () => {
     try {
-      await api.delete('/auth/account')
+      await api.delete('/api/auth/account')
       setUser(null)
       localStorage.removeItem('arcanaToken')
       window.location.href = '/'

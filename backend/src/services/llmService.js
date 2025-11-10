@@ -115,10 +115,15 @@ Estructura tus interpretaciones así:
 
 Mantén un tono cálido, respetuoso y empoderador.`;
 
+  // Asegurar que feelings sea array
+  const feelingsArray = Array.isArray(dreamData.feelings) 
+    ? dreamData.feelings 
+    : dreamData.feelings ? [dreamData.feelings] : ['sin especificar'];
+
   const userPrompt = `Interpreta este sueño con tu sabiduría ancestral:
 
 **Sueño**: ${dreamData.text}
-**Sentimientos experimentados**: ${dreamData.feelings.join(', ')}
+**Sentimientos experimentados**: ${feelingsArray.join(', ')}
 **Fecha del sueño**: ${dreamData.date}
 
 Ayúdame a entender qué mensaje tiene mi subconsciente para mí.`;

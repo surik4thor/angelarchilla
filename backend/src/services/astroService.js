@@ -71,16 +71,16 @@ export function calculatePlanetaryPositions(birthDate, birthTime = '12:00', birt
     // Posiciones aproximadas (simplificadas)
     const positions = {};
     
-    // Sol
-    const sunLon = A.solar.ApparentLongitude(jd);
-    positions.Sol = degreesToZodiacPosition(sunLon * 180 / Math.PI);
+    // Sol - cálculo simplificado
+    const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 1)) / 86400000) + 1;
+    const sunLon = (dayOfYear / 365.25) * 360; // Aproximación simple
+    positions.Sol = degreesToZodiacPosition(sunLon);
     
     // Para otros planetas, usaremos cálculos aproximados
     // En una implementación real, usarías efemérides más precisas
     
     // Luna (aproximación simple)
-    const moonPhase = A.moonphase.Phase(jd);
-    const moonLon = (moonPhase * 360) % 360; // Simplificación
+    const moonLon = ((dayOfYear + 15) / 29.5 * 360) % 360; // Aproximación del ciclo lunar
     positions.Luna = degreesToZodiacPosition(moonLon);
     
     // Planetas (posiciones aproximadas basadas en órbitas medias)

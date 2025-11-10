@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Auth - Nebulosa Mágica</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test de Autenticación - Nebulosa Mágica</h1>
+    
+    <div class="test-section info">
+        <h3>📝 Estado Actual</h3>
+        <p><strong>Token:</strong> <span id="currentToken">No disponible</span></p>
+        <p><strong>Usuario:</strong> <span id="currentUser">No autenticado</span></p>
+        <button onclick="checkCurrentState()">🔄 Actualizar Estado</button>
+    </div>
+
+    <div class="test-section">
+        <h3>🔐 Test Login</h3>
+        <button onclick="testLogin()">Login como Admin</button>
+        <div id="loginResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>📚 Test Endpoints Protegidos</h3>
+        <button onclick="testReadingsHistory()">Test Readings History</button>
+        <button onclick="testDreamsHistory()">Test Dreams History</button>
+        <button onclick="testAuthMe()">Test /api/auth/me</button>
+        <div id="endpointsResult"></div>
+    </div>
+
+    <div class="test-section">
+        <h3>🚪 Test Logout</h3>
+        <button onclick="testLogout()">Logout</button>
+        <div id="logoutResult"></div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin + '/api';
+        
+        // Función para mostrar resultados
+        function showResult(containerId, content, type = 'info') {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `<div class="${type}"><pre>${content}</pre></div>`;
+        }
+
+        // Verificar estado actual
+        function checkCurrentState() {
+            const token = localStorage.getItem('arcanaToken');
+            const user = localStorage.getItem('authUser');
+            
+            document.getElementById('currentToken').textContent = token ? 
+                token.substring(0, 20) + '...' : 'No disponible';
+            
+            document.getElementById('currentUser').textContent = user ? 
+                JSON.parse(user).email || 'Usuario guardado' : 'No autenticado';
+        }
+
+        // Test login
+        async function testLogin() {
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: 'surik4thor@icloud.com',
+                        password: 'admin123'
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('arcanaToken', data.token);
+                    localStorage.setItem('authUser', JSON.stringify(data.user));
+                    
+                    showResult('loginResult', 
+                        `✅ Login exitoso!\n` +
+                        `User: ${data.user.email}\n` +
+                        `Role: ${data.user.role}\n` +
+                        `Token: ${data.token.substring(0, 20)}...`, 
+                        'success'
+                    );
+                    checkCurrentState();
+                } else {
+                    showResult('loginResult', `❌ Error: ${JSON.stringify(data, null, 2)}`, 'error');
+                }
+            } catch (error) {
+                showResult('loginResult', `❌ Error de red: ${error.message}`, 'error');
+            }
+        }
+
+        // Test endpoints protegidos
+        async function testReadingsHistory() {
+            await testProtectedEndpoint('/readings/history', 'Readings History');
+        }
+
+        async function testDreamsHistory() {
+            await testProtectedEndpoint('/dreams/history', 'Dreams History');
+        }
+
+        async function testAuthMe() {
+            await testProtectedEndpoint('/auth/me', 'Auth Me');
+        }
+
+        async function testProtectedEndpoint(endpoint, name) {
+            try {
+                const token = localStorage.getItem('arcanaToken');
+                
+                if (!token) {
+                    showResult('endpointsResult', `❌ No hay token disponible para ${name}`, 'error');
+                    return;
+                }
+
+                const response = await fetch(`${API_BASE}${endpoint}`, {
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('endpointsResult', 
+                        `✅ ${name} exitoso!\n` +
+                        `Status: ${response.status}\n` +
+                        `Data: ${JSON.stringify(data, null, 2)}`, 
+                        'success'
+                    );
+                } else {
+                    showResult('endpointsResult', 
+                        `❌ ${name} falló!\n` +
+                        `Status: ${response.status}\n` +
+                        `Error: ${JSON.stringify(data, null, 2)}`, 
+                        'error'
+                    );
+                }
+            } catch (error) {
+                showResult('endpointsResult', `❌ Error de red en ${name}: ${error.message}`, 'error');
+            }
+        }
+
+        // Test logout
+        function testLogout() {
+            localStorage.removeItem('arcanaToken');
+            localStorage.removeItem('authUser');
+            
+            showResult('logoutResult', '✅ Logout exitoso! Tokens eliminados del localStorage.', 'success');
+            checkCurrentState();
+        }
+
+        // Inicializar
+        checkCurrentState();
+    </script>
+</body>
+</html>

@@ -2,43 +2,30 @@ import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import { authenticate } from '../middleware/auth.js';
 import { interpretDreamAI } from '../services/llmService.js';
+
+// Nuevo middleware simplificado
+import { checkSinglePlanFeatureAccess } from '../middleware/singlePlanLimits.js';
+
+// Legacy middleware (mantener por compatibilidad temporal)
 import { checkDreamLimits, checkFeatureAccess } from '../middleware/subscriptionLimits.js';
 
 const prisma = new PrismaClient();
 const router = express.Router();
 
-// Obtener estado de límites
+// Obtener estado de límites - sin límites para usuarios Premium
 router.get('/limit-status', authenticate, async (req, res) => {
   try {
-    const user = req.member;
-    const today = new Date();
-    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    
-    const dreamsThisMonth = await prisma.dream.count({
-      where: {
-        userId: user.id,
-        createdAt: {
-          gte: startOfMonth
-        }
-      }
-    });
+    if (!req.member) {
+      return res.json({ 
+        limited: true,
+        message: 'Debes registrarte para acceder a interpretaciones de sueños'
+      });
+    }
 
-    const limits = {
-      INVITADO: 1,
-      INICIADO: 5,
-      ADEPTO: 15,
-      MAESTRO: 999
-    };
-    
-    const userLimit = limits[user.subscriptionPlan] || 1;
-    const remaining = Math.max(0, userLimit - dreamsThisMonth);
-    
+    // Usuarios Premium - sin límites
     res.json({ 
-      limited: dreamsThisMonth >= userLimit,
-      used: dreamsThisMonth,
-      limit: userLimit,
-      remaining: remaining,
-      plan: user.subscriptionPlan
+      limited: false,
+      plan: 'PREMIUM'
     });
   } catch (err) {
     console.error('Error en limit-status:', err);
@@ -46,8 +33,11 @@ router.get('/limit-status', authenticate, async (req, res) => {
   }
 });
 
-// Crear sueño
-router.post('/', authenticate, checkFeatureAccess('dreams'), checkDreamLimits, async (req, res) => {
+// Solo requiere Premium activo (trial o suscripción)
+import { requirePremiumAccess } from '../middleware/premiumAccess.js';
+
+// Crear sueño - requiere Premium activo
+router.post('/', authenticate, requirePremiumAccess, async (req, res) => {
   try {
     const { date, text, feelings } = req.body;
     console.log('[POST /dreams] req.member:', req.member);
@@ -79,12 +69,17 @@ router.post('/', authenticate, checkFeatureAccess('dreams'), checkDreamLimits, a
       console.error('[POST /dreams] Error IA:', aiError);
       interpretation = 'No se pudo obtener interpretación por IA.';
     }
+    // Asegurar que feelings sea array
+    const feelingsArray = Array.isArray(feelings) 
+      ? feelings 
+      : feelings ? [feelings] : [];
+
     const dream = await prisma.dream.create({
       data: {
         userId: req.member.id,
         dreamText: text,
         date: parsedDate,
-        feelings: feelings || [],
+        feelings: feelingsArray,
         interpretation
       }
     });
@@ -96,8 +91,8 @@ router.post('/', authenticate, checkFeatureAccess('dreams'), checkDreamLimits, a
   }
 });
 
-// Obtener sueños del usuario
-router.get('/history', authenticate, checkFeatureAccess('dreams'), async (req, res) => {
+// Obtener sueños del usuario - requiere Premium activo
+router.get('/history', authenticate, requirePremiumAccess, async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;

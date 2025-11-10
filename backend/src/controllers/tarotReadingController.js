@@ -9,7 +9,7 @@ import { checkBonusMasterAccess } from './weeklyBonusController.js';
 export const createTarotReading = async (req, res) => {
   try {
     const { deck, spread, question } = req.body;
-    // Validar usuario autenticado
+    // Validar usuario autenticado (middleware ya garantiza Premium activo)
     const member = req.member;
     if (!member) {
       return res.status(401).json({ success: false, message: 'Usuario no autenticado' });
@@ -17,16 +17,6 @@ export const createTarotReading = async (req, res) => {
     // Validar pregunta
     if (!question || question.length < 10) {
       return res.status(400).json({ success: false, message: 'La pregunta debe tener al menos 10 caracteres.' });
-    }
-    // Verificar acceso Maestro (suscripción, trial o bono semanal)
-    const hasRegularMaster = (member.subscriptionPlan || '').toUpperCase() === 'MAESTRO' || member.isTrialMaestro;
-    const hasBonusMaster = await checkBonusMasterAccess(member.id);
-    const isMaestro = hasRegularMaster || hasBonusMaster;
-    // Si no es Maestro, validar límites (puedes integrar aquí la lógica centralizada si lo prefieres)
-    if (!isMaestro) {
-      // Aquí deberías consultar el límite real, pero para simplificar:
-      // const limited = await checkTarotLimit(member.id);
-      // if (limited) return res.status(403).json({ success: false, message: 'Has alcanzado tu límite de lecturas.' });
     }
     // Generar lectura según el tipo de baraja
     let selectedCards, interpretation;
@@ -75,7 +65,7 @@ export const createTarotReading = async (req, res) => {
 };
 
 export const getTarotLimitStatus = async (req, res) => {
-  // TODO: Implementar lógica de límite por usuario
+  // Sin límites para usuarios Premium - siempre unlimited
   res.json({ limited: false });
 };
 

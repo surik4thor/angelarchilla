@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import ReactMarkdown from 'react-markdown'
 import { fetchPersonalizedHoroscope } from '../api/horoscope.js'
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import AdModal from '../components/AdModal.jsx';
@@ -143,31 +144,35 @@ export default function HoroscopeDaily({ user }) {
             <div className="horoscope-text">
               <div className="daily-message">
                 <h3>Mensaje del Día</h3>
-                <p className="main-message">{horoscope.mainMessage}</p>
+                <div className="main-message">
+                  <ReactMarkdown>{horoscope.mainMessage}</ReactMarkdown>
+                </div>
               </div>
 
               <div className="areas-grid">
                 <div className="area-card love">
                   <h4>💕 Amor</h4>
-                  <p>{horoscope.love}</p>
+                  <div><ReactMarkdown>{horoscope.love}</ReactMarkdown></div>
                 </div>
                 <div className="area-card work">
                   <h4>💼 Trabajo</h4>
-                  <p>{horoscope.work}</p>
+                  <div><ReactMarkdown>{horoscope.work}</ReactMarkdown></div>
                 </div>
                 <div className="area-card health">
                   <h4>🌿 Salud</h4>
-                  <p>{horoscope.health}</p>
+                  <div><ReactMarkdown>{horoscope.health}</ReactMarkdown></div>
                 </div>
                 <div className="area-card spirituality">
                   <h4>✨ Espiritualidad</h4>
-                  <p>{horoscope.spirituality}</p>
+                  <div><ReactMarkdown>{horoscope.spirituality}</ReactMarkdown></div>
                 </div>
               </div>
 
               <div className="daily-advice">
                 <h3>Consejo Místico del Día</h3>
-                <p className="mystical-advice">{horoscope.mysticalAdvice}</p>
+                <div className="mystical-advice">
+                  <ReactMarkdown>{horoscope.mysticalAdvice}</ReactMarkdown>
+                </div>
               </div>
 
               {horoscope.personalizedMessage && (

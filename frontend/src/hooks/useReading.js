@@ -11,7 +11,7 @@ export function useReading() {
     setLoading(true);
     setError(null);
     try {
-      const { data } = await api.post('/readings', payload);
+      const { data } = await api.post('/api/readings', payload);
       setCurrentReading(data.reading);
       return data.reading;
     } catch (err) {
@@ -42,7 +42,7 @@ export function useReading() {
     setError(null);
     try {
       // Usar endpoint centralizado para todas las lecturas
-      const { data } = await api.post('/readings', {
+      const { data } = await api.post('/api/readings', {
         type: readingData.type,
         spreadType: readingData.spreadType,
         deckType: readingData.deckType,
@@ -67,7 +67,7 @@ export function useReading() {
     setError(null);
     
     try {
-      const { data } = await api.get(`/readings/${readingId}`);
+      const { data } = await api.get(`/api/readings/${readingId}`);
       setCurrentReading(data.reading);
       return data.reading;
     } catch (err) {

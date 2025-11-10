@@ -525,10 +525,13 @@ button,
   color: #adb5bd;
   margin-top: 0.5rem;
 }
-.plan-invitado { color: #d4af37; }
-.plan-iniciado { color: #8b5cf6; }
-.plan-adepto { color: #f4d03f; }
-.plan-maestro { color: #e67e22; }
+.plan-free { color: #95a5a6; }
+.plan-premium { color: #f39c12; }
+/* Legacy support */
+.plan-invitado { color: #95a5a6; }
+.plan-iniciado { color: #f39c12; }
+.plan-adepto { color: #f39c12; }
+.plan-maestro { color: #f39c12; }
 
 .dashboard-reading .action-card {
   display: flex;
@@ -732,6 +735,39 @@ button,
     border-radius: 14px;
   }
 }
+
+/* Estilos para interpretación de sueños formateada */
+.dream-interpretation-content {
+  line-height: 1.6;
+  font-size: 1.05rem;
+  color: #e6d7c3;
+}
+
+.interpretation-section-title {
+  color: #d4af37;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.8rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #8b5cf6;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.interpretation-paragraph {
+  margin: 1rem 0;
+  padding: 0.8rem;
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid #d4af37;
+}
+
+.interpretation-paragraph strong {
+  color: #d4af37;
+  font-weight: 600;
+}
+
 @media (max-width: 700px) {
   .cards-destacadas {
     grid-template-columns: 1fr;
@@ -742,5 +778,14 @@ button,
   .card-destacada {
     max-width: 98vw;
     padding: 1.2rem 0.5rem;
+  }
+  
+  .interpretation-section-title {
+    font-size: 1.1rem;
+  }
+  
+  .interpretation-paragraph {
+    font-size: 1rem;
+    padding: 0.6rem;
   }
 }

@@ -1,5 +1,6 @@
 import express from 'express';
 import { authenticate } from '../middleware/auth.js';
+import { requirePremiumAccess } from '../middleware/premiumAccess.js';
 import { 
   createOrUpdateNatalChart, 
   getNatalChart, 
@@ -8,13 +9,13 @@ import {
 
 const router = express.Router();
 
-// Obtener carta natal del usuario
-router.get('/natal-chart', authenticate, getNatalChart);
+// Obtener carta natal del usuario - requiere Premium activo
+router.get('/natal-chart', authenticate, requirePremiumAccess, getNatalChart);
 
-// Crear o actualizar carta natal
-router.post('/natal-chart', authenticate, createOrUpdateNatalChart);
+// Crear o actualizar carta natal - requiere Premium activo
+router.post('/natal-chart', authenticate, requirePremiumAccess, createOrUpdateNatalChart);
 
-// Generar horóscopo personalizado basado en carta natal
-router.get('/personalized-horoscope', authenticate, generatePersonalizedHoroscope);
+// Generar horóscopo personalizado basado en carta natal - requiere Premium activo
+router.get('/personalized-horoscope', authenticate, requirePremiumAccess, generatePersonalizedHoroscope);
 
 export default router;

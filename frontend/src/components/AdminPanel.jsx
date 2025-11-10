@@ -74,7 +74,7 @@ function AdminPanel() {
 
   const handleSaveObjetivos = async () => {
     try {
-      await api.put('/objetivos', { objetivos: objetivosEdit });
+      await api.put('/api/admin/objetivos', { objetivos: objetivosEdit });
       setObjetivos(objetivosEdit.map(obj => ({ ...obj })));
       setEditMode(false);
     } catch (err) {
@@ -308,11 +308,11 @@ function AdminPanel() {
                         </td>
                         <td>
                           <select
-                            value={user.subscriptionPlan || 'INVITADO'}
+                            value={user.subscriptionPlan || 'FREE'}
                             onChange={async (e) => {
                               const newPlan = e.target.value;
                               try {
-                                await api.put(`/admin/users/${user.id}/plan`, { plan: newPlan });
+                                await api.put(`/api/admin/users/${user.id}/plan`, { plan: newPlan });
                                 setUsers(users => users.map(u => u.id === user.id ? { ...u, subscriptionPlan: newPlan } : u));
                               } catch (err) {
                                 alert('Error al actualizar el plan: ' + err.message);
@@ -320,10 +320,8 @@ function AdminPanel() {
                             }}
                             className="plan-select-modern"
                           >
-                            <option value="INVITADO">🆓 Invitado</option>
-                            <option value="INICIADO">⭐ Iniciado</option>
-                            <option value="ADEPTO">💫 Adepto</option>
-                            <option value="MAESTRO">👑 Maestro</option>
+                            <option value="FREE">🆓 Free</option>
+                            <option value="PREMIUM">� Premium</option>
                           </select>
                         </td>
                         <td className="readings-cell">

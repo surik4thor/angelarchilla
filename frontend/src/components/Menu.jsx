@@ -116,7 +116,7 @@ export default function Menu() {
                       {user.username || user.email?.split('@')[0]}
                     </span>
                     <span className="user-role">
-                      {isAdmin ? 'Administrador' : user.subscriptionPlan || 'Invitado'}
+                      {isAdmin ? 'Admin Premium' : user.subscriptionPlan || 'Free'}
                     </span>
                   </div>
                   <span role="img" aria-label="Desplegar" style={{fontSize:'1.1em'}}>

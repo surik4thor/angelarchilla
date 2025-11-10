@@ -15,9 +15,6 @@ export const createRunesReading = async (req, res) => {
       console.error('[RUNES] Pregunta inválida:', question);
       return res.status(400).json({ success: false, message: 'La pregunta debe tener al menos 10 caracteres.' });
     }
-    // Simular Maestro si está en trial activo
-    const isMaestro = (member.subscriptionPlan || '').toUpperCase() === 'MAESTRO' || member.isTrialMaestro;
-    // Si no es Maestro, aquí podrías consultar el límite real
     // Simulación de runas seleccionadas
     const selectedRunes = ['Fehu', 'Ansuz', 'Raidho'];
     const interpretation = 'Esta es una interpretación simulada de runas.';
@@ -51,7 +48,7 @@ export const createRunesReading = async (req, res) => {
 };
 
 export const getRunesLimitStatus = async (req, res) => {
-  // TODO: Implementar lógica de límite por usuario
+  // Sin límites para usuarios Premium - siempre unlimited
   res.json({ limited: false });
 };
 

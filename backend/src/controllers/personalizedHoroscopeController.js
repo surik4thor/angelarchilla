@@ -44,33 +44,10 @@ class PersonalizedHoroscopeController {
         });
       }
 
-      // Verificar límites diarios para usuarios free
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      
-      if (!user.isPremium) {
-        const horoscopeCount = await prisma.personalizedHoroscope.count({
-          where: {
-            userId: userId,
-            createdAt: {
-              gte: today
-            }
-          }
-        });
-
-        if (horoscopeCount >= 1) {
-          return res.status(429).json({
-            success: false,
-            error: 'Límite diario alcanzado. Mejora a Premium para horóscopos ilimitados.',
-            limit: 'daily_limit_reached'
-          });
-        }
-      }
+      // El middleware ya verificó que tiene acceso Premium - no hay límites
 
       // Calcular tránsitos actuales
-      const currentTransits = astroService.default.calculateCurrentTransits
-        ? astroService.default.calculateCurrentTransits(natalChart.planetPositions, new Date())
-        : astroService.calculateCurrentTransits(natalChart.planetPositions, new Date());
+      const currentTransits = astroService.calculateCurrentTransits(natalChart.planetPositions, new Date());
 
       // Generar horóscopo personalizado con IA
       const horoscopeContent = await llmService.generatePersonalizedHoroscope(

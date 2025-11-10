@@ -83,7 +83,7 @@ export default function Reading() {
     loadDecks();
   }, []);
 
-  // Selección de tipo: consulta límite
+  // Selección de tipo: verificar acceso Premium
   const handleTypeSelect = (type) => {
     setReadingType(type);
     setSpreadType('');
@@ -93,25 +93,35 @@ export default function Reading() {
     setIsLimited(null);
     setLimitMessage('');
     setLoadingLimit(true);
-    const apiType = type === 'runes' ? 'runes' : 'tarot';
+    
     const token = localStorage.getItem('arcanaToken');
-    // Si el usuario es MAESTRO, nunca hay límite
-    if (user && (user.subscriptionPlan || '').toUpperCase() === 'MAESTRO') {
+    
+    // Si es admin o tiene Premium activo, no hay límites
+    const isAdmin = user && user.role === 'ADMIN';
+    const hasPremium = user && user.subscriptionPlan === 'PREMIUM' && user.subscriptionStatus === 'ACTIVE';
+    const hasTrial = user && user.trialActive && user.trialExpiry && new Date() < new Date(user.trialExpiry);
+    
+    if (isAdmin || hasPremium || hasTrial) {
       setIsLimited(false);
       setLimitMessage('');
       setLoadingLimit(false);
       return;
     }
-    fetch(`/api/readings/limit-status?type=${apiType}`, {
+
+    // Verificar estado de acceso
+    fetch('/api/readings/access-status', {
       credentials: 'include',
       headers: token ? { Authorization: `Bearer ${token}` } : {}
     })
       .then(res => res.json())
       .then(json => {
-        setIsLimited(!!json.limited);
-        setLimitMessage(json.limited ? (json.message || 'Has alcanzado el límite de lecturas para tu plan.') : '');
+        setIsLimited(!json.hasAccess);
+        setLimitMessage(!json.hasAccess ? (json.message || 'Necesitas Premium para acceder a las lecturas') : '');
       })
-      .catch(() => setIsLimited(false))
+      .catch(() => {
+        setIsLimited(true);
+        setLimitMessage('Necesitas Premium para acceder a las lecturas');
+      })
       .finally(() => setLoadingLimit(false));
   }
 

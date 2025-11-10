@@ -1,21 +1,5 @@
-model FeedbackBizum {
-  id        String   @id @default(cuid())
-  userId    String?
-  opinion   String
-  createdAt DateTime @default(now())
-  user      User?    @relation(fields: [userId], references: [id])
-}
-model Objetivo {
-  id        String   @id @default(cuid())
-  clave     String   @unique // Ejemplo: 'ventas', 'suscriptores', 'lecturas', etc.
-  descripcion String?
-  valor     Int      // Meta numérica (ej: 1000 ventas)
-  periodo   String?  // Ejemplo: '2025', 'Q4-2025', 'mensual', etc.
-  creadoEn  DateTime @default(now())
-  actualizadoEn DateTime @updatedAt
-}
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
@@ -24,55 +8,69 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-model User {
+model FeedbackBizum {
   id        String   @id @default(cuid())
-  // Relaciones directas eliminadas. Las relaciones se gestionan desde Product/ProductVariant/DigitalFile.
-  aiDescription String? // Descripción generada por IA
-  geoDescription String? // Descripción GEO (Generative Engine Optimization)
-  email     String   @unique
-  preferences Json?
-  username  String?
-  password  String
-  resetPasswordToken String?
-  resetPasswordExpires DateTime?
-  avatar    String?
-  birthDate DateTime?
-  zodiacSign String?
-  role      UserRole @default(USER)
-  subscriptionPlan   SubscriptionPlan @default(INVITADO)
-  subscriptionStatus SubscriptionStatus @default(INACTIVE)
-  subscriptionExpiry DateTime?
-  readingsThisMonth  Int @default(0)
-  biography String?
-  newsletter Boolean @default(false)
-  emailNotifications Boolean @default(true)
-  smsNotifications Boolean @default(false)
+  userId    String?
+  opinion   String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  lastLogin DateTime?
-  anonUserStats   AnonUserStats[]
-  subscriptionHistory SubscriptionHistory[]
-  expenses        Expense[]
-  emailLogs       EmailLog[]
-  openaiCalls     OpenAICall[]
-  consentimientosNewsletter ConsentimientoNewsletter[]
-  readings         Reading[]
-  trialCoupons     TrialCoupon[]
-  trialActive Boolean @default(false)
-  trialExpiry DateTime?
-  readingBonus Int @default(0)
-  autoRenewal Boolean @default(false)
-  feedbackBizum FeedbackBizum[]
-  dreams       Dream[]
-  natalChart   NatalChart?
-  personalizedHoroscopes PersonalizedHoroscope[]
-  weeklyBonuses WeeklyBonus[]
-  @@map("users")
+  user      User?    @relation(fields: [userId], references: [id])
 }
 
+model Objetivo {
+  id            String   @id @default(cuid())
+  clave         String   @unique
+  descripcion   String?
+  valor         Int
+  periodo       String?
+  creadoEn      DateTime @default(now())
+  actualizadoEn DateTime @updatedAt
+}
 
+model User {
+  id                        String                     @id @default(cuid())
+  email                     String                     @unique
+  username                  String?
+  password                  String
+  avatar                    String?
+  birthDate                 DateTime?
+  zodiacSign                String?
+  role                      UserRole                   @default(USER)
+  subscriptionPlan          SubscriptionPlan           @default(FREE)
+  subscriptionStatus        SubscriptionStatus         @default(INACTIVE)
+  subscriptionExpiry        DateTime?
+  readingsThisMonth         Int                        @default(0)
+  biography                 String?
+  newsletter                Boolean                    @default(false)
+  emailNotifications        Boolean                    @default(true)
+  smsNotifications          Boolean                    @default(false)
+  createdAt                 DateTime                   @default(now())
+  updatedAt                 DateTime                   @updatedAt
+  lastLogin                 DateTime?
+  preferences               Json?
+  autoRenewal               Boolean                    @default(false)
+  readingBonus              Int                        @default(0)
+  trialActive               Boolean                    @default(false)
+  trialExpiry               DateTime?
+  aiDescription             String?
+  geoDescription            String?
+  resetPasswordExpires      DateTime?
+  resetPasswordToken        String?
+  feedbackBizum             FeedbackBizum[]
+  trialCoupons              TrialCoupon[]
+  anonUserStats             AnonUserStats[]
+  consentimientosNewsletter ConsentimientoNewsletter[]
+  dreams                    Dream[]
+  emailLogs                 EmailLog[]
+  expenses                  Expense[]
+  natalChart                NatalChart?
+  openaiCalls               OpenAICall[]
+  personalizedHoroscopes    PersonalizedHoroscope[]
+  readings                  Reading[]
+  subscriptionHistory       SubscriptionHistory[]
+  weeklyBonuses             WeeklyBonus[]
 
+  @@map("users")
+}
 
 model Deck {
   id          String      @id @default(cuid())
@@ -80,64 +78,68 @@ model Deck {
   slug        String      @unique
   description String?
   imageUrl    String?
-  type        String      // TAROT o RUNES
-  tarotCards  TarotCard[]
-  runes       Rune[]
+  type        String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+  runes       Rune[]
+  tarotCards  TarotCard[]
+
   @@map("decks")
 }
 
 model TarotCard {
-  id             String   @id @default(cuid())
-  name           String
-  cardNumber     Int?
-  arcana         String   // MAJOR or MINOR
-  suit           String?  // For Minor Arcana: OROS, COPAS, ESPADAS, BASTOS
-  meaning        String
+  id              String   @id @default(cuid())
+  name            String
+  cardNumber      Int?
+  arcana          String
+  suit            String?
+  meaning         String
   reversedMeaning String
-  keywords       String[]
-  imageUrl       String
-  deckType       String   // RIDER_WAITE, MARSELLA
-  deckId         String?  // Relación opcional al modelo Deck
-  deck           Deck?    @relation(fields: [deckId], references: [id], onDelete: SetNull)
-  prompt         String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  keywords        String[]
+  imageUrl        String
+  deckType        String
+  prompt          String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deckId          String?
+  deck            Deck?    @relation(fields: [deckId], references: [id])
+
   @@map("tarot_cards")
 }
 
 model Rune {
-  id        String   @id @default(cuid())
-  name      String
-  symbol    String
-  meaning   String
+  id              String   @id @default(cuid())
+  name            String
+  symbol          String
+  meaning         String
+  imageUrl        String?
+  prompt          String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deckId          String?
+  svg             String?
+  keywords        String[]
   reversedMeaning String?
-  keywords  String[]
-  runeSet   String?
-  svg       String?
-  imageUrl  String?
-  deckId    String?
-  deck      Deck?    @relation(fields: [deckId], references: [id], onDelete: SetNull)
-  prompt    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  runeSet         String?
+  deck            Deck?    @relation(fields: [deckId], references: [id])
+
   @@map("runes")
 }
 
 model Reading {
-  id           String      @id @default(cuid())
-  userId       String?
-  type         ReadingType
-  spreadType   String
-  deckType     String?
-  question     String
-  cards        Json
+  id             String      @id @default(cuid())
+  userId         String?
+  type           ReadingType
+  spreadType     String
+  deckType       String?
+  question       String
+  cards          Json
   interpretation String
-  anonBirthDate DateTime?
-  anonGender    String?
-  createdAt DateTime @default(now())
-  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  anonBirthDate  DateTime?
+  anonGender     String?
+  createdAt      DateTime    @default(now())
+  user           User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@map("readings")
 }
 
@@ -147,172 +149,201 @@ model AnonUserStats {
   fechaNac  DateTime
   genero    String
   createdAt DateTime @default(now())
-  user User? @relation(fields: [userId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
+
   @@map("anon_user_stats")
 }
 
 model SubscriptionHistory {
-  id         String             @id @default(cuid())
-  userId     String
-  plan       SubscriptionPlan
-  status     SubscriptionStatus
-  startDate  DateTime
-  endDate    DateTime?
-  amount     Float
-  stripeId   String?
-  createdAt DateTime @default(now())
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String             @id @default(cuid())
+  userId    String
+  plan      SubscriptionPlan
+  status    SubscriptionStatus
+  startDate DateTime
+  endDate   DateTime?
+  amount    Float
+  stripeId  String?
+  createdAt DateTime           @default(now())
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@map("subscription_history")
 }
 
-
-
 model HoroscopeCache {
-  id          String   @id @default(cuid())
-  zodiacSign  String
-  date        DateTime
-  content     String
-  createdAt DateTime @default(now())
+  id         String   @id @default(cuid())
+  zodiacSign String
+  date       DateTime
+  content    String
+  createdAt  DateTime @default(now())
+
   @@unique([zodiacSign, date])
   @@map("horoscope_cache")
 }
 
 model Income {
-  id          String   @id @default(cuid())
-  description String
-  amount      Int
-  source      String
-  date        DateTime
-  category    IncomeCategory @default(SUBSCRIPTION)
+  id              String         @id @default(cuid())
+  description     String
+  amount          Int
+  source          String
+  date            DateTime
+  category        IncomeCategory @default(SUBSCRIPTION)
   stripePaymentId String?
   userId          String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
   @@map("income")
 }
 
 model Expense {
-  id          String         @id @default(cuid())
+  id          String          @id @default(cuid())
   description String
   amount      Int
   category    ExpenseCategory
   date        DateTime
-  recurring   Boolean        @default(false)
+  recurring   Boolean         @default(false)
   notes       String?
   createdById String
-  createdBy   User @relation(fields: [createdById], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  createdBy   User            @relation(fields: [createdById], references: [id])
+
   @@map("expenses")
 }
 
 model DailyStats {
-  id             String   @id @default(cuid())
-  date           DateTime @unique
-  newUsers       Int @default(0)
-  activeUsers    Int @default(0)
-  totalUsers     Int @default(0)
-  totalReadings  Int @default(0)
-  tarotReadings  Int @default(0)
-  runeReadings   Int @default(0)
-  dailyRevenue   Int @default(0)
-  subscriptions  Int @default(0)
-  oneTimePayments Int @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String   @id @default(cuid())
+  date            DateTime @unique
+  newUsers        Int      @default(0)
+  activeUsers     Int      @default(0)
+  totalUsers      Int      @default(0)
+  totalReadings   Int      @default(0)
+  tarotReadings   Int      @default(0)
+  runeReadings    Int      @default(0)
+  dailyRevenue    Int      @default(0)
+  subscriptions   Int      @default(0)
+  oneTimePayments Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
   @@map("daily_stats")
 }
 
 model TrialCoupon {
-  id        String   @id @default(cuid())
-  code      String   @unique
-  isActive  Boolean  @default(true)
+  id        String    @id @default(cuid())
+  code      String    @unique
+  isActive  Boolean   @default(true)
   usedBy    String?
   usedAt    DateTime?
-  createdAt DateTime @default(now())
-  user      User?    @relation(fields: [usedBy], references: [id])
+  createdAt DateTime  @default(now())
+  user      User?     @relation(fields: [usedBy], references: [id])
 }
 
 model EmailLog {
-  id        String   @id @default(cuid())
-  userId    String?
-  email     String
-  type      String
-  subject   String?
-  sentAt    DateTime @default(now())
-  openedAt  DateTime?
-  user      User?    @relation(fields: [userId], references: [id])
+  id       String    @id @default(cuid())
+  userId   String?
+  email    String
+  type     String
+  subject  String?
+  sentAt   DateTime  @default(now())
+  openedAt DateTime?
+  user     User?     @relation(fields: [userId], references: [id])
+
   @@map("email_log")
 }
 
 model OpenAICall {
-  id         String   @id @default(cuid())
-  userId     String?
-  prompt     String?
-  model      String?
-  tokens     Int?
-  cost       Float
-  createdAt  DateTime @default(now())
-  user       User?    @relation(fields: [userId], references: [id])
+  id        String   @id @default(cuid())
+  userId    String?
+  prompt    String?
+  model     String?
+  tokens    Int?
+  cost      Float
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
+
   @@map("openai_call")
 }
 
 model ConsentimientoNewsletter {
-  id        String   @id @default(cuid())
-  email     String
-  ip        String?
-  acceptedAt DateTime @default(now())
-  acceptedLegal Boolean @default(true)
-  acceptedNewsletter Boolean @default(false)
-  userId    String?
-  user      User?    @relation(fields: [userId], references: [id])
+  id                 String   @id @default(cuid())
+  email              String
+  ip                 String?
+  acceptedAt         DateTime @default(now())
+  acceptedLegal      Boolean  @default(true)
+  userId             String?
+  acceptedNewsletter Boolean  @default(false)
+  user               User?    @relation(fields: [userId], references: [id])
+
   @@map("consentimiento_newsletter")
 }
 
 model Dream {
-  id            String   @id @default(cuid())
-  userId        String
-  dreamText     String
-  feelings      String[]
+  id             String   @id @default(cuid())
+  userId         String
+  dreamText      String
+  feelings       String[]
   interpretation String?
-  date          DateTime
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date           DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@map("dreams")
 }
 
 model NatalChart {
-  id              String   @id @default(cuid())
-  userId          String   @unique
-  birthDate       DateTime
-  birthTime       String?
-  birthLocation   Json     // { lat, lon, city, country }
-  zodiacSign      String
-  planetPositions Json     // Posiciones planetarias
-  houses          Json     // Casas astrológicas
-  aspects         Json     // Aspectos entre planetas
-  interpretation  String?  // Interpretación básica
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                     String                  @id @default(cuid())
+  userId                 String                  @unique
+  birthDate              DateTime
+  birthTime              String?
+  birthLocation          Json
+  zodiacSign             String
+  planetPositions        Json
+  houses                 Json
+  aspects                Json
+  interpretation         String?
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  user                   User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
   personalizedHoroscopes PersonalizedHoroscope[]
+
   @@map("natal_charts")
 }
 
 model PersonalizedHoroscope {
-  id            String     @id @default(cuid())
-  userId        String
-  natalChartId  String
-  content       String
-  transits      String     // JSON con tránsitos planetarios actuales
-  zodiacSign    String
-  date          DateTime
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  natalChart    NatalChart @relation(fields: [natalChartId], references: [id], onDelete: Cascade)
+  id           String     @id @default(cuid())
+  userId       String
+  natalChartId String
+  content      String
+  transits     String
+  zodiacSign   String
+  date         DateTime
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  natalChart   NatalChart @relation(fields: [natalChartId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@map("personalized_horoscopes")
+}
+
+model WeeklyBonus {
+  id               String      @id @default(cuid())
+  userId           String
+  amount           Float
+  currency         String      @default("EUR")
+  purchaseDate     DateTime    @default(now())
+  activatedAt      DateTime?
+  expiresAt        DateTime?
+  status           BonusStatus @default(PURCHASED)
+  paymentMethod    String?
+  paymentReference String?
+  features         Json?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  user             User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("weekly_bonuses")
 }
 
 enum ReadingType {
@@ -329,12 +360,12 @@ enum UserRole {
 
 enum SubscriptionPlan {
   INVITADO
-  ESENCIAL
-  PREMIUM
-  // Legacy plans for migration
   INICIADO
   ADEPTO
   MAESTRO
+  ESENCIAL
+  PREMIUM
+  FREE
 }
 
 enum SubscriptionStatus {
@@ -343,8 +374,6 @@ enum SubscriptionStatus {
   CANCELED
   EXPIRED
 }
-
-
 
 enum IncomeCategory {
   SUBSCRIPTION
@@ -363,29 +392,9 @@ enum ExpenseCategory {
   OTHER
 }
 
-model WeeklyBonus {
-  id          String   @id @default(cuid())
-  userId      String
-  amount      Float    // Precio del bono (ej: 8.99)
-  currency    String   @default("EUR")
-  purchaseDate DateTime @default(now())
-  activatedAt DateTime?
-  expiresAt   DateTime?
-  status      BonusStatus @default(PURCHASED)
-  paymentMethod String? // "bizum", "card", etc.
-  paymentReference String?
-  features    Json?    // Características del bono
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  @@map("weekly_bonuses")
-}
-
 enum BonusStatus {
-  PURCHASED   // Comprado pero no activado
-  ACTIVE      // Activo y en uso
-  EXPIRED     // Expirado
-  REFUNDED    // Reembolsado
+  PURCHASED
+  ACTIVE
+  EXPIRED
+  REFUNDED
 }

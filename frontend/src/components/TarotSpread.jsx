@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import ReactMarkdown from 'react-markdown'
+import { shareNebulosaMagica } from '../utils/shareUtils'
 import '../styles/TarotSpread.css'
 
 const SPREAD_LAYOUTS = {
@@ -171,6 +173,7 @@ const TarotCard = ({ card, position, isRevealed, isAnimating, onClick }) => {
 export default function TarotSpread({ 
   spreadType = 'tres-cartas', 
   cards = [], 
+  interpretation = null,
   isRevealed = false,
   isAnimating = false,
   onCardClick = () => {}
@@ -280,6 +283,30 @@ export default function TarotSpread({
           <p className="spread-description">
             Haz clic en cualquier carta para ver más detalles sobre su significado
           </p>
+        </div>
+      )}
+
+      {/* Interpretación del tarot */}
+      {interpretation && isRevealed && (
+        <div className="interpretation-section">
+          <div className="interpretation-header">
+            <h3>
+              🔮 Interpretación de tu Lectura
+            </h3>
+          </div>
+          <div className="interpretation-content">
+            <div className="interpretation-text">
+              <ReactMarkdown className="interpretation-markdown">
+                {interpretation}
+              </ReactMarkdown>
+            </div>
+          </div>
+          <div className="interpretation-actions">
+            <button className="share-btn" onClick={() => shareNebulosaMagica('tarot')}>
+              <span role="img" aria-label="compartir">📱</span>
+              Compartir lectura
+            </button>
+          </div>
         </div>
       )}
     </div>

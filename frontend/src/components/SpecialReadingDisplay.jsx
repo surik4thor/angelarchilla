@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import '../styles/SpecialReadings.css';
 
 const AngelReading = ({ reading }) => {
@@ -22,13 +23,13 @@ const AngelReading = ({ reading }) => {
             </div>
 
             <div className="angel-message">
-              <p>{card.message}</p>
+              <ReactMarkdown>{card.message}</ReactMarkdown>
             </div>
 
             {card.guidance && (
               <div className="angel-guidance">
                 <h5>🌟 Guía Angelical:</h5>
-                <p>{card.guidance}</p>
+                <ReactMarkdown>{card.guidance}</ReactMarkdown>
               </div>
             )}
 
@@ -58,8 +59,8 @@ const AngelReading = ({ reading }) => {
 
       {parsedReading.overallMessage && (
         <div className="overall-angel-message">
-          <h3>🌈 Mensaje General de tus Ángeles</h3>
-          <p>{parsedReading.overallMessage}</p>
+          <h3>💫 Mensaje General de los Ángeles</h3>
+          <ReactMarkdown>{parsedReading.overallMessage}</ReactMarkdown>
         </div>
       )}
 
@@ -122,21 +123,21 @@ const EgyptianReading = ({ reading }) => {
             {card.integratedMessage && (
               <div className="egyptian-integrated">
                 <h5>⚖️ Mensaje Integrado:</h5>
-                <p>{card.integratedMessage}</p>
+                <ReactMarkdown>{card.integratedMessage}</ReactMarkdown>
               </div>
             )}
 
             {card.priestAdvice && (
               <div className="egyptian-advice">
                 <h5>🏛️ Consejo del Sacerdote:</h5>
-                <p>{card.priestAdvice}</p>
+                <ReactMarkdown>{card.priestAdvice}</ReactMarkdown>
               </div>
             )}
 
             {card.meditationSymbol && (
               <div className="egyptian-meditation">
                 <h5>𓂀 Símbolo para Meditar:</h5>
-                <p>{card.meditationSymbol}</p>
+                <ReactMarkdown>{card.meditationSymbol}</ReactMarkdown>
               </div>
             )}
           </div>
@@ -146,14 +147,14 @@ const EgyptianReading = ({ reading }) => {
       {parsedReading.overallReading && (
         <div className="overall-egyptian-message">
           <h3>𓊃 Lectura General del Oráculo 𓊃</h3>
-          <p>{parsedReading.overallReading}</p>
+          <ReactMarkdown>{parsedReading.overallReading}</ReactMarkdown>
         </div>
       )}
 
       {parsedReading.maat && (
         <div className="maat-teaching">
           <h3>⚖️ Enseñanza del Ma'at</h3>
-          <p>{parsedReading.maat}</p>
+          <ReactMarkdown>{parsedReading.maat}</ReactMarkdown>
         </div>
       )}
 

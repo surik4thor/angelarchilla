@@ -17,6 +17,7 @@ import horoscopePersonalizedRoutes from './src/routes/horoscopePersonalized.js';
 import membershipRoutes from './src/routes/membership.js';
 import weeklyBonusRoutes from './src/routes/weeklyBonus.js';
 import subscriptionRoutes from './src/routes/subscriptions.js';
+import statsRoutes from './src/routes/stats.js';
 
 const app = express();
 const prisma = new PrismaClient();
@@ -40,6 +41,9 @@ if (process.env.NODE_ENV === 'production') {
 // Rutas
 app.use('/api/auth', authRoutes);
 app.use('/api/readings', readingRoutes);
+
+// Ruta directa para compatibilidad con frontend
+app.use('/readings', readingRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/report', reportRoutes);
 app.use('/api/bizum', bizumRoutes);
@@ -52,6 +56,7 @@ app.use('/api/membership', membershipRoutes);
 app.use('/api/weekly-bonus', weeklyBonusRoutes);
 app.use('/api/tarot-readings', tarotReadingsRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/stats', statsRoutes);
 
 // Ruta raíz - evita errores 404 en peticiones del navegador
 app.get('/', (req, res) => {
@@ -132,6 +137,8 @@ app.listen(PORT, () => {
   console.log(`🚀 Servidor Nebulosa Mágica corriendo en http://localhost:${PORT}`);
   console.log(`📊 Panel Admin disponible en http://localhost:5173/admin`);
   console.log(`🔮 API Health Check: http://localhost:${PORT}/api/health`);
+  console.log(`🌍 NODE_ENV: ${process.env.NODE_ENV}`);
+  console.log(`📁 Serving static files: ${process.env.NODE_ENV === 'production' ? 'YES' : 'NO'}`);
   // Activar cron jobs automáticos de IA (informes mensuales y alertas inteligentes)
   try {
     import('./src/aiAssistant/cronJobs.js');

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth.jsx';
 import LoadingSpinner from '../components/LoadingSpinner.jsx';
 import AdModal from '../components/AdModal.jsx';
+import { shareNebulosaMagica } from '../utils/shareUtils.js';
 import '../styles/Reading.css';
 import '../styles/DreamInterpretation.css';
-import CanvasExporter from '../components/CanvasExporter.jsx';
 
 const FEELINGS = [
   { key: 'calma', label: 'Calma' },
@@ -28,45 +28,24 @@ export default function DreamInterpretation() {
   const [limitMessage, setLimitMessage] = useState('');
   const [isLimited, setIsLimited] = useState(null);
   const [loadingLimit, setLoadingLimit] = useState(false);
-  const [exportTrigger, setExportTrigger] = useState(false);
-  const [exportedImage, setExportedImage] = useState(null);
-  const [hasAccess, setHasAccess] = useState(false);
-  const [accessChecked, setAccessChecked] = useState(false);
 
-  // Verificar acceso a función de sueños (solo plan MAESTRO)
+  // Chequeo de acceso Premium para sueños
   useEffect(() => {
-    const token = localStorage.getItem('arcanaToken');
-    if (!user || !user.subscriptionPlan) {
-      setHasAccess(false);
-      setAccessChecked(true);
-      return;
-    }
-    
-    // Solo el plan MAESTRO tiene acceso a sueños
-    if (user.subscriptionPlan === 'MAESTRO') {
-      setHasAccess(true);
-    } else {
-      setHasAccess(false);
-    }
-    setAccessChecked(true);
-  }, [user]);
-
-  // Chequeo de límite premium para sueños (solo si tiene acceso)
-  useEffect(() => {
-    if (!hasAccess || !accessChecked) return;
-    
     setLoadingLimit(true);
     const token = localStorage.getItem('arcanaToken');
-  fetch('/api/readings/limit-status?type=dreams', {
+    fetch('/api/readings/access-status', {
       credentials: 'include',
       headers: token ? { Authorization: `Bearer ${token}` } : {}
     })
       .then(res => res.json())
       .then(json => {
-        setIsLimited(!!json.limited);
-        setLimitMessage(json.limited ? (json.message || 'Has alcanzado el límite de interpretaciones de sueños para tu plan.') : '');
+        setIsLimited(!json.hasAccess);
+        setLimitMessage(!json.hasAccess ? (json.message || 'Necesitas una suscripción Premium activa para interpretar sueños.') : '');
       })
-      .catch(() => setIsLimited(false))
+      .catch(() => {
+        setIsLimited(true);
+        setLimitMessage('Necesitas una suscripción Premium activa para interpretar sueños.');
+      })
       .finally(() => setLoadingLimit(false));
   }, []);
 
@@ -90,7 +69,7 @@ export default function DreamInterpretation() {
       // Llamada premium: endpoint exclusivo sueños
       const payload = {
         text: dreamText,
-        feelings: feelings.join(','),
+        feelings: feelings, // Enviar como array, no como string
         date: new Date(dreamDate).toISOString()
       };
       const res = await fetch('/api/dreams', {
@@ -117,43 +96,9 @@ export default function DreamInterpretation() {
     }
   };
 
-  const handleExport = () => {
-    setExportTrigger(true);
+  const handleShareWeb = () => {
+    shareNebulosaMagica('interpretaciones de sueños');
   };
-  React.useEffect(() => {
-    if (exportedImage) {
-      const file = dataURLtoFile(exportedImage, 'interpretacion-sueno.png');
-      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share({
-          title: 'Mi interpretación de Sueño',
-          text: 'Mira mi interpretación premium en ArcanaClub',
-          files: [file]
-        }).catch(() => {
-          // Si falla el share, descarga la imagen
-          const link = document.createElement('a');
-          link.href = exportedImage;
-          link.download = 'interpretacion-sueno.png';
-          link.click();
-        });
-      } else {
-        // Si no soporta share, descarga la imagen
-        const link = document.createElement('a');
-        link.href = exportedImage;
-        link.download = 'interpretacion-sueno.png';
-        link.click();
-        alert('Tu navegador no soporta compartir imágenes directamente. La imagen se ha descargado.');
-      }
-      setExportTrigger(false);
-      setExportedImage(null);
-    }
-  }, [exportedImage]);
-
-  function dataURLtoFile(dataurl, filename) {
-    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1], bstr = atob(arr[1].replace(/\s/g, '')),
-      n = bstr.length, u8arr = new Uint8Array(n);
-    while(n--){ u8arr[n] = bstr.charCodeAt(n); }
-    return new File([u8arr], filename, {type:mime});
-  }
 
   const showAds = !user || !['ADEPTO', 'MAESTRO'].includes((user?.subscriptionPlan || '').toUpperCase());
   if (loading || loadingLimit || isLimited === null) {
@@ -174,31 +119,7 @@ export default function DreamInterpretation() {
         <p>Descubre el mensaje oculto de tu subconsciente con ayuda de la IA y la sabiduría onírica.</p>
       </div>
       <div className="reading-content">
-        {!accessChecked ? (
-          <div className="step-container">
-            <div className="loading-spinner-container">
-              <LoadingSpinner />
-              <p>Verificando acceso...</p>
-            </div>
-          </div>
-        ) : !hasAccess ? (
-          <div className="step-container limit-reached">
-            <div className="limit-message-block center-text">
-              <span role="img" aria-label="Restringido" className="limit-icon" style={{fontSize:'1.3em'}}>🔒</span>
-              <h2 className="limit-title">Función exclusiva del Plan MAESTRO</h2>
-              <p className="limit-desc dream-bg">
-                La interpretación de sueños está disponible únicamente para suscriptores del plan MAESTRO.
-                {user && user.subscriptionPlan && (
-                  <><br />Tu plan actual: <strong>{user.subscriptionPlan}</strong></>
-                )}
-              </p>
-              <button className="subscribe-btn" onClick={()=>window.location.href='/planes'}>
-                <span role="img" aria-label="Premium" className="mr-half" style={{fontSize:'1.2em'}}>⭐</span>
-                Actualizar a Plan MAESTRO
-              </button>
-            </div>
-          </div>
-        ) : isLimited === true ? (
+        {isLimited === true ? (
           <div className="step-container limit-reached">
             <div className="limit-message-block center-text">
               <span role="img" aria-label="Límite" className="limit-icon" style={{fontSize:'1.3em'}}>❓</span>
@@ -215,18 +136,62 @@ export default function DreamInterpretation() {
         ) : (
           result ? (
             <section className="dream-result premium-box dream-result-box">
-              <h3 className="dream-result-title">Interpretación de tu sueño</h3>
-              <p>{result}</p>
-              <button className="share-btn" onClick={handleExport}>
-                <span role="img" aria-label="Compartir" style={{fontSize:'1.2em'}}>⭐</span> Compartir como imagen
+              <h3 className="dream-result-title">✨ Interpretación de tu sueño</h3>
+              <div className="dream-interpretation-content">
+                {result.split('\n').map((line, index) => {
+                  const trimmedLine = line.trim();
+                  
+                  if (trimmedLine.startsWith('**') && trimmedLine.endsWith('**')) {
+                    // Es un título de sección
+                    const title = trimmedLine.replace(/\*\*/g, '');
+                    let emoji = '✨';
+                    
+                    // Detectar tipo de sección por palabras clave
+                    if (title.toLowerCase().includes('simbolismo') || title.toLowerCase().includes('principal')) {
+                      emoji = '🔮';
+                    } else if (title.toLowerCase().includes('subconsciente') || title.toLowerCase().includes('mensaje')) {
+                      emoji = '🌙';
+                    } else if (title.toLowerCase().includes('guía') || title.toLowerCase().includes('espiritual')) {
+                      emoji = '⭐';
+                    } else if (title.toLowerCase().includes('reflexión') || title.toLowerCase().includes('pregunt')) {
+                      emoji = '🤔';
+                    } else if (title.toLowerCase().includes('significado') || title.toLowerCase().includes('interpretación')) {
+                      emoji = '💫';
+                    } else if (title.toLowerCase().includes('consejo') || title.toLowerCase().includes('recomend')) {
+                      emoji = '💡';
+                    }
+                    
+                    return (
+                      <h4 key={index} className="interpretation-section-title">
+                        {emoji} {title}
+                      </h4>
+                    );
+                  } else if (trimmedLine && !trimmedLine.startsWith('**')) {
+                    // Es un párrafo normal - procesar markdown básico
+                    let processedText = trimmedLine
+                      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+                      .replace(/\*(.*?)\*/g, '<em>$1</em>'); // Italic
+                    
+                    // Añadir clase especial si es una pregunta
+                    const isQuestion = processedText.includes('¿') && processedText.includes('?');
+                    const className = isQuestion ? 
+                      'interpretation-paragraph interpretation-question' : 
+                      'interpretation-paragraph';
+                    
+                    return (
+                      <p key={index} className={className} 
+                         dangerouslySetInnerHTML={{ __html: processedText }} />
+                    );
+                  } else if (!trimmedLine) {
+                    // Línea vacía - espacio
+                    return <div key={index} style={{height: '0.5rem'}} />;
+                  }
+                  return null;
+                })}
+              </div>
+              <button className="share-btn" onClick={handleShareWeb}>
+                <span role="img" aria-label="Compartir" style={{fontSize:'1.2em'}}>🌟</span> Compartir Nebulosa Mágica
               </button>
-              <CanvasExporter
-                exportTrigger={exportTrigger}
-                onExported={setExportedImage}
-                logoSrc="/logo.png"
-              >
-                {`Interpretación de Sueño Premium\nFecha: ${dreamDate}\nSensaciones: ${feelings.join(', ')}\nInterpretación: ${result}`}
-              </CanvasExporter>
             </section>
           ) : (
             <form className="dream-form premium-form" onSubmit={handleSubmit}>

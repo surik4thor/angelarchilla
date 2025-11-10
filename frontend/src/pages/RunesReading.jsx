@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { useReading } from '../hooks/useReading.js';
@@ -35,29 +36,37 @@ export default function RunesReading() {
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, []);
 
-  // Consulta límite runas al cargar
+  // Verificar acceso Premium al cargar
   useEffect(() => {
     setLoadingLimit(true);
     const token = localStorage.getItem('arcanaToken');
-    // Si el usuario es MAESTRO o está en periodo TRIAL, nunca hay límite
-    const isMaestro = user && (user.subscriptionPlan || '').toUpperCase() === 'MAESTRO';
-    const isTrial = user && user.trialActive && user.trialExpiry && new Date() < new Date(user.trialExpiry);
-    if (isMaestro || isTrial) {
+    
+    // Si es admin o tiene Premium activo, no hay límites
+    const isAdmin = user && user.role === 'ADMIN';
+    const hasPremium = user && user.subscriptionPlan === 'PREMIUM' && user.subscriptionStatus === 'ACTIVE';
+    const hasTrial = user && user.trialActive && user.trialExpiry && new Date() < new Date(user.trialExpiry);
+    
+    if (isAdmin || hasPremium || hasTrial) {
       setIsLimited(false);
       setLimitMessage('');
       setLoadingLimit(false);
       return;
     }
-  fetch('/api/readings/limit-status?type=runes', {
+
+    // Verificar estado de acceso
+    fetch('/api/readings/access-status', {
       credentials: 'include',
       headers: token ? { Authorization: `Bearer ${token}` } : {}
     })
       .then(res => res.json())
       .then(json => {
-        setIsLimited(!!json.limited);
-        setLimitMessage(json.limited ? (json.message || 'Has alcanzado el límite de lecturas de runas para tu plan.') : '');
+        setIsLimited(!json.hasAccess);
+        setLimitMessage(!json.hasAccess ? (json.message || 'Necesitas Premium para acceder a las lecturas de runas') : '');
       })
-      .catch(() => setIsLimited(false))
+      .catch(() => {
+        setIsLimited(true);
+        setLimitMessage('Necesitas Premium para acceder a las lecturas de runas');
+      })
       .finally(() => setLoadingLimit(false));
   }, [user]);
 
@@ -282,7 +291,7 @@ export default function RunesReading() {
                   👁️ Interpretación
                 </h3>
                 <div className="interpretation-text">
-                  {result.interpretation}
+                  <ReactMarkdown>{result.interpretation}</ReactMarkdown>
                 </div>
               </div>
               <div className="reading-info">

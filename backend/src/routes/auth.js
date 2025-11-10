@@ -452,4 +452,49 @@ router.post('/avatar', authenticate, upload.single('avatar'), async (req, res) =
   }
 });
 
+// Eliminar avatar
+router.delete('/avatar', authenticate, async (req, res) => {
+  try {
+    const updated = await prisma.user.update({
+      where: { id: req.member.id },
+      data: { avatar: null }
+    });
+    res.json({ user: updated });
+  } catch (error) {
+    res.status(500).json({ error: 'Error eliminando avatar', details: error.message });
+  }
+});
+
+// Cambiar contraseña
+router.put('/password', authenticate, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'Se requiere la contraseña actual y la nueva contraseña' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: 'La nueva contraseña debe tener al menos 6 caracteres' });
+    }
+
+    // Verificar contraseña actual
+    const user = await prisma.user.findUnique({ where: { id: req.member.id } });
+    if (!user || !(await comparePassword(currentPassword, user.password))) {
+      return res.status(401).json({ error: 'La contraseña actual es incorrecta' });
+    }
+
+    // Hashear y actualizar nueva contraseña
+    const hashedPassword = await hashPassword(newPassword);
+    await prisma.user.update({
+      where: { id: req.member.id },
+      data: { password: hashedPassword }
+    });
+
+    res.json({ success: true, message: 'Contraseña actualizada correctamente' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error cambiando contraseña', details: error.message });
+  }
+});
+
 export default router;
