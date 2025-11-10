@@ -398,3 +398,12 @@ enum BonusStatus {
   EXPIRED
   REFUNDED
 }
+
+model DailyInspiration {
+  id          String   @id @default(cuid())
+  date        String   @unique // Formato YYYY-MM-DD
+  message     String
+  generatedBy String   @default("openai") // "openai" o "fallback"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

@@ -25,6 +25,7 @@ import statsRoutes from './routes/stats.js'
 import horoscopeRoutes from './routes/horoscope.js'
 import horoscopoRoutes from './routes/horoscopo.js'
 import membershipRoutes from './routes/membership.js';
+import inspirationRoutes from './routes/inspiration.js';
 import newsletterRoutes from './routes/newsletter.js';
 import reportRoutes from './routes/report.js';
 import objetivosRoutes from './routes/objetivos.js';
@@ -108,6 +109,7 @@ app.use('/api/stats', statsRoutes);
 app.use('/api/horoscope', horoscopeRoutes);
 app.use('/api/horoscopo', horoscopoRoutes);
 app.use('/api/membership', membershipRoutes);
+app.use('/api/inspiration', inspirationRoutes);
 
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 

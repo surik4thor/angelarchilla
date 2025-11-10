@@ -479,7 +479,7 @@ router.put('/password', authenticate, async (req, res) => {
     }
 
     // Verificar contraseña actual
-    const user = await prisma.user.findUnique({ where: { id: req.member.id } });
+    const user = await prisma.user.findUnique({ where: { id: req.user.id } });
     if (!user || !(await comparePassword(currentPassword, user.password))) {
       return res.status(401).json({ error: 'La contraseña actual es incorrecta' });
     }
@@ -487,7 +487,7 @@ router.put('/password', authenticate, async (req, res) => {
     // Hashear y actualizar nueva contraseña
     const hashedPassword = await hashPassword(newPassword);
     await prisma.user.update({
-      where: { id: req.member.id },
+      where: { id: req.user.id },
       data: { password: hashedPassword }
     });
 

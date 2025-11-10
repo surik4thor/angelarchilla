@@ -49,20 +49,23 @@ export default function Home() {
 
   // Mensaje aleatorio del universo
   useEffect(() => {
-    const mensajes = [
-      'Hoy es un gran día para comenzar nuevos proyectos.',
-      'La creatividad fluye en ti. ¡Exprésate!',
-      'Es un buen momento para cuidar de ti mismo y relajarte.',
-      'Las estrellas están de tu lado, aprovecha las oportunidades.',
-      'Recuerda que el amor y la amistad son tesoros valiosos.',
-      'La sabiduría ancestral guía tus pasos hoy.',
-      'Confía en tu intuición, te llevará por el camino correcto.',
-      'Hoy es un día para brillar y mostrar tu verdadero yo.',
-      'Las energías cósmicas favorecen la comunicación y el entendimiento.',
-      'Es un buen día para aprender algo nuevo o profundizar en tus conocimientos.'
-    ]
-    const idx = Math.floor(Math.random() * mensajes.length)
-    setMensajeUniverso(mensajes[idx])
+    const fetchDailyInspiration = async () => {
+      try {
+        const response = await fetch('https://nebulosamagica.com/api/inspiration');
+        const data = await response.json();
+        if (data.success) {
+          setMensajeUniverso(data.inspiration.replace(/"/g, ''));
+        } else {
+          // Fallback
+          setMensajeUniverso('Tu intuición es tu mejor guía, confía en ella');
+        }
+      } catch (error) {
+        console.error('Error cargando inspiración diaria:', error);
+        setMensajeUniverso('La energía del universo conspira a tu favor hoy');
+      }
+    };
+    
+    fetchDailyInspiration();
   }, [])
 
   // Abre modal de suscripción o autenticación

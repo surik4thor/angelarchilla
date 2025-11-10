@@ -2099,7 +2099,7 @@ router.delete('/cashflow/expenses/:id', async (req, res) => {
 });
 
 // Actualizar objetivos
-router.put('/objetivos', requireAdminAccess, async (req, res) => {
+router.put('/objetivos', requireAdmin, async (req, res) => {
   try {
     const { objetivos } = req.body;
     

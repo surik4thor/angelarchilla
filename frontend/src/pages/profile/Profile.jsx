@@ -68,8 +68,26 @@ export default function Profile() {
   const [selectedReading, setSelectedReading] = useState(null);
   const [readingView, setReadingView] = useState('tabla');
   const [dreamView, setDreamView] = useState('tabla');
-  // Simulación de horóscopo diario
-  const horoscopeSummary = `Hoy tu energía está en alza. Aprovecha para tomar decisiones importantes y confiar en tu intuición.`;
+  const [dailyInspiration, setDailyInspiration] = useState('Conecta con tu interior y confía en tu intuición...');
+  
+  // Cargar inspiración diaria
+  useEffect(() => {
+    const fetchDailyInspiration = async () => {
+      try {
+        const response = await fetch('https://nebulosamagica.com/api/inspiration');
+        const data = await response.json();
+        if (data.success) {
+          setDailyInspiration(data.inspiration.replace(/"/g, ''));
+        }
+      } catch (error) {
+        console.error('Error cargando inspiración diaria:', error);
+        // Mantener el fallback por defecto
+      }
+    };
+    
+    fetchDailyInspiration();
+  }, []);
+  
   const horoscopeDetail = `Hoy es un día propicio para los nuevos comienzos. La alineación de los astros favorece la comunicación y la creatividad. Mantente abierto a las oportunidades inesperadas y no temas expresar tus ideas. Recuerda cuidar tu bienestar emocional y dedicar tiempo a tus pasiones.`;
 
   const isAdmin = user?.role === 'ADMIN' || user?.email === 'surik4thor@icloud.com';
@@ -134,21 +152,7 @@ export default function Profile() {
   // Acceso premium si es Maestro o está en periodo de prueba
   const planActivo = ['ADEPTO','MAESTRO'].includes((user?.subscriptionPlan || '').toUpperCase()) || (user?.trialActive && user?.trialExpiry && new Date() < new Date(user.trialExpiry));
 
-  // Generar afirmación diferente cada día
-  const affirmations = [
-    'Confía en tu intuición, el universo te guía.',
-    'Hoy es un buen día para avanzar hacia tus sueños.',
-    'La magia está en tu interior, cree en ti.',
-    'Cada paso cuenta, sigue adelante.',
-    'Tu energía positiva atrae nuevas oportunidades.',
-    'El cambio comienza contigo, da el primer paso.',
-    'Eres más fuerte de lo que imaginas.',
-    'La claridad llega cuando escuchas a tu corazón.',
-    'Hoy es el día perfecto para empezar de nuevo.',
-    'La gratitud transforma tu realidad.'
-  ];
-  const todayIdx = new Date().getDate() % affirmations.length;
-  const dailyAffirmation = affirmations[todayIdx];
+  // La frase inspiradora ahora se carga desde el estado dailyInspiration
 
   return (
     <div className="profile-container">
@@ -185,12 +189,23 @@ export default function Profile() {
           <div className="horoscope-icon" style={{fontSize:'2em'}}>
             {zodiacIcons[user?.zodiacSign] || '🌟'}
           </div>
-          <div className="horoscope-summary">{horoscopeSummary}</div>
         </div>
       </div>
-      {/* Afirmación diaria */}
-      <div className="profile-affirmation" style={{marginBottom:'1.5em', background:'#eebc1d', color:'#232946', borderRadius:'10px', padding:'1em', fontWeight:'bold', fontSize:'1.1em'}}>
-        {dailyAffirmation}
+      
+      {/* Inspiración diaria generada por IA */}
+      <div className="profile-inspiration" style={{
+        marginBottom:'1.5em', 
+        background:'linear-gradient(135deg, #eebc1d, #f4d03f)', 
+        color:'#232946', 
+        borderRadius:'12px', 
+        padding:'1.2em', 
+        fontWeight:'600', 
+        fontSize:'1.1em',
+        textAlign:'center',
+        boxShadow:'0 4px 15px rgba(238,188,29,0.3)',
+        border:'2px solid rgba(255,255,255,0.2)'
+      }}>
+        ✨ {dailyInspiration} ✨
       </div>
             {/* Accesos rápidos */}
       <div className="profile-quick-access">
