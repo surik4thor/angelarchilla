@@ -1,4 +1,7 @@
-import { getSecret } from './secrets.js';
+import jwt from 'jsonwebtoken';
+import prisma from '../config/database.js';
+import { config, messages } from '../config/config.js';
+
 // Middleware para requerir nivel de membresía específico
 export const requireMembership = (requiredLevels = []) => {
   return (req, res, next) => {
@@ -74,10 +77,6 @@ export const optionalAuth = async (req, res, next) => {
     next();
   }
 };
-import jwt from 'jsonwebtoken';
-import prisma from '../config/database.js';
-import { config, messages } from '../config/config.js';
-
 // Verificar token JWT para miembros de Arcana Club
 export const authenticate = async (req, res, next) => {
   // Función para enviar error sin headers CORS (gestionados globalmente)
