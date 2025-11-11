@@ -788,4 +788,43 @@ button,
     font-size: 1rem;
     padding: 0.6rem;
   }
+
+  /* Nuevos estilos responsivos para marketing */
+  .hero-layout {
+    padding: 1.5rem 1rem;
+  }
+  
+  .email-capture-widget {
+    margin-bottom: 1rem;
+    padding: 1.5rem !important;
+  }
+  
+  .benefits-section,
+  .testimonials-section,
+  .lead-magnets-section {
+    padding: 0 1rem;
+  }
+  
+  .benefits-section h2,
+  .testimonials-section h2,
+  .lead-magnets-section h2 {
+    font-size: 1.8rem;
+  }
+  
+  .benefit-card,
+  .testimonial-card,
+  .lead-magnet-card {
+    padding: 1.5rem !important;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cta-primary-btn,
+  .cta-secondary-btn {
+    width: 100%;
+    max-width: 280px;
+  }
 }
